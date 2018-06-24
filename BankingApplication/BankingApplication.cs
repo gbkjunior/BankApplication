@@ -32,52 +32,66 @@ namespace BankingApplication
                     {
                         //Also include transaction 1 Accounts 2: transaction exit
                         //if 2 - which account transaction 1:checking 2: loan 3: saving 
-
-                        Console.WriteLine("Main Menu: \n1. {0} \n2. {1} \n3. {2} \n4. Get All Account Balances \n5. Exit", AccountType.Checking, AccountType.Savings, AccountType.Loan);
+                        Console.WriteLine("Main Menu:\n1. Accounts \n2. Transactions \n3. Exit");
                         string mainMenuInput = Console.ReadLine();
+
+                        //Console.WriteLine("Main Menu: \n1. {0} \n2. {1} \n3. {2} \n4. Get All Account Balances \n5. Exit", AccountType.Checking, AccountType.Savings, AccountType.Loan);
+                        //string mainMenuInput = Console.ReadLine();
 
                         bool mainMenuInputCheck = int.TryParse(mainMenuInput, out int mainMenuInputInteger);
                         if (mainMenuInputCheck)
                         {
-                            if (mainMenuInputInteger == 5)
-                            {
-                                Console.ReadKey();
-                                break;
-                            }
-                            if (mainMenuInputInteger > 5 || mainMenuInputInteger < 1)
-                            {
-                                Console.WriteLine("Please select a value from 1 to 5. \n");
-                                
-                            }
-                            else if (mainMenuInputInteger == 1)
-                            {
+                            //if (mainMenuInputInteger == 5)
+                            //{
+                            //    Console.ReadKey();
+                            //    break;
+                            //}
+                            //if (mainMenuInputInteger > 5 || mainMenuInputInteger < 1)
+                            //{
+                            //    Console.WriteLine("Please select a value from 1 to 5. \n");
 
-                                AccountMenu(AccountType.Checking);
+                            //}
+                            //else if (mainMenuInputInteger == 1)
+                            //{
 
-                            }
-                            else if (mainMenuInputInteger == 2)
-                            {
+                            //    AccountMenu(AccountType.Checking);
 
-                                AccountMenu(AccountType.Savings);
-                            }
-                            else if (mainMenuInputInteger == 3)
-                            {
+                            //}
+                            //else if (mainMenuInputInteger == 2)
+                            //{
 
-                                AccountMenu(AccountType.Loan);
-                            }
-                            else if (mainMenuInputInteger == 4)
+                            //    AccountMenu(AccountType.Savings);
+                            //}
+                            //else if (mainMenuInputInteger == 3)
+                            //{
+
+                            //    AccountMenu(AccountType.Loan);
+                            //}
+                            //else if (mainMenuInputInteger == 4)
+                            //{
+                            //    Console.WriteLine("Your checking account balance is: {0}", accounts.GetBalance(AccountType.Checking));
+                            //    Console.WriteLine("Your savings account balance is: {0}", accounts.GetBalance(AccountType.Savings));
+                            //    Console.WriteLine("Your loan account balance is: {0}", accounts.GetBalance(AccountType.Loan));
+                            //    MainMenu();
+                            //}
+
+                            switch (mainMenuInputInteger)
                             {
-                                Console.WriteLine("Your checking account balance is: {0}", accounts.GetBalance(AccountType.Checking));
-                                Console.WriteLine("Your savings account balance is: {0}", accounts.GetBalance(AccountType.Savings));
-                                Console.WriteLine("Your loan account balance is: {0}", accounts.GetBalance(AccountType.Loan));
-                                MainMenu();
+                                case 1: SelectAccountMenu();
+                                    break;
+                                case 2: SelectTransactionMenu();
+                                    break;
+                                case 3: Console.ReadKey();
+                                    break;
+                                default: Console.WriteLine("Please choose either 1 or 2");
+                                    break;
                             }
                         }
                         else
                             Console.WriteLine("Please enter a value from the given options");
 
                         
-                    } while (true);
+                    } while (!true);
                 }
                 catch (Exception e)
                 {
@@ -92,18 +106,18 @@ namespace BankingApplication
                 {
                     do
                     {
-                        Console.WriteLine("Account Menu: \n1. Get Balance \n2. Withdraw \n3. Deposit \n4. Main Menu \n5. Exit");
+                        Console.WriteLine("Account Menu: \n1. Get Balance \n2. Withdraw \n3. Deposit \n4. Account Menu \n5. Main Menu \n6. Exit");
                         string accountMenuInput = Console.ReadLine();
 
                         bool accountMenuInputCheck = int.TryParse(accountMenuInput, out int accountMenuInputInteger);
                         if (accountMenuInputCheck)
                         {
-                            if (accountMenuInputInteger == 5)
+                            if (accountMenuInputInteger == 6)
                             {
                                 Console.ReadKey();
                                 break;
                             }
-                            if (accountMenuInputInteger > 5 || accountMenuInputInteger < 1)
+                            if (accountMenuInputInteger > 6 || accountMenuInputInteger < 1)
                             {
                                 Console.WriteLine("Please select a value from 1 to 5. \n");
                                 
@@ -166,6 +180,11 @@ namespace BankingApplication
                             }
                             else if (accountMenuInputInteger == 4)
                             {
+                                SelectAccountMenu();
+                                break;
+                            }
+                            else if (accountMenuInputInteger == 5)
+                            {
                                 MainMenu();
                                 break;
                             }
@@ -184,7 +203,84 @@ namespace BankingApplication
                 }
             }
 
+            void SelectAccountMenu()
+            {
+                do
+                {
+                    Console.WriteLine("Select Account: \n1. {0} \n2. {1} \n3. {2} \n4. Get All Account Balances \n5. Exit", AccountType.Checking, AccountType.Savings, AccountType.Loan);
+                    string selectAcctMenuInput = Console.ReadLine();
+                    bool selectAcctMenuInputCheck = int.TryParse(selectAcctMenuInput, out int selectAcctMenuInputInteger);
 
+                    if (selectAcctMenuInputCheck)
+                    {
+                        switch (selectAcctMenuInputInteger)
+                        {
+                            case 1:
+                                AccountMenu(AccountType.Checking);
+                                break;
+                            case 2:
+                                AccountMenu(AccountType.Savings);
+                                break;
+                            case 3:
+                                AccountMenu(AccountType.Loan);
+                                break;
+                            case 4: GetAllBalances();
+                                break;
+                            case 5: 
+                                break;
+                            default:
+                                Console.WriteLine("Please enter a value between 1 to 5.");
+                                break;
+                        }
+                    }
+                    else
+                        Console.WriteLine("Please enter a value from the given options.");
+
+                } while (!true);
+
+
+            }
+
+            void SelectTransactionMenu()
+            {
+                do
+                {
+                    Console.WriteLine("Select the account to retrieve transactions: \n1. Checking \n2. Savings \n3. Loan \n4. Main Menu \n5. Exit");
+                    string selectTransInput = Console.ReadLine();
+
+                    bool selectTransInputCheck = int.TryParse(selectTransInput, out int selectTransInputInteger);
+
+                    if (selectTransInputCheck)
+                    {
+                        switch (selectTransInputInteger)
+                        {
+                            case 1: accounts.GetTransactions(AccountType.Checking);
+                                break;
+                            case 2: accounts.GetTransactions(AccountType.Savings);
+                                break;
+                            case 3: accounts.GetTransactions(AccountType.Loan);
+                                break;
+                            case 4: MainMenu();
+                                break;
+                            case 5: Console.ReadKey();
+                                break;
+                            default: Console.WriteLine("Please enter a value from the given options.");
+                                break;
+                        }
+                    }
+                    else
+                        Console.WriteLine("Please select a value from the given options.");
+                } while (true);
+            }
+
+            void GetAllBalances()
+            {
+                Console.WriteLine("Your checking account balance is: {0}", accounts.GetBalance(AccountType.Checking));
+                Console.WriteLine("Your savings account balance is: {0}", accounts.GetBalance(AccountType.Savings));
+                Console.WriteLine("Your loan account balance is: {0}", accounts.GetBalance(AccountType.Loan));
+                
+                Console.ReadKey();
+            }
         }
 
 
