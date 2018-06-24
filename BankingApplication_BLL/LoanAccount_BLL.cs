@@ -8,19 +8,18 @@ namespace BankingApplication_BLL
     {
         LoanAccount_BO loanAccount_BO = new LoanAccount_BO();
 
-        public LoanAccount_BLL()
-        {
-            loanAccount_BO.amount = 100;
-        }
+        
 
         public double Deposit(double amount)
         {
-            return loanAccount_BO.amount = loanAccount_BO.amount + amount;
+            loanAccount_BO.amount += amount;
+            return GetBalance();
         }
 
         public double Withdraw(double amount)
         {
-            return loanAccount_BO.amount = loanAccount_BO.amount + amount;
+            loanAccount_BO.amount -= amount;
+            return GetBalance();
         }
         public double GetBalance()
         {

@@ -11,21 +11,17 @@ namespace BankingApplication_BLL
         
         CheckingAccount_BO checkingAccount_BO = new CheckingAccount_BO();
 
-        public CheckingAccount_BLL()
-        {
-            checkingAccount_BO.amount = 100;
-        }
-
         public double Deposit(double amount)
         {
-             checkingAccount_BO.amount += amount ;
+            checkingAccount_BO.amount += amount ;
 
             return GetBalance();
         }
 
         public double Withdraw(double amount)
         {
-            return checkingAccount_BO.amount= checkingAccount_BO.amount - amount;
+            checkingAccount_BO.amount -= amount;
+            return GetBalance();
         }
 
         public double GetBalance()

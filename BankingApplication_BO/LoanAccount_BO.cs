@@ -7,7 +7,12 @@ namespace BankingApplication_BO
     public class LoanAccount_BO
     {
         int accountID;
-        string accountName;
+        string name;
         public double amount;
+
+        public LoanAccount_BO()
+        {
+            this.amount = 100;
+        }
     }
 }

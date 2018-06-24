@@ -6,8 +6,8 @@ namespace BankingApplication
 {
     class BankingApplication
     {
-        enum AccountType { Checking, Savings, Loan };
-        enum AccountFunc { Balance, Withdraw, Deposit}
+        //enum AccountType { Checking, Savings, Loan };
+        enum AccountFunc { Balance, Withdraw, Deposit }
         static void Main(string[] args)
         {
 
@@ -15,14 +15,18 @@ namespace BankingApplication
             // Account Menu 1: get balance 2: deposit 3: withdraw 4: main menu  5: exit
             //1 - print balance and account menu
             //2 - take amount and acount menu
+
             CheckingAccount_BLL checkAccountObject = new CheckingAccount_BLL();
             SavingAccount_BLL savingAccountObject = new SavingAccount_BLL();
             LoanAccount_BLL loanAccountObject = new LoanAccount_BLL();
 
-            
+            Accounts_BLL accounts = new Accounts_BLL();
+
+            Console.WriteLine(accounts);
+
 
             MainMenu();
-            
+
 
             void MainMenu()
             {
@@ -30,6 +34,9 @@ namespace BankingApplication
                 {
                     do
                     {
+                        //Also include transaction 1 Accounts 2: transaction exit
+                        //if 2 - which account transaction 1:checking 2: loan 3: saving 
+
                         Console.WriteLine("Main Menu: \n1. {0} \n2. {1} \n3. {2} \n4. Get All Account Balances \n5. Exit", AccountType.Checking, AccountType.Savings, AccountType.Loan);
                         string mainMenuInput = Console.ReadLine();
 
@@ -49,35 +56,33 @@ namespace BankingApplication
                             else if (mainMenuInputInteger == 1)
                             {
 
-                                CheckAccountMenu();
+                                AccountMenu(AccountType.Checking);
 
                             }
                             else if (mainMenuInputInteger == 2)
                             {
 
-                                SaveAccountMenu();
+                                AccountMenu(AccountType.Savings);
                             }
                             else if (mainMenuInputInteger == 3)
                             {
 
-                                LoanAccountMenu();
+                                AccountMenu(AccountType.Loan);
                             }
                             else if (mainMenuInputInteger == 4)
                             {
-                                Console.WriteLine("Your checking account balance is: {0}", checkAccountObject.GetBalance());
-                                Console.WriteLine("Your savings account balance is: {0}", savingAccountObject.GetBalance());
-                                Console.WriteLine("Your loan account balance is: {0}", loanAccountObject.GetBalance());
-                                MainMenu();
+                                Console.WriteLine("Your checking account balance is: {0}", accounts.GetBalance(AccountType.Checking));
+                                Console.WriteLine("Your savings account balance is: {0}", accounts.GetBalance(AccountType.Savings));
+                                Console.WriteLine("Your loan account balance is: {0}", accounts.GetBalance(AccountType.Loan));    
                             }
                         }
                         else
-                        {
                             Console.WriteLine("Please enter a value from the given options");
-                            MainMenu();
-                        }
+
+                        
                     } while (!true);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine("Exception caught: {0}", e);
                 }
@@ -110,7 +115,7 @@ namespace BankingApplication
                             {
 
                                 Console.WriteLine("Your Checking account balance is: {0}", checkAccountObject.GetBalance());
-                                CheckAccountMenu();
+                                //CheckAccountMenu();
                             }
                             else if (accountMenuInputInteger == 2)
                             {
@@ -120,22 +125,15 @@ namespace BankingApplication
                                 if (checkAmount)
                                 {
                                     if (checkAccountObject.GetBalance() - amountValue < 0)
-                                    {
                                         Console.WriteLine("Please enter an amount within your balance: {0}", checkAccountObject.GetBalance());
-                                        CheckAccountMenu();
-                                    }
                                     else
-                                    {
                                         checkAccountObject.Withdraw(amountValue);
-                                        CheckAccountMenu();
-                                    }
 
+                                    //CheckAccountMenu();
                                 }
                                 else
-                                {
                                     Console.WriteLine("Please enter a proper amount value.");
-                                    CheckAccountMenu();
-                                }
+                                //CheckAccountMenu();
                             }
                             else if (accountMenuInputInteger == 3)
                             {
@@ -145,22 +143,14 @@ namespace BankingApplication
                                 if (checkAmount)
                                 {
                                     if (amountValue < 0)
-                                    {
                                         Console.WriteLine("Please enter a valid amount value.");
-                                        CheckAccountMenu();
-                                    }
                                     else
-                                    {
                                         checkAccountObject.Deposit(amountValue);
-                                        CheckAccountMenu();
-                                    }
-
                                 }
                                 else
-                                {
                                     Console.WriteLine("Please enter a proper amount value.");
-                                    CheckAccountMenu();
-                                }
+
+                                //CheckAccountMenu();
                             }
                             else if (accountMenuInputInteger == 4)
                             {
@@ -168,17 +158,17 @@ namespace BankingApplication
                             }
                         }
                         else
-                        {
                             Console.WriteLine("Please enter a value from the given options");
-                            CheckAccountMenu();
-                        }
+
+                        CheckAccountMenu();    
+                        
                     } while (!true);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine("Exception caught: {0}", e);
                 }
-                
+
             }
 
             void SaveAccountMenu()
@@ -271,7 +261,7 @@ namespace BankingApplication
                         }
                     } while (!true);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine("Exception caught: {0}", e);
                 }
@@ -314,7 +304,7 @@ namespace BankingApplication
                                 {
                                     if (loanAccountObject.GetBalance() - amountValue < 0)
                                     {
-                                        Console.WriteLine("Please enter an amount within your balance {0}:", loanAccountObject.GetBalance());
+                                        Console.WriteLine("Please enter an amount within your balance: {0}", loanAccountObject.GetBalance());
                                         LoanAccountMenu();
                                     }
                                     else
@@ -374,6 +364,102 @@ namespace BankingApplication
 
             }
 
+            void AccountMenu(AccountType acctType) 
+            {
+                try
+                {
+                    do
+                    {
+                        Console.WriteLine("Account Menu: \n1. Get Balance \n2. Withdraw \n3. Deposit \n4. Main Menu \n5. Exit");
+                        string accountMenuInput = Console.ReadLine();
+
+                        bool accountMenuInputCheck = int.TryParse(accountMenuInput, out int accountMenuInputInteger);
+                        if (accountMenuInputCheck)
+                        {
+                            if (accountMenuInputInteger == 5)
+                            {
+                                Console.ReadKey();
+                                break;
+                            }
+                            if (accountMenuInputInteger > 5 || accountMenuInputInteger < 1)
+                            {
+                                Console.WriteLine("Please select a value from 1 to 5. \n");
+                                LoanAccountMenu();
+                            }
+                            else if (accountMenuInputInteger == 1)
+                            {
+
+                                Console.WriteLine("Your {0} account balance is: {1}", acctType,accounts.GetBalance(acctType));
+                                
+                            }
+                            else if (accountMenuInputInteger == 2)
+                            {
+                                Console.WriteLine("Enter an amount to withdraw:");
+                                string amount = Console.ReadLine();
+                                bool checkAmount = double.TryParse(amount, out double amountValue);
+                                if (checkAmount)
+                                {
+                                    if (accounts.GetBalance(acctType) - amountValue < 0)
+                                    {
+                                        Console.WriteLine("Please enter an amount within your balance: {0}", accounts.GetBalance(acctType));
+                                        
+                                    }
+                                    else
+                                    {
+                                        accounts.Withdraw(amountValue,acctType);
+                                        
+                                    }
+
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please enter a proper amount value.");
+                                    
+                                }
+                            }
+                            else if (accountMenuInputInteger == 3)
+                            {
+                                Console.WriteLine("Enter an amount to deposit:");
+                                string amount = Console.ReadLine();
+                                bool checkAmount = double.TryParse(amount, out double amountValue);
+                                if (checkAmount)
+                                {
+                                    if (amountValue < 0)
+                                    {
+                                        Console.WriteLine("Please enter a valid amount value.");
+                                        
+                                    }
+                                    else
+                                    {
+                                        accounts.Deposit(amountValue,acctType);
+                                        
+                                    }
+
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please enter a proper amount value.");
+                                    
+                                }
+                            }
+                            else if (accountMenuInputInteger == 4)
+                            {
+                                MainMenu();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a value from the given options");
+                            
+                        }
+                        AccountMenu(acctType);
+                    } while (!true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception caught: {0}", e);
+                }
+            }
             //void continueCheck()
             //{
             //    string continueInput;
@@ -404,7 +490,7 @@ namespace BankingApplication
 
             //}
 
-            
+
         }
 
 
