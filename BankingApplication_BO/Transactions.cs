@@ -10,9 +10,9 @@ namespace BankingApplication_BO
         //Enum TransactionType // Deposit Withdraw
         int transactionID;
         public TransactionType transType;
-        public AccountType accountType;
-        public DateTime date;
-        public double amount;
+        private AccountType accountType;
+        private DateTime date;
+        private double amount;
         private double balance;
         //trancationID
         //transactionType - enum - line 9
@@ -32,12 +32,22 @@ namespace BankingApplication_BO
 
         public AccountType GetAccountType()
         {
-            return accountType;
+            return this.accountType;
         }
 
         public double GetBalance()
         {
             return this.balance;
+        }
+
+        public DateTime getDate()
+        {
+            return this.date;
+        }
+
+        public double getAmount()
+        {
+            return this.amount;
         }
         //constructor
 
