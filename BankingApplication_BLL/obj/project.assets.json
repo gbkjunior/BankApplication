@@ -206,6 +206,19 @@
         "runtime": {
           "bin/placeholder/BankingApplication_BO.dll": {}
         }
+      },
+      "BankingApplication_DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "BankingApplication_BO": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BankingApplication_DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BankingApplication_DAL.dll": {}
+        }
       }
     }
   },
@@ -671,11 +684,17 @@
       "type": "project",
       "path": "../BankingApplication_BO/BankingApplication_BO.csproj",
       "msbuildProject": "../BankingApplication_BO/BankingApplication_BO.csproj"
+    },
+    "BankingApplication_DAL/1.0.0": {
+      "type": "project",
+      "path": "../BankingApplication_DAL/BankingApplication_DAL.csproj",
+      "msbuildProject": "../BankingApplication_DAL/BankingApplication_DAL.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "BankingApplication_BO >= 1.0.0",
+      "BankingApplication_DAL >= 1.0.0",
       "Microsoft.NETCore.App >= 2.0.0"
     ]
   },
@@ -711,6 +730,9 @@
           "projectReferences": {
             "C:\\Users\\vijay\\C# Development\\BankingApplication\\BankingApplication_BO\\BankingApplication_BO.csproj": {
               "projectPath": "C:\\Users\\vijay\\C# Development\\BankingApplication\\BankingApplication_BO\\BankingApplication_BO.csproj"
+            },
+            "C:\\Users\\vijay\\C# Development\\BankingApplication\\BankingApplication_DAL\\BankingApplication_DAL.csproj": {
+              "projectPath": "C:\\Users\\vijay\\C# Development\\BankingApplication\\BankingApplication_DAL\\BankingApplication_DAL.csproj"
             }
           }
         }

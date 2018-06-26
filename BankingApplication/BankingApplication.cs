@@ -18,6 +18,9 @@ namespace BankingApplication
             //2 - take amount and acount menu
 
             Accounts_BLL accounts = new Accounts_BLL();
+            Transactions_BLL transactions = new Transactions_BLL();
+            Customers_BLL customers = new Customers_BLL();
+            
             //List<bool> flagList = new List<bool>();
             //for(int i = 0; i<4; i++)
             //    flagList.Add(true);
@@ -27,9 +30,37 @@ namespace BankingApplication
             bool mainMenuFlag = true;
             bool accountMenuFlag = true;
             bool transMenuFlag = true;
-            
-            MainMenu();
+            bool custFlag = true;
+            bool checkCustFlag = true;
+            CustomerMenu();
 
+            void CustomerMenu()
+            {
+                do
+                {
+                    Console.WriteLine("Enter your customer ID:");
+                    string custInput = Console.ReadLine();
+
+                    bool custInputCheck = int.TryParse(custInput, out int custInputInteger);
+                    if (custInputCheck)
+                    {
+                        checkCustFlag = customers.validateCustomer(custInputInteger);
+                        if (checkCustFlag)
+                        {
+                            Console.WriteLine("Welcome to our Banking Application. You have successfully logged in.");
+                            MainMenu();
+                            custFlag = false;
+                        }
+                            
+                        else
+                        {
+                            Console.WriteLine("Your customer ID is not found. Please try again.");
+                            
+                        }
+                            
+                    }
+                } while (custFlag);
+            }
 
             void MainMenu()
             {
@@ -118,6 +149,7 @@ namespace BankingApplication
                                         else
                                         {
                                             accounts.Withdraw(amountValue, acctType);
+                                            
                                             Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, acctType);
                                             Console.WriteLine("Your current balance in your {0} account is: {1}", acctType, accounts.GetBalance(acctType));
                                         }
@@ -230,13 +262,13 @@ namespace BankingApplication
                         switch (selectTransInputInteger)
                         {
                             case 1:
-                                accounts.GetTransactions(AccountType.Checking);
+                                transactions.displayTransactions(transactions.GetTransactions(AccountType.Checking), AccountType.Checking);
                                 break;
                             case 2:
-                                accounts.GetTransactions(AccountType.Savings);
+                                transactions.displayTransactions(transactions.GetTransactions(AccountType.Savings), AccountType.Savings);
                                 break;
                             case 3:
-                                accounts.GetTransactions(AccountType.Loan);
+                                transactions.displayTransactions(transactions.GetTransactions(AccountType.Loan), AccountType.Loan);
                                 break;
                             case 4:
                                 MainMenu();
@@ -268,6 +300,8 @@ namespace BankingApplication
                 Console.WriteLine("Your savings account balance is: {0}", accounts.GetBalance(AccountType.Savings));
                 Console.WriteLine("Your loan account balance is: {0}", accounts.GetBalance(AccountType.Loan));
             }
+
+            
         }
 
 

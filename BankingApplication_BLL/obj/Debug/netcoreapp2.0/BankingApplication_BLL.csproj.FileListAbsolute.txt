@@ -10,3 +10,5 @@ C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BLL\obj\Debu
 C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BLL\obj\Debug\netcoreapp2.0\BankingApplication_BLL.csproj.CopyComplete
 C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BLL\obj\Debug\netcoreapp2.0\BankingApplication_BLL.dll
 C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BLL\obj\Debug\netcoreapp2.0\BankingApplication_BLL.pdb
+C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BLL\bin\Debug\netcoreapp2.0\BankingApplication_DAL.dll
+C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BLL\bin\Debug\netcoreapp2.0\BankingApplication_DAL.pdb
