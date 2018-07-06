@@ -11,10 +11,36 @@ namespace BankingApplication_BLL
         List<Customers> lstCustomers = new List<Customers>();
         Customers_DAL custObject = new Customers_DAL();
 
+        public void AddNewCustomer(string custName, string custAddress, string custTelephone)
+        {
+            custObject.AddNewCustomer(custName,custAddress,custTelephone);
+        }
         
+        public int GetCustomerID(string custName)
+        {
+            int custID = 0;
+            for(int i = 0; i < custObject.getLstCustomers().Count; i++)
+            {
+                if(custObject.getLstCustomers()[i].getCustomerName() == custName)
+                {
+                    custID = custObject.getLstCustomers()[i].getCustomerID();
+                }
+            }
+            return custID;
+        }
         
-
-      
+        public string GetCustomerName(int custID)
+        {
+            string custName = "";
+            for (int i = 0; i < custObject.getLstCustomers().Count; i++)
+            {
+                if (custObject.getLstCustomers()[i].getCustomerID() == custID)
+                {
+                    custName = custObject.getLstCustomers()[i].getCustomerName();
+                }
+            }
+            return custName;
+        }
         public bool validateCustomer(int custID)
         {
             bool flag = false;

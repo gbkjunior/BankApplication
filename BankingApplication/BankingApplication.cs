@@ -20,21 +20,65 @@ namespace BankingApplication
             Accounts_BLL accounts = new Accounts_BLL();
             Transactions_BLL transactions = new Transactions_BLL();
             Customers_BLL customers = new Customers_BLL();
-            
+
             //List<bool> flagList = new List<bool>();
             //for(int i = 0; i<4; i++)
             //    flagList.Add(true);
             //Console.WriteLine(flagList[1]);
-
+            bool bankMenuFlag = true;
             bool selectAcctMenuFlag = true;
             bool mainMenuFlag = true;
             bool accountMenuFlag = true;
             bool transMenuFlag = true;
             bool custFlag = true;
             bool checkCustFlag = true;
-            CustomerMenu();
 
-            void CustomerMenu()
+            BankMenu();
+
+            void BankMenu()
+            {
+                try
+                {
+                    do
+                    {
+                        Console.WriteLine("Application Menu:\n1. Login \n2. Register \n3. Exit");
+                        string bankMenuInput = Console.ReadLine();
+
+                        bool bankMenuInputCheck = int.TryParse(bankMenuInput, out int bankMenuInputInteger);
+
+                        if (bankMenuInputCheck)
+                        {
+                            switch (bankMenuInputInteger)
+                            {
+                                case 1:
+                                    CustomerLoginMenu();
+                                    break;
+                                case 2:
+                                    CustomerRegisterMenu();
+                                    continue;
+                                case 3:
+                                    bankMenuFlag = false;
+                                    Console.ReadKey();
+                                    break;
+                                default:
+                                    Console.WriteLine("Please choose either 1 or 2 or 3");
+                                    break;
+                            }
+                        }
+                        else
+                            Console.WriteLine("Please enter a value from the given options");
+
+                    } while (bankMenuFlag);
+
+
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
+            void CustomerLoginMenu()
             {
                 do
                 {
@@ -47,8 +91,8 @@ namespace BankingApplication
                         checkCustFlag = customers.validateCustomer(custInputInteger);
                         if (checkCustFlag)
                         {
-                            Console.WriteLine("Welcome to our Banking Application. You have successfully logged in.");
-                            MainMenu();
+                            Console.WriteLine("Welcome to our Banking Application, {0}. You have successfully logged in.", customers.GetCustomerName(custInputInteger));
+                            MainMenu(custInputInteger);
                             custFlag = false;
                         }
                             
@@ -62,7 +106,33 @@ namespace BankingApplication
                 } while (custFlag);
             }
 
-            void MainMenu()
+            void CustomerRegisterMenu()
+            {
+                try
+                {
+                        Console.WriteLine("Welcome to our Banking Application. Please enter the following details:\n");
+
+                        Console.WriteLine("Enter your Full Name");
+                        string userNameInput = Console.ReadLine();
+
+                        Console.WriteLine("Enter your Address");
+                        string userAddressInput = Console.ReadLine();
+
+                        Console.WriteLine("Enter your Telephone Number");
+                        string userTelephoneInput = Console.ReadLine();
+
+                        customers.AddNewCustomer(userNameInput, userAddressInput, userTelephoneInput);
+
+                        Console.WriteLine("You have registered successfully. Your customerID is: {0}", customers.GetCustomerID(userNameInput));
+                    
+                }
+                catch(Exception e)
+                {
+
+                }
+            }
+
+            void MainMenu(int custID)
             {
                 try
                 {
@@ -84,10 +154,10 @@ namespace BankingApplication
                             switch (mainMenuInputInteger)
                             {
                                 case 1:
-                                    SelectAccountMenu();
+                                    SelectAccountMenu(custID);
                                     break;
                                 case 2:
-                                    SelectTransactionMenu();
+                                    SelectTransactionMenu(custID);
                                     break;
                                 case 3:
                                     mainMenuFlag = false;
@@ -117,7 +187,7 @@ namespace BankingApplication
 
             }
 
-            void AccountMenu(AccountType acctType)
+            void AccountMenu(int custID,AccountType acctType)
             {
                 try
                 {
@@ -126,7 +196,7 @@ namespace BankingApplication
                     do
                     {
 
-                        Console.WriteLine("Account Menu: \n1. Get Balance \n2. Withdraw \n3. Deposit \n4. Select Account Menu \n5. Exit");
+                        Console.WriteLine("Account Menu: \n1. Get Balance \n2. Withdraw \n3. Deposit \n4. Select Account Menu \n5. Main Menu");
                         string accountMenuInput = Console.ReadLine();
 
                         bool accountMenuInputCheck = int.TryParse(accountMenuInput, out int accountMenuInputInteger);
@@ -178,10 +248,10 @@ namespace BankingApplication
                                         Console.WriteLine("Please enter a proper amount value.");
                                     break;
                                 case 4:
-                                    SelectAccountMenu();
+                                    SelectAccountMenu(custID);
                                     break;
                                 case 5:
-                                    mainMenuFlag = false;
+                                    
                                     accountMenuFlag = false;
                                     selectAcctMenuFlag = false;
                                     Console.ReadKey();
@@ -202,11 +272,11 @@ namespace BankingApplication
                 }
             }
 
-            void SelectAccountMenu()
+            void SelectAccountMenu(int custID)
             {
                 do
                 {
-                    Console.WriteLine("Select Account Menu: \n1. {0} \n2. {1} \n3. {2} \n4. Get All Account Balances \n5. Main Menu \n6. Exit", AccountType.Checking, AccountType.Savings, AccountType.Loan);
+                    Console.WriteLine("Select Account Menu: \n1. {0} \n2. {1} \n3. {2} \n4. Get All Account Balances \n5. Main Menu", AccountType.Checking, AccountType.Savings, AccountType.Loan);
                     string selectAcctMenuInput = Console.ReadLine();
                     bool selectAcctMenuInputCheck = int.TryParse(selectAcctMenuInput, out int selectAcctMenuInputInteger);
 
@@ -215,23 +285,19 @@ namespace BankingApplication
                         switch (selectAcctMenuInputInteger)
                         {
                             case 1:
-                                AccountMenu(AccountType.Checking);
+                                AccountMenu(custID, AccountType.Checking);
                                 break;
                             case 2:
-                                AccountMenu(AccountType.Savings);
+                                AccountMenu(custID, AccountType.Savings);
                                 break;
                             case 3:
-                                AccountMenu(AccountType.Loan);
+                                AccountMenu(custID, AccountType.Loan);
                                 break;
                             case 4:
                                 GetAllBalances();
                                 break;
                             case 5:
-                                MainMenu();
-                                selectAcctMenuFlag = false;
-                                break;
-                            case 6:
-                                mainMenuFlag = false;
+                                MainMenu(custID);
                                 selectAcctMenuFlag = false;
                                 break;
                             default:
@@ -247,12 +313,12 @@ namespace BankingApplication
 
             }
 
-            void SelectTransactionMenu()
+            void SelectTransactionMenu(int custID)
             {
 
                 do
                 {
-                    Console.WriteLine("Select the account to retrieve transactions: \n1. Checking \n2. Savings \n3. Loan \n4. Main Menu \n5. Exit");
+                    Console.WriteLine("Select the account to retrieve transactions: \n1. Checking \n2. Savings \n3. Loan \n4. Main Menu ");
                     string selectTransInput = Console.ReadLine();
 
                     bool selectTransInputCheck = int.TryParse(selectTransInput, out int selectTransInputInteger);
@@ -271,18 +337,11 @@ namespace BankingApplication
                                 transactions.displayTransactions(transactions.GetTransactions(AccountType.Loan), AccountType.Loan);
                                 break;
                             case 4:
-                                MainMenu();
+                                MainMenu(custID);
                                 mainMenuFlag = false;
                                 transMenuFlag = false;
                                 selectAcctMenuFlag = false;
                                 accountMenuFlag = false;
-                                break;
-                            case 5:
-                                selectAcctMenuFlag = false;
-                                accountMenuFlag = false;
-                                transMenuFlag = false;
-                                mainMenuFlag = false;
-                                Console.ReadKey();
                                 break;
                             default:
                                 Console.WriteLine("Please enter a value from the given options.");
