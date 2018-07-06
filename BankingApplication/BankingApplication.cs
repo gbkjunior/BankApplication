@@ -70,7 +70,7 @@ namespace BankingApplication
                     {
                         //Also include transaction 1 Accounts 2: transaction exit
                         //if 2 - which account transaction 1:checking 2: loan 3: saving 
-                        Console.WriteLine("Main Menu:\n1. Accounts \n2. Transactions \n3. Exit");
+                        Console.WriteLine("Main Menu:\n1. Accounts \n2. Transactions \n3. Log Out");
                         string mainMenuInput = Console.ReadLine();
 
                         //Console.WriteLine("Main Menu: \n1. {0} \n2. {1} \n3. {2} \n4. Get All Account Balances \n5. Exit", AccountType.Checking, AccountType.Savings, AccountType.Loan);

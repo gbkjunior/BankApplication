@@ -18,11 +18,6 @@ namespace BankingApplication_DAL
         public List<Accounts> GetAccounts()
         {
             return lstAccounts;
-        }
-
-        public void AddAccount(Accounts account)
-        {
-            lstAccounts.Add(account);
         } 
 
 

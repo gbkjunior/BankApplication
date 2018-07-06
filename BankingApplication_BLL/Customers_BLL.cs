@@ -2,27 +2,25 @@
 using System.Collections.Generic;
 using System.Text;
 using BankingApplication_BO;
+using BankingApplication_DAL;
 
 namespace BankingApplication_BLL
 {
     public class Customers_BLL
     {
         List<Customers> lstCustomers = new List<Customers>();
+        Customers_DAL custObject = new Customers_DAL();
 
-        public Customers_BLL()
-        {
-            for(int i = 1; i < 6; i++)
-            {
-                lstCustomers.Add(new Customers(i));
-            }
-        }
+        
+        
 
+      
         public bool validateCustomer(int custID)
         {
             bool flag = false;
-            for(int i = 0; i < lstCustomers.Count; i++)
+            for(int i = 0; i < custObject.getLstCustomers().Count; i++)
             {
-                if(lstCustomers[i].getCustomerID() == custID)
+                if(custObject.getLstCustomers()[i].getCustomerID() == custID)
                 {
                     flag = true;
                 }

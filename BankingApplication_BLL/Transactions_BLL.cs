@@ -18,7 +18,7 @@ namespace BankingApplication_BLL
             {
                 if (transRepo.GetListTransactions()[i].GetAccountType() == acctType)
                 {
-                    lstObject.Add(transRepo.GetListTransactions()[i]) ;
+                    lstObject.Add(transRepo.GetListTransactions()[i]);
 
                 }
             }
@@ -38,6 +38,7 @@ namespace BankingApplication_BLL
                     Console.WriteLine("Transaction Date: {0}", i.getDate());
                     Console.WriteLine("Amount: {0}", i.getAmount());
                     Console.WriteLine("Account Balance: {0}", i.GetBalance());
+                    Console.WriteLine();
                 }
             }
             else

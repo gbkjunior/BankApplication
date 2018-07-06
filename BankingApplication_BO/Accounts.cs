@@ -20,6 +20,7 @@ namespace BankingApplication_BO
 
         public Accounts(double amt,AccountType acctType)
         {
+            
             this.amount = amt;
             this.accountType = acctType;
         }

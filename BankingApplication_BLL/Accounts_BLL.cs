@@ -10,6 +10,7 @@ namespace BankingApplication_BLL
     {
         Accounts_DAL accountsRepo = new Accounts_DAL();
         Transactions_DAL transRepo = new Transactions_DAL();
+        Customers_DAL custRepo = new Customers_DAL();
 
         public Accounts_BLL()
         {
@@ -19,6 +20,7 @@ namespace BankingApplication_BLL
 
         public double GetBalance(AccountType acctType)
         {
+            var customers = custRepo.getLstCustomers();
             var accounts = accountsRepo.GetAccounts();// = 
             double amount = 0;
             for (int i = 0; i < accounts.Count; i++)
