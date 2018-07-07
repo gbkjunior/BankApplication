@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Bank" Class="BankDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Bank.mdf;Integrated Security=True" SettingsObjectName="BankingApplication_DAL.Properties.Settings" SettingsPropertyName="BankConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=&quot;C:\Users\vijay\C# Development\BankingApplication\BankingApplication_DAL\Bank.mdf&quot;;Integrated Security=True" SettingsObjectName="BankingApplication_DAL.Properties.Settings" SettingsPropertyName="BankConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.AccountTable" Member="AccountTables">
     <Type Name="AccountTable">
-      <Column Name="Account_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Account_ID" Type="System.Int32" DbType="Int" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Account_Type" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
     </Type>
   </Table>

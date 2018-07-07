@@ -14,14 +14,16 @@ namespace BankingApplication_BLL
 
         public Accounts_BLL()
         {
-           
+            accountsRepo.AddAccounts(new Accounts(1, AccountType.Checking));
+            accountsRepo.AddAccounts(new Accounts(2, AccountType.Savings));
+            accountsRepo.AddAccounts(new Accounts(3, AccountType.Loan));
         }
-
+        
 
         public double GetBalance(AccountType acctType)
         {
             var customers = custRepo.getLstCustomers();
-            var accounts = accountsRepo.GetAccounts();// = 
+            var accounts = accountsRepo.GetAccounts(); 
             double amount = 0;
             for (int i = 0; i < accounts.Count; i++)
             {

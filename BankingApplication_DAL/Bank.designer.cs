@@ -30,6 +30,9 @@ namespace BankingApplication_DAL
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertAccountTable(AccountTable instance);
+    partial void UpdateAccountTable(AccountTable instance);
+    partial void DeleteAccountTable(AccountTable instance);
     partial void InsertCustomerTable(CustomerTable instance);
     partial void UpdateCustomerTable(CustomerTable instance);
     partial void DeleteCustomerTable(CustomerTable instance);
@@ -99,19 +102,32 @@ namespace BankingApplication_DAL
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AccountTable")]
-	public partial class AccountTable
+	public partial class AccountTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
-		private System.Nullable<int> _Account_ID;
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Account_ID;
 		
 		private string _Account_Type;
 		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAccount_IDChanging(int value);
+    partial void OnAccount_IDChanged();
+    partial void OnAccount_TypeChanging(string value);
+    partial void OnAccount_TypeChanged();
+    #endregion
+		
 		public AccountTable()
 		{
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Account_ID", DbType="Int")]
-		public System.Nullable<int> Account_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Account_ID", DbType="Int", IsPrimaryKey=true)]
+		public int Account_ID
 		{
 			get
 			{
@@ -121,7 +137,11 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Account_ID != value))
 				{
+					this.OnAccount_IDChanging(value);
+					this.SendPropertyChanging();
 					this._Account_ID = value;
+					this.SendPropertyChanged("Account_ID");
+					this.OnAccount_IDChanged();
 				}
 			}
 		}
@@ -137,8 +157,32 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Account_Type != value))
 				{
+					this.OnAccount_TypeChanging(value);
+					this.SendPropertyChanging();
 					this._Account_Type = value;
+					this.SendPropertyChanged("Account_Type");
+					this.OnAccount_TypeChanged();
 				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
