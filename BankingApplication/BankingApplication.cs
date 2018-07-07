@@ -7,24 +7,15 @@ namespace BankingApplication
 {
     class BankingApplication
     {
-        //enum AccountType { Checking, Savings, Loan };
+ 
         enum AccountFunc { Balance, Withdraw, Deposit }
         static void Main(string[] args)
         {
-
-            //Main Menu Please select account, 1: checking 2: saving 3: loan 4: Get all Account balances 5 exit
-            // Account Menu 1: get balance 2: deposit 3: withdraw 4: main menu  5: exit
-            //1 - print balance and account menu
-            //2 - take amount and acount menu
-
             Accounts_BLL accounts = new Accounts_BLL();
             Transactions_BLL transactions = new Transactions_BLL();
             Customers_BLL customers = new Customers_BLL();
 
-            //List<bool> flagList = new List<bool>();
-            //for(int i = 0; i<4; i++)
-            //    flagList.Add(true);
-            //Console.WriteLine(flagList[1]);
+
             bool bankMenuFlag = true;
             bool selectAcctMenuFlag = true;
             bool mainMenuFlag = true;
@@ -138,13 +129,10 @@ namespace BankingApplication
                 {
                     do
                     {
-                        //Also include transaction 1 Accounts 2: transaction exit
-                        //if 2 - which account transaction 1:checking 2: loan 3: saving 
+
                         Console.WriteLine("Main Menu:\n1. Accounts \n2. Transactions \n3. Log Out");
                         string mainMenuInput = Console.ReadLine();
 
-                        //Console.WriteLine("Main Menu: \n1. {0} \n2. {1} \n3. {2} \n4. Get All Account Balances \n5. Exit", AccountType.Checking, AccountType.Savings, AccountType.Loan);
-                        //string mainMenuInput = Console.ReadLine();
 
                         bool mainMenuInputCheck = int.TryParse(mainMenuInput, out int mainMenuInputInteger);
 
