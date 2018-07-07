@@ -26,5 +26,26 @@
         <elementListCompartment Id="91e45262-16d7-483e-a363-0452ff26bc9d" absoluteBounds="5.265, 4.71, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <associationConnector edgePoints="[(3.375 : 2.47199625651042); (4.75 : 2.47199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BankDataContext/AccountTable/AccountTable_Customer_Accounts_Table" />
+      <nodes>
+        <classShapeMoniker Id="512aa272-7fcd-4ae9-9bbf-6490e49a9dec" />
+        <classShapeMoniker Id="f99641ad-80f9-4075-928d-7ad167ff1cc4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3 : 3.84375); (4.96875 : 3.84375); (4.96875 : 3.3862939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BankDataContext/CustomerTable/CustomerTable_Customer_Accounts_Table" />
+      <nodes>
+        <classShapeMoniker Id="363d4ea8-a9d5-478c-bbb4-59166787bbcf" />
+        <classShapeMoniker Id="f99641ad-80f9-4075-928d-7ad167ff1cc4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6 : 3.3862939453125); (6 : 4.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BankDataContext/Customer_Accounts_Table/Customer_Accounts_Table_TransactionTable" />
+      <nodes>
+        <classShapeMoniker Id="f99641ad-80f9-4075-928d-7ad167ff1cc4" />
+        <classShapeMoniker Id="daa05642-c564-4ede-bb5b-b0202a67a397" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

@@ -175,7 +175,7 @@ namespace BankingApplication
 
             }
 
-            void AccountMenu(int custID,AccountType acctType)
+            void AccountMenu(int custID,int acctID)
             {
                 try
                 {
@@ -194,7 +194,7 @@ namespace BankingApplication
                             switch (accountMenuInputInteger)
                             {
                                 case 1:
-                                    Console.WriteLine("Your {0} account balance is: {1}", acctType, accounts.GetBalance(acctType));
+                                    //Console.WriteLine("Your {0} account balance is: {1}", acctID, accounts.GetBalance(custID,acctID));
                                     break;
                                 case 2:
                                     Console.WriteLine("Enter an amount to withdraw:");
@@ -202,15 +202,15 @@ namespace BankingApplication
                                     bool checkAmount = double.TryParse(amount, out double amountValue);
                                     if (checkAmount)
                                     {
-                                        if (accounts.GetBalance(acctType) - amountValue < 0)
-                                            Console.WriteLine("Please enter an amount within your balance: {0}", accounts.GetBalance(acctType));
-                                        else
-                                        {
-                                            accounts.Withdraw(amountValue, acctType);
-                                            
-                                            Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, acctType);
-                                            Console.WriteLine("Your current balance in your {0} account is: {1}", acctType, accounts.GetBalance(acctType));
-                                        }
+                                        //if (accounts.GetBalance(custID, acctID) - amountValue < 0)
+                                        //    Console.WriteLine("Please enter an amount within your balance: {0}", accounts.GetBalance(custID, acctID));
+                                        //else
+                                        //{
+                                        accounts.Withdraw(custID, acctID, amountValue);
+
+                                        Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, accounts.GetAccountTypeByID(acctID));
+                                        //Console.WriteLine("Your current balance in your {0} account is: {1}", acctID, accounts.GetBalance(custID, acctID));
+                                    //}
 
                                     }
                                     else
@@ -222,14 +222,14 @@ namespace BankingApplication
                                     bool checkDepositAmount = double.TryParse(depositAmount, out double depositAmountValue);
                                     if (checkDepositAmount)
                                     {
-                                        if (depositAmountValue < 0)
-                                            Console.WriteLine("Please enter a valid amount value.");
-                                        else
-                                        {
-                                            accounts.Deposit(depositAmountValue, acctType);
-                                            Console.WriteLine("You have successfully deposited {0} in your {1} account.", depositAmountValue, acctType);
-                                            Console.WriteLine("Your current balance in your {0} account is: {1}", acctType, accounts.GetBalance(acctType));
-                                        }
+                                        //if (depositAmountValue < 0)
+                                        //    Console.WriteLine("Please enter a valid amount value.");
+                                        //else
+                                        //{
+                                            accounts.Deposit(custID,acctID,depositAmountValue);
+                                            Console.WriteLine("You have successfully deposited {0} in your {1} account.", depositAmountValue, accounts.GetAccountTypeByID(acctID));
+                                            //Console.WriteLine("Your current balance in your {0} account is: {1}", acctID, accounts.GetBalance(custID,acctID));
+                                        //}
 
                                     }
                                     else
@@ -270,16 +270,21 @@ namespace BankingApplication
 
                     if (selectAcctMenuInputCheck)
                     {
+                        int acctID;
                         switch (selectAcctMenuInputInteger)
                         {
+                            
                             case 1:
-                                AccountMenu(custID, AccountType.Checking);
+                                acctID = (int)AccountType.Checking;
+                                AccountMenu(custID, acctID);
                                 break;
                             case 2:
-                                AccountMenu(custID, AccountType.Savings);
+                                acctID = (int)AccountType.Savings;
+                                AccountMenu(custID, acctID);
                                 break;
                             case 3:
-                                AccountMenu(custID, AccountType.Loan);
+                                acctID = (int)AccountType.Loan;
+                                AccountMenu(custID, acctID);
                                 break;
                             case 4:
                                 GetAllBalances();
@@ -306,7 +311,7 @@ namespace BankingApplication
 
                 do
                 {
-                    Console.WriteLine("Select the account to retrieve transactions: \n1. Checking \n2. Savings \n3. Loan \n4. Main Menu ");
+                    Console.WriteLine("Select the account to retrieve transactions: \n1. Checking \n2. Savings \n3. Loan \n4. Get All Transactions \n5. Main Menu ");
                     string selectTransInput = Console.ReadLine();
 
                     bool selectTransInputCheck = int.TryParse(selectTransInput, out int selectTransInputInteger);
@@ -316,15 +321,18 @@ namespace BankingApplication
                         switch (selectTransInputInteger)
                         {
                             case 1:
-                                transactions.displayTransactions(transactions.GetTransactions(AccountType.Checking), AccountType.Checking);
-                                break;
+                                transactions.GetTransactionsByID(custID, 1);
+                                continue;
                             case 2:
-                                transactions.displayTransactions(transactions.GetTransactions(AccountType.Savings), AccountType.Savings);
-                                break;
+                                transactions.GetTransactionsByID(custID, 2);
+                                continue;
                             case 3:
-                                transactions.displayTransactions(transactions.GetTransactions(AccountType.Loan), AccountType.Loan);
-                                break;
+                                transactions.GetTransactionsByID(custID, 3);
+                                continue;
                             case 4:
+                                transactions.GetAllTransaction(custID);
+                                continue;
+                            case 5:
                                 MainMenu(custID);
                                 mainMenuFlag = false;
                                 transMenuFlag = false;

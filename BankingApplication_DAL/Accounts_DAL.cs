@@ -20,6 +20,20 @@ namespace BankingApplication_DAL
             bankDataContext.SubmitChanges();
         }
 
+        public string GetAccountType(int acctID)
+        {
+            BankDataContext bankDataContext = new BankDataContext();
+
+            AccountTable accountTableObject = new AccountTable();
+
+            var getAcctTypeQuery = (from p in bankDataContext.AccountTables
+                                    where p.Account_ID == acctID
+                                    select p.Account_Type).Single();
+
+            return getAcctTypeQuery.ToString();
+        }
+
+
         public List<Accounts> GetAccounts()
         {
             return lstAccounts;

@@ -4,13 +4,17 @@
     <Type Name="AccountTable">
       <Column Name="Account_ID" Type="System.Int32" DbType="Int" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Account_Type" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Association Name="AccountTable_Customer_Accounts_Table" Member="Customer_Accounts_Tables" ThisKey="Account_ID" OtherKey="Account_ID" Type="Customer_Accounts_Table" />
     </Type>
   </Table>
   <Table Name="dbo.Customer_Accounts_Table" Member="Customer_Accounts_Tables">
     <Type Name="Customer_Accounts_Table">
-      <Column Name="Customer_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Account_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Customer_ID" Type="System.Int32" DbType="Int" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Account_ID" Type="System.Int32" DbType="Int" CanBeNull="false" />
       <Column Name="Balance" Type="System.Decimal" DbType="Decimal(10,0)" CanBeNull="true" />
+      <Association Name="Customer_Accounts_Table_TransactionTable" Member="TransactionTables" ThisKey="Customer_ID,Account_ID" OtherKey="Customer_ID,Account_ID" Type="TransactionTable" />
+      <Association Name="AccountTable_Customer_Accounts_Table" Member="AccountTable" ThisKey="Account_ID" OtherKey="Account_ID" Type="AccountTable" IsForeignKey="true" />
+      <Association Name="CustomerTable_Customer_Accounts_Table" Member="CustomerTable" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="CustomerTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CustomerTable" Member="CustomerTables">
@@ -19,16 +23,18 @@
       <Column Name="Customer_Name" Type="System.String" DbType="VarChar(45)" CanBeNull="true" />
       <Column Name="Customer_Address" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Customer_Telephone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="CustomerTable_Customer_Accounts_Table" Member="Customer_Accounts_Tables" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="Customer_Accounts_Table" />
     </Type>
   </Table>
   <Table Name="dbo.TransactionTable" Member="TransactionTables">
     <Type Name="TransactionTable">
-      <Column Name="Transaction_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Transaction_ID" AutoSync="Never" Type="System.Int32" DbType="Int" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Transaction_Type" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
       <Column Name="Transaction_Date" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Column Name="Amount" Type="System.Decimal" DbType="Decimal(10,0)" CanBeNull="true" />
       <Column Name="Account_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Customer_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Customer_Accounts_Table_TransactionTable" Member="Customer_Accounts_Table" ThisKey="Customer_ID,Account_ID" OtherKey="Customer_ID,Account_ID" Type="Customer_Accounts_Table" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

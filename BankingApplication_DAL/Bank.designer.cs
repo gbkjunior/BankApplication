@@ -33,9 +33,15 @@ namespace BankingApplication_DAL
     partial void InsertAccountTable(AccountTable instance);
     partial void UpdateAccountTable(AccountTable instance);
     partial void DeleteAccountTable(AccountTable instance);
+    partial void InsertCustomer_Accounts_Table(Customer_Accounts_Table instance);
+    partial void UpdateCustomer_Accounts_Table(Customer_Accounts_Table instance);
+    partial void DeleteCustomer_Accounts_Table(Customer_Accounts_Table instance);
     partial void InsertCustomerTable(CustomerTable instance);
     partial void UpdateCustomerTable(CustomerTable instance);
     partial void DeleteCustomerTable(CustomerTable instance);
+    partial void InsertTransactionTable(TransactionTable instance);
+    partial void UpdateTransactionTable(TransactionTable instance);
+    partial void DeleteTransactionTable(TransactionTable instance);
     #endregion
 		
 		public BankDataContext() : 
@@ -111,6 +117,8 @@ namespace BankingApplication_DAL
 		
 		private string _Account_Type;
 		
+		private EntitySet<Customer_Accounts_Table> _Customer_Accounts_Tables;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -123,6 +131,7 @@ namespace BankingApplication_DAL
 		
 		public AccountTable()
 		{
+			this._Customer_Accounts_Tables = new EntitySet<Customer_Accounts_Table>(new Action<Customer_Accounts_Table>(this.attach_Customer_Accounts_Tables), new Action<Customer_Accounts_Table>(this.detach_Customer_Accounts_Tables));
 			OnCreated();
 		}
 		
@@ -166,6 +175,19 @@ namespace BankingApplication_DAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AccountTable_Customer_Accounts_Table", Storage="_Customer_Accounts_Tables", ThisKey="Account_ID", OtherKey="Account_ID")]
+		public EntitySet<Customer_Accounts_Table> Customer_Accounts_Tables
+		{
+			get
+			{
+				return this._Customer_Accounts_Tables;
+			}
+			set
+			{
+				this._Customer_Accounts_Tables.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -185,24 +207,60 @@ namespace BankingApplication_DAL
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_Customer_Accounts_Tables(Customer_Accounts_Table entity)
+		{
+			this.SendPropertyChanging();
+			entity.AccountTable = this;
+		}
+		
+		private void detach_Customer_Accounts_Tables(Customer_Accounts_Table entity)
+		{
+			this.SendPropertyChanging();
+			entity.AccountTable = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Customer_Accounts_Table")]
-	public partial class Customer_Accounts_Table
+	public partial class Customer_Accounts_Table : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
-		private System.Nullable<int> _Customer_ID;
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private System.Nullable<int> _Account_ID;
+		private int _Customer_ID;
+		
+		private int _Account_ID;
 		
 		private System.Nullable<decimal> _Balance;
 		
+		private EntitySet<TransactionTable> _TransactionTables;
+		
+		private EntityRef<AccountTable> _AccountTable;
+		
+		private EntityRef<CustomerTable> _CustomerTable;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCustomer_IDChanging(int value);
+    partial void OnCustomer_IDChanged();
+    partial void OnAccount_IDChanging(int value);
+    partial void OnAccount_IDChanged();
+    partial void OnBalanceChanging(System.Nullable<decimal> value);
+    partial void OnBalanceChanged();
+    #endregion
+		
 		public Customer_Accounts_Table()
 		{
+			this._TransactionTables = new EntitySet<TransactionTable>(new Action<TransactionTable>(this.attach_TransactionTables), new Action<TransactionTable>(this.detach_TransactionTables));
+			this._AccountTable = default(EntityRef<AccountTable>);
+			this._CustomerTable = default(EntityRef<CustomerTable>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_ID", DbType="Int")]
-		public System.Nullable<int> Customer_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_ID", DbType="Int", IsPrimaryKey=true)]
+		public int Customer_ID
 		{
 			get
 			{
@@ -212,13 +270,21 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Customer_ID != value))
 				{
+					if (this._CustomerTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCustomer_IDChanging(value);
+					this.SendPropertyChanging();
 					this._Customer_ID = value;
+					this.SendPropertyChanged("Customer_ID");
+					this.OnCustomer_IDChanged();
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Account_ID", DbType="Int")]
-		public System.Nullable<int> Account_ID
+		public int Account_ID
 		{
 			get
 			{
@@ -228,7 +294,15 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Account_ID != value))
 				{
+					if (this._AccountTable.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAccount_IDChanging(value);
+					this.SendPropertyChanging();
 					this._Account_ID = value;
+					this.SendPropertyChanged("Account_ID");
+					this.OnAccount_IDChanged();
 				}
 			}
 		}
@@ -244,9 +318,126 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Balance != value))
 				{
+					this.OnBalanceChanging(value);
+					this.SendPropertyChanging();
 					this._Balance = value;
+					this.SendPropertyChanged("Balance");
+					this.OnBalanceChanged();
 				}
 			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Accounts_Table_TransactionTable", Storage="_TransactionTables", ThisKey="Customer_ID,Account_ID", OtherKey="Customer_ID,Account_ID")]
+		public EntitySet<TransactionTable> TransactionTables
+		{
+			get
+			{
+				return this._TransactionTables;
+			}
+			set
+			{
+				this._TransactionTables.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AccountTable_Customer_Accounts_Table", Storage="_AccountTable", ThisKey="Account_ID", OtherKey="Account_ID", IsForeignKey=true)]
+		public AccountTable AccountTable
+		{
+			get
+			{
+				return this._AccountTable.Entity;
+			}
+			set
+			{
+				AccountTable previousValue = this._AccountTable.Entity;
+				if (((previousValue != value) 
+							|| (this._AccountTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._AccountTable.Entity = null;
+						previousValue.Customer_Accounts_Tables.Remove(this);
+					}
+					this._AccountTable.Entity = value;
+					if ((value != null))
+					{
+						value.Customer_Accounts_Tables.Add(this);
+						this._Account_ID = value.Account_ID;
+					}
+					else
+					{
+						this._Account_ID = default(int);
+					}
+					this.SendPropertyChanged("AccountTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CustomerTable_Customer_Accounts_Table", Storage="_CustomerTable", ThisKey="Customer_ID", OtherKey="Customer_ID", IsForeignKey=true)]
+		public CustomerTable CustomerTable
+		{
+			get
+			{
+				return this._CustomerTable.Entity;
+			}
+			set
+			{
+				CustomerTable previousValue = this._CustomerTable.Entity;
+				if (((previousValue != value) 
+							|| (this._CustomerTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CustomerTable.Entity = null;
+						previousValue.Customer_Accounts_Tables.Remove(this);
+					}
+					this._CustomerTable.Entity = value;
+					if ((value != null))
+					{
+						value.Customer_Accounts_Tables.Add(this);
+						this._Customer_ID = value.Customer_ID;
+					}
+					else
+					{
+						this._Customer_ID = default(int);
+					}
+					this.SendPropertyChanged("CustomerTable");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TransactionTables(TransactionTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Customer_Accounts_Table = this;
+		}
+		
+		private void detach_TransactionTables(TransactionTable entity)
+		{
+			this.SendPropertyChanging();
+			entity.Customer_Accounts_Table = null;
 		}
 	}
 	
@@ -264,6 +455,8 @@ namespace BankingApplication_DAL
 		
 		private string _Customer_Telephone;
 		
+		private EntitySet<Customer_Accounts_Table> _Customer_Accounts_Tables;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -280,6 +473,7 @@ namespace BankingApplication_DAL
 		
 		public CustomerTable()
 		{
+			this._Customer_Accounts_Tables = new EntitySet<Customer_Accounts_Table>(new Action<Customer_Accounts_Table>(this.attach_Customer_Accounts_Tables), new Action<Customer_Accounts_Table>(this.detach_Customer_Accounts_Tables));
 			OnCreated();
 		}
 		
@@ -363,6 +557,19 @@ namespace BankingApplication_DAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CustomerTable_Customer_Accounts_Table", Storage="_Customer_Accounts_Tables", ThisKey="Customer_ID", OtherKey="Customer_ID")]
+		public EntitySet<Customer_Accounts_Table> Customer_Accounts_Tables
+		{
+			get
+			{
+				return this._Customer_Accounts_Tables;
+			}
+			set
+			{
+				this._Customer_Accounts_Tables.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -382,13 +589,27 @@ namespace BankingApplication_DAL
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_Customer_Accounts_Tables(Customer_Accounts_Table entity)
+		{
+			this.SendPropertyChanging();
+			entity.CustomerTable = this;
+		}
+		
+		private void detach_Customer_Accounts_Tables(Customer_Accounts_Table entity)
+		{
+			this.SendPropertyChanging();
+			entity.CustomerTable = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TransactionTable")]
-	public partial class TransactionTable
+	public partial class TransactionTable : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
-		private System.Nullable<int> _Transaction_ID;
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Transaction_ID;
 		
 		private string _Transaction_Type;
 		
@@ -400,12 +621,34 @@ namespace BankingApplication_DAL
 		
 		private System.Nullable<int> _Customer_ID;
 		
+		private EntityRef<Customer_Accounts_Table> _Customer_Accounts_Table;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTransaction_IDChanging(int value);
+    partial void OnTransaction_IDChanged();
+    partial void OnTransaction_TypeChanging(string value);
+    partial void OnTransaction_TypeChanged();
+    partial void OnTransaction_DateChanging(string value);
+    partial void OnTransaction_DateChanged();
+    partial void OnAmountChanging(System.Nullable<decimal> value);
+    partial void OnAmountChanged();
+    partial void OnAccount_IDChanging(System.Nullable<int> value);
+    partial void OnAccount_IDChanged();
+    partial void OnCustomer_IDChanging(System.Nullable<int> value);
+    partial void OnCustomer_IDChanged();
+    #endregion
+		
 		public TransactionTable()
 		{
+			this._Customer_Accounts_Table = default(EntityRef<Customer_Accounts_Table>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Transaction_ID", DbType="Int")]
-		public System.Nullable<int> Transaction_ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Transaction_ID", DbType="Int", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Transaction_ID
 		{
 			get
 			{
@@ -415,7 +658,11 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Transaction_ID != value))
 				{
+					this.OnTransaction_IDChanging(value);
+					this.SendPropertyChanging();
 					this._Transaction_ID = value;
+					this.SendPropertyChanged("Transaction_ID");
+					this.OnTransaction_IDChanged();
 				}
 			}
 		}
@@ -431,7 +678,11 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Transaction_Type != value))
 				{
+					this.OnTransaction_TypeChanging(value);
+					this.SendPropertyChanging();
 					this._Transaction_Type = value;
+					this.SendPropertyChanged("Transaction_Type");
+					this.OnTransaction_TypeChanged();
 				}
 			}
 		}
@@ -447,7 +698,11 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Transaction_Date != value))
 				{
+					this.OnTransaction_DateChanging(value);
+					this.SendPropertyChanging();
 					this._Transaction_Date = value;
+					this.SendPropertyChanged("Transaction_Date");
+					this.OnTransaction_DateChanged();
 				}
 			}
 		}
@@ -463,7 +718,11 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Amount != value))
 				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
 					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
 				}
 			}
 		}
@@ -479,7 +738,15 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Account_ID != value))
 				{
+					if (this._Customer_Accounts_Table.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAccount_IDChanging(value);
+					this.SendPropertyChanging();
 					this._Account_ID = value;
+					this.SendPropertyChanged("Account_ID");
+					this.OnAccount_IDChanged();
 				}
 			}
 		}
@@ -495,8 +762,72 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Customer_ID != value))
 				{
+					if (this._Customer_Accounts_Table.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCustomer_IDChanging(value);
+					this.SendPropertyChanging();
 					this._Customer_ID = value;
+					this.SendPropertyChanged("Customer_ID");
+					this.OnCustomer_IDChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Accounts_Table_TransactionTable", Storage="_Customer_Accounts_Table", ThisKey="Customer_ID,Account_ID", OtherKey="Customer_ID,Account_ID", IsForeignKey=true)]
+		public Customer_Accounts_Table Customer_Accounts_Table
+		{
+			get
+			{
+				return this._Customer_Accounts_Table.Entity;
+			}
+			set
+			{
+				Customer_Accounts_Table previousValue = this._Customer_Accounts_Table.Entity;
+				if (((previousValue != value) 
+							|| (this._Customer_Accounts_Table.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Customer_Accounts_Table.Entity = null;
+						previousValue.TransactionTables.Remove(this);
+					}
+					this._Customer_Accounts_Table.Entity = value;
+					if ((value != null))
+					{
+						value.TransactionTables.Add(this);
+						this._Customer_ID = value.Customer_ID;
+						this._Account_ID = value.Account_ID;
+					}
+					else
+					{
+						this._Customer_ID = default(Nullable<int>);
+						this._Account_ID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Customer_Accounts_Table");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

@@ -5,7 +5,7 @@ using System.Text;
 namespace BankingApplication_BO
 {
 
-    public enum AccountType { Savings, Checking, Loan };
+    public enum AccountType { Checking = 1, Savings = 2, Loan = 3 };
 
     public class Accounts
     {

@@ -14,11 +14,15 @@ namespace BankingApplication_BLL
 
         public Accounts_BLL()
         {
-            accountsRepo.AddAccounts(new Accounts(1, AccountType.Checking));
-            accountsRepo.AddAccounts(new Accounts(2, AccountType.Savings));
-            accountsRepo.AddAccounts(new Accounts(3, AccountType.Loan));
+            //accountsRepo.AddAccounts(new Accounts(1, AccountType.Checking));
+            //accountsRepo.AddAccounts(new Accounts(2, AccountType.Savings));
+            //accountsRepo.AddAccounts(new Accounts(3, AccountType.Loan));
         }
         
+        public string GetAccountTypeByID(int acctID)
+        {
+            return accountsRepo.GetAccountType(acctID);
+        }
 
         public double GetBalance(AccountType acctType)
         {
@@ -48,8 +52,29 @@ namespace BankingApplication_BLL
             var balanceAmount = GetBalance(acctType);
             transRepo.AddTransaction(amount, balanceAmount, acctType);
             //Transactions_DAL trans = new Transactions_DAL(amount, balanceAmount, acctType);
-            
+            //transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
             return GetBalance(acctType);
+        }
+        public double GetBalance(int custID, int acctID)
+        {
+
+            return transRepo.GetBalance(new Transactions(custID, acctID));
+        }
+
+        public void Deposit(int custID, int acctID, double amount)
+        {
+            
+            transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
+            //transRepo.DepositAmount(custID, acctID, amount);
+            //return GetBalance(custID, acctID);
+        }
+
+        public void Withdraw(int custID, int acctID, double amount)
+        {
+            
+            transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Withdraw, DateTime.Now, amount));
+            //transRepo.WithdrawAmount(custID, acctID, amount);
+            //return GetBalance(custID, acctID);
         }
 
         public double Withdraw(double amount, AccountType acctType)
@@ -68,46 +93,6 @@ namespace BankingApplication_BLL
             return GetBalance(acctType);
         }
 
-        //public List<Transactions> GetTransactions(AccountType acctType)
-        //{
-        //    var accountType = lstTransactions.FindAll(o => o.GetAccountType() == acctType);
-
-        //    List<Transactions> lstObject = new List<Transactions>();
-        //    for (int i = 0; i < lstTransactions.Count; i++)
-        //    {
-        //        if (lstTransactions[i].GetAccountType() == acctType)
-        //        {
-        //            lstObject = lstTransactions;
-
-        //        }
-        //    }
-        //    return lstObject;
-        //}
-        //public void displayTrans(List<Transactions> lstObject, AccountType acctType)
-        //{
-
-        //    if (lstObject.Count > 0)
-        //    {
-        //        Console.WriteLine("The transactions for the {0} account are as follows:", acctType);
-        //        foreach (var i in lstObject)
-        //        {
-        //            Console.WriteLine("Transaction Type: {0}", i.transType);
-        //            Console.WriteLine("Transaction Date: {0}", i.getDate());
-        //            Console.WriteLine("Amount: {0}", i.getAmount());
-        //            Console.WriteLine("Account Balance: {0}", i.GetBalance());
-        //        }
-        //    }
-        //    else
-        //        Console.WriteLine("There are no transactions made to this account yet.");
-
-
-
-        //}
-
-        //public List<Transactions> GetTransList(AccountType acctType)
-        //{
-        //    return this.lstTransactions;
-        //}
-
+        
     }
 }

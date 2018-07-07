@@ -58,9 +58,10 @@ namespace BankingApplication_DAL
 
             var valIDQuery = (from p in bankDataContext.CustomerTables
                               where p.Customer_ID == custID
-                              select p.Customer_ID).Single();
+                              select p.Customer_ID).Any();
             //Console.WriteLine(valIDQuery);
-            return Convert.ToBoolean(valIDQuery);
+            
+             return Convert.ToBoolean(valIDQuery);
         }
     }
 }

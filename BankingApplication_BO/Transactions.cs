@@ -9,16 +9,15 @@ namespace BankingApplication_BO
     {
         //Enum TransactionType // Deposit Withdraw
         int transactionID;
+        int customerID;
+        int accountID;
         public TransactionType transType;
         private AccountType accountType;
         private DateTime date;
         private double amount;
         private double balance;
-        private TransactionType deposit;
-        private Accounts acctType;
         private DateTime now;
-        private object amount1;
-        private object p;
+
 
         //trancationID
         //transactionType - enum - line 9
@@ -36,14 +35,21 @@ namespace BankingApplication_BO
             this.amount = amount;
             this.balance = balance;
         }
-
-        public Transactions(TransactionType deposit, Accounts acctType, DateTime now, object amount1, object p)
+        public Transactions(int custID, int acctID)
         {
-            this.deposit = deposit;
-            this.acctType = acctType;
+            this.customerID = custID;
+            this.accountID = acctID;
+            
+        }
+
+        public Transactions(int custID, int acctID, TransactionType tType, DateTime now, double amount)
+        {
+            this.transType = tType;
+            this.accountID = acctID;
+            this.customerID = custID;
             this.now = now;
-            this.amount1 = amount1;
-            this.p = p;
+            this.amount = amount;
+            
         }
 
         public AccountType GetAccountType()
@@ -56,14 +62,29 @@ namespace BankingApplication_BO
             return this.balance;
         }
 
-        public DateTime getDate()
+        public int GetAccountID()
         {
-            return this.date;
+            return this.accountID;
         }
 
-        public double getAmount()
+        public int GetCustomerID()
         {
-            return this.amount;
+            return this.customerID;
+        }
+
+        public string getDate()
+        {
+            return this.now.ToString();
+        }
+
+        public decimal getAmount()
+        {
+            return Convert.ToDecimal(this.amount);
+        }
+
+        public string GetTransactionType()
+        {
+            return this.transType.ToString();
         }
         //constructor
 
