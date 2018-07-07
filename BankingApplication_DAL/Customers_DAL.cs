@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using System.Data.Linq;
 
 namespace BankingApplication_DAL
 {
@@ -17,15 +19,37 @@ namespace BankingApplication_DAL
         //    }
         //}
 
-        public void AddNewCustomer(string custName, string custAddress, string custTelephone)
+        public void AddNewCustomer(Customers customer)
         {
-            lstCustomers.Add(new Customers(custID, custName, custAddress, custTelephone));
-            custID++;
+            BankDataContext bankDataContext = new BankDataContext();
+            bankDataContext.Connection.Open();
+
+            CustomerTable custTable = new CustomerTable();
+
+            custTable.Customer_Address = customer.GetCustomerAddress();
+            custTable.Customer_Name = customer.getCustomerName();
+            custTable.Customer_Telephone = customer.GetCustomerTelephone();
+
+            bankDataContext.CustomerTables.InsertOnSubmit(custTable);
+            bankDataContext.SubmitChanges();
         }
 
         public List<Customers> getLstCustomers()
         {
             return lstCustomers;
+        }
+
+        public int GetCustomerIDAfterRegister(string custName)
+        {
+            BankDataContext bankDataContext = new BankDataContext();
+            CustomerTable custTable = new CustomerTable();
+
+            var custIDQuery = (from p in bankDataContext.CustomerTables
+                       where p.Customer_Name == custName
+                       select p.Customer_ID).Single();
+
+            Console.WriteLine(custIDQuery);
+            return Convert.ToInt32(custIDQuery);               
         }
     }
 }

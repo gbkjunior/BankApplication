@@ -19,6 +19,13 @@ namespace BankingApplication_BO
             this.customerTelephone = custTelephone;
         }
 
+        public Customers(string custName, string custAddress, string custTelephone)
+        {
+            this.customerName = custName;
+            this.customerAddress = custAddress;
+            this.customerTelephone = custTelephone;
+        }
+
         public int getCustomerID()
         {
             return this.customerID;
@@ -27,6 +34,16 @@ namespace BankingApplication_BO
         public string getCustomerName()
         {
             return this.customerName;
+        }
+
+        public string GetCustomerAddress()
+        {
+            return this.customerAddress;
+        }
+
+        public string GetCustomerTelephone()
+        {
+            return this.customerTelephone;
         }
     }
 }

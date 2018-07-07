@@ -28,3 +28,6 @@ C:\Users\vijay\C# Development\BankingApplication_Core\BankingApplication\obj\Deb
 C:\Users\vijay\C# Development\BankingApplication_Core\BankingApplication\obj\Debug\BankingApplication.csproj.CopyComplete
 C:\Users\vijay\C# Development\BankingApplication_Core\BankingApplication\obj\Debug\BankingApplication.exe
 C:\Users\vijay\C# Development\BankingApplication_Core\BankingApplication\obj\Debug\BankingApplication.pdb
+C:\Users\vijay\C# Development\BankingApplication\BankingApplication\bin\Debug\BankingApplication_DAL.dll.config
+C:\Users\vijay\C# Development\BankingApplication\BankingApplication\bin\Debug\Bank.mdf
+C:\Users\vijay\C# Development\BankingApplication\BankingApplication\bin\Debug\Bank_log.ldf

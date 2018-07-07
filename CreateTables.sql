@@ -1,22 +1,27 @@
-﻿CREATE TABLE ACCOUNTS (
+﻿Drop table Account;
+Drop table Customer;
+Drop table Customer_Account;
+Drop table Transactions;
+
+CREATE TABLE AccountTable (
 	Account_ID int,
 	Account_Type varchar(15)
 ) 
 
-CREATE TABLE CUSTOMERS (
-	Customer_ID int,
+CREATE TABLE CustomerTable (
+	Customer_ID int Not Null identity(1,1) primary key,
 	Customer_Name varchar(45),
 	Customer_Address varchar(100),
 	Customer_Telephone varchar(20),
 )
 
-CREATE TABLE CUSTOMER_ACCOUNTS (
+CREATE TABLE Customer_Account_Table (
 	Customer_ID int,
 	Account_ID int,
 	Balance decimal(10)
 )
 
-CREATE TABLE TRANSACTIONS (
+CREATE TABLE TransactionTable (
 	Transaction_ID int,
 	Transaction_Type varchar(15),
 	Transaction_Date varchar(20),

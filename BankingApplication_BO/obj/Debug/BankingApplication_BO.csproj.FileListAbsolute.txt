@@ -3,3 +3,4 @@ C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BO\bin\Debug
 C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BO\obj\Debug\BankingApplication_BO.csproj.CoreCompileInputs.cache
 C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BO\obj\Debug\BankingApplication_BO.dll
 C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BO\obj\Debug\BankingApplication_BO.pdb
+C:\Users\vijay\C# Development\BankingApplication\BankingApplication_BO\obj\Debug\BankingApplication_BO.csprojAssemblyReference.cache

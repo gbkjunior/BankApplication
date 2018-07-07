@@ -13,19 +13,14 @@ namespace BankingApplication_BLL
 
         public void AddNewCustomer(string custName, string custAddress, string custTelephone)
         {
-            custObject.AddNewCustomer(custName,custAddress,custTelephone);
+            custObject.AddNewCustomer(new Customers(custName, custAddress, custTelephone));
+            //custObject.AddNewCustomer(custName,custAddress,custTelephone);
         }
         
         public int GetCustomerID(string custName)
         {
-            int custID = 0;
-            for(int i = 0; i < custObject.getLstCustomers().Count; i++)
-            {
-                if(custObject.getLstCustomers()[i].getCustomerName() == custName)
-                {
-                    custID = custObject.getLstCustomers()[i].getCustomerID();
-                }
-            }
+            int custID = custObject.GetCustomerIDAfterRegister(custName);
+
             return custID;
         }
         
