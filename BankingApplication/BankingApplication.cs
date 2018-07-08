@@ -194,7 +194,7 @@ namespace BankingApplication
                             switch (accountMenuInputInteger)
                             {
                                 case 1:
-                                    //Console.WriteLine("Your {0} account balance is: {1}", acctID, accounts.GetBalance(custID,acctID));
+                                    Console.WriteLine("Your {0} account balance is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID,acctID));
                                     break;
                                 case 2:
                                     Console.WriteLine("Enter an amount to withdraw:");
@@ -209,7 +209,7 @@ namespace BankingApplication
                                         transactions.Withdraw(custID, acctID, amountValue);
 
                                         Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, accounts.GetAccountTypeByID(acctID));
-                                        //Console.WriteLine("Your current balance in your {0} account is: {1}", acctID, accounts.GetBalance(custID, acctID));
+                                        Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID, acctID));
                                     //}
 
                                     }
@@ -228,7 +228,7 @@ namespace BankingApplication
                                         //{
                                             transactions.Deposit(custID,acctID,depositAmountValue);
                                             Console.WriteLine("You have successfully deposited {0} in your {1} account.", depositAmountValue, accounts.GetAccountTypeByID(acctID));
-                                            //Console.WriteLine("Your current balance in your {0} account is: {1}", acctID, accounts.GetBalance(custID,acctID));
+                                            Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID,acctID));
                                         //}
 
                                     }

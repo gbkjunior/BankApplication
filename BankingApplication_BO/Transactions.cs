@@ -51,12 +51,20 @@ namespace BankingApplication_BO
             
         }
 
+        public Transactions(int custID, int acctID, TransactionType tType, double amount)
+        {
+            this.customerID = custID;
+            this.accountID = acctID;
+            this.transType = tType;
+            this.amount = amount;
+
+        }
         public Transactions(int custID, int acctID, TransactionType tType, DateTime now, double amount)
         {
             this.transType = tType;
             this.accountID = acctID;
             this.customerID = custID;
-            this.now = now;
+            this.date = now;
             this.amount = amount;
             
         }

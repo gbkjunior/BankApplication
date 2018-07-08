@@ -16,26 +16,26 @@ namespace BankingApplication_BLL
             return transRepo.GetAllTransactions(custID);
         }
 
-        //public double GetBalance(int custID, int acctID)
-        //{
+        public double GetBalance(int custid, int acctid)
+        {
+            return transRepo.GetBalance(new Transactions(custid, acctid));
+            
+        }
 
-        //    return transRepo.GetBalance(new Transactions(custID, acctID));
-        //}
-
-        public void Deposit(int custID, int acctID, double amount)
+        public double Deposit(int custID, int acctID, double amount)
         {
 
             transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
-            //transRepo.DepositAmount(custID, acctID, amount);
-            //return GetBalance(custID, acctID);
+            Console.WriteLine(transRepo.DepositAmount(new Transactions(custID, acctID, TransactionType.Deposit, amount)));
+            return GetBalance(custID, acctID);
         }
 
-        public void Withdraw(int custID, int acctID, double amount)
+        public double Withdraw(int custID, int acctID, double amount)
         {
 
             transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Withdraw, DateTime.Now, amount));
-            //transRepo.WithdrawAmount(custID, acctID, amount);
-            //return GetBalance(custID, acctID);
+            Console.WriteLine(transRepo.WithdrawAmount(new Transactions(custID, acctID, TransactionType.Withdraw, amount)));
+            return GetBalance(custID, acctID);
         }
 
 
@@ -61,6 +61,9 @@ namespace BankingApplication_BLL
                 Console.WriteLine("Amount: {0}", i.GetAmount());
 
             }
+
+            //Console.WriteLine("Balance: {0}", transRepo.DisplayBalance(trans[0].GetAccountID(),trans[0].GetCustomerID()));
+            
         }
 
         
