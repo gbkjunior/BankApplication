@@ -11,15 +11,12 @@ namespace BankingApplication_BLL
 
         Customers_DAL custObject = new Customers_DAL();
 
-        public void AddNewCustomer(string custName, string custAddress, string custTelephone)
+        public int AddNewCustomer(string custName, string custAddress, string custTelephone)
         {
-            custObject.AddNewCustomer(new Customers(custName, custAddress, custTelephone));
+             return custObject.AddNewCustomer(new Customers(custName, custAddress, custTelephone));
         }
         
-        public int GetCustomerID(string custName)
-        {
-            return custObject.GetCustomerIDAfterRegister(custName);
-        }
+        
         
         public string GetCustomerName(int custID)
         {

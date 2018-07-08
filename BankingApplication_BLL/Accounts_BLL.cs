@@ -19,7 +19,7 @@ namespace BankingApplication_BLL
             //accountsRepo.AddAccounts(new Accounts(3, AccountType.Loan));
         }
         
-        public string GetAccountTypeByID(int acctID)
+        public AccountType GetAccountTypeByID(int acctID)
         {
             return accountsRepo.GetAccountType(acctID);
         }

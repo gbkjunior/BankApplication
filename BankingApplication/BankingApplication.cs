@@ -112,9 +112,9 @@ namespace BankingApplication
                         Console.WriteLine("Enter your Telephone Number");
                         string userTelephoneInput = Console.ReadLine();
 
-                        customers.AddNewCustomer(userNameInput, userAddressInput, userTelephoneInput);
+                        
 
-                        Console.WriteLine("You have registered successfully. Your customerID is: {0}", customers.GetCustomerID(userNameInput));
+                        Console.WriteLine("You have registered successfully. Your customerID is: {0}", customers.AddNewCustomer(userNameInput, userAddressInput, userTelephoneInput));
                     
                 }
                 catch(Exception e)
@@ -321,16 +321,16 @@ namespace BankingApplication
                         switch (selectTransInputInteger)
                         {
                             case 1:
-                                transactions.GetTransactionsByID(custID, 1);
+                                transactions.DisplayTransactions(transactions.GetTransactionsByID(custID, 1));
                                 continue;
                             case 2:
-                                transactions.GetTransactionsByID(custID, 2);
+                                transactions.DisplayTransactions(transactions.GetTransactionsByID(custID, 2));
                                 continue;
                             case 3:
-                                transactions.GetTransactionsByID(custID, 3);
+                                transactions.DisplayTransactions(transactions.GetTransactionsByID(custID, 3));
                                 continue;
                             case 4:
-                                transactions.GetAllTransaction(custID);
+                                transactions.DisplayTransactions(transactions.GetAllTransaction(custID));
                                 continue;
                             case 5:
                                 MainMenu(custID);

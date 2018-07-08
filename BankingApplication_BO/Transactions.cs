@@ -35,6 +35,15 @@ namespace BankingApplication_BO
             this.amount = amount;
             this.balance = balance;
         }
+
+        public Transactions(TransactionType tType, AccountType acctType, DateTime date, double amount)
+        {
+            this.transType = tType;
+            this.accountType = acctType;
+            this.date = date;
+            this.amount = amount;
+            
+        }
         public Transactions(int custID, int acctID)
         {
             this.customerID = custID;
@@ -72,12 +81,12 @@ namespace BankingApplication_BO
             return this.customerID;
         }
 
-        public string getDate()
+        public DateTime GetDate()
         {
-            return this.now.ToString();
+            return this.date;
         }
 
-        public decimal getAmount()
+        public decimal GetAmount()
         {
             return Convert.ToDecimal(this.amount);
         }

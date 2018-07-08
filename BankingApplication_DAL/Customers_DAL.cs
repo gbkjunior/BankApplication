@@ -12,7 +12,7 @@ namespace BankingApplication_DAL
 
         
 
-        public void AddNewCustomer(Customers customer)
+        public int AddNewCustomer(Customers customer)
         {
 
             BankDataContext bankDataContext = new BankDataContext();
@@ -26,30 +26,22 @@ namespace BankingApplication_DAL
 
             bankDataContext.CustomerTables.InsertOnSubmit(custTable);
             bankDataContext.SubmitChanges();
+            // how linq to sql works in fetching the identity column
+
+            return bankDataContext.CustomerTables.First(a => a.Customer_Name == custTable.Customer_Name).Customer_ID;
+            
         }
 
-        
-
-        public int GetCustomerIDAfterRegister(string custName)
-        {
 
 
-            BankDataContext bankDataContext = new BankDataContext();
-            CustomerTable custTable = new CustomerTable();
-
-            var custIDQuery = (from p in bankDataContext.CustomerTables
-                       where p.Customer_Name == custName
-                       select p.Customer_ID).Single();
-
-            //Console.WriteLine(custIDQuery);
-            return Convert.ToInt32(custIDQuery);               
-        }
 
         public string GetCustomerName(int custID)
         {
 
             BankDataContext bankDataContext = new BankDataContext();
             CustomerTable custTable = new CustomerTable();
+
+            //use lambda expression
 
             var custNameQuery = (from p in bankDataContext.CustomerTables
                                  where p.Customer_ID == custID
@@ -65,6 +57,7 @@ namespace BankingApplication_DAL
             BankDataContext bankDataContext = new BankDataContext();
             CustomerTable custTable = new CustomerTable();
 
+            //update
             var valIDQuery = (from p in bankDataContext.CustomerTables
                               where p.Customer_ID == custID
                               select p.Customer_ID).Any();

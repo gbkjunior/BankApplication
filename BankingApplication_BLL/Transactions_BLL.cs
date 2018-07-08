@@ -11,9 +11,9 @@ namespace BankingApplication_BLL
 
         Transactions_DAL transRepo = new Transactions_DAL();
 
-        public void GetAllTransaction(int custID)
+        public List<Transactions> GetAllTransaction(int custID)
         {
-            transRepo.GetAllTransactions(custID);
+            return transRepo.GetAllTransactions(custID);
         }
 
         //public double GetBalance(int custID, int acctID)
@@ -41,15 +41,27 @@ namespace BankingApplication_BLL
 
 
 
-        public void GetTransactionsByID(int custID, int acctID)
+        public List<Transactions> GetTransactionsByID(int custID, int acctID)
         {
             //List<Transactions> lstObject = new List<Transactions>();
-            transRepo.GetTransactionsByAcctID(custID, acctID);
+            return  transRepo.GetTransactionsByAcctID(custID, acctID);
             //return lstObject;
+
+            
 
         }
 
+        public void DisplayTransactions(List<Transactions> trans)
+        {
+            foreach(var i in trans)
+            {
+                Console.WriteLine("Account Type: {0}", i.GetAccountType());
+                Console.WriteLine("Transaction Type: {0}", i.GetTransactionType());
+                Console.WriteLine("Transaction Date: {0}", i.GetDate());
+                Console.WriteLine("Amount: {0}", i.GetAmount());
 
+            }
+        }
 
         
     }

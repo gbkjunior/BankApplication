@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BankingApplication_BO;
 using System.Linq;
+using System.Collections;
 
 namespace BankingApplication_DAL
 {
@@ -16,8 +17,8 @@ namespace BankingApplication_DAL
             transTable.Transaction_Type = trans.GetTransactionType();
             transTable.Account_ID = trans.GetAccountID();
             transTable.Customer_ID = trans.GetCustomerID();
-            transTable.Transaction_Date = trans.getDate();
-            transTable.Amount = trans.getAmount();
+            transTable.Transaction_Date = trans.GetDate().ToString();
+            transTable.Amount = trans.GetAmount();
 
             //transTable.Customer_Accounts_Table.Account_ID = trans.GetAccountID();
             //transTable.Customer_Accounts_Table.Customer_ID = trans.GetCustomerID();
@@ -31,54 +32,57 @@ namespace BankingApplication_DAL
 
         }
 
-        public void GetTransactionsByAcctID(int custID, int acctID)
+        public List<Transactions> GetTransactionsByAcctID(int custID, int acctID)
         {
             BankDataContext bankDataContext = new BankDataContext();
             TransactionTable transTable = new TransactionTable();
             AccountTable acctTable = new AccountTable();
 
-            var getTransQuery = (from p in bankDataContext.TransactionTables
-                                 where p.Customer_ID == custID && p.Account_ID == acctID
-                                 select p);
+            var getTransQuery = bankDataContext.TransactionTables.Where(a => (a.Customer_ID == custID && a.Account_ID == acctID));
 
 
-            foreach (var i in getTransQuery)
+            List<Transactions> getTrans = new List<Transactions>();
+            foreach(var i in getTransQuery)
             {
-                var getAcctType = (from p in bankDataContext.AccountTables
-                                   where p.Account_ID == i.Account_ID
-                                   select p.Account_Type).Single();
+                var getAcctType = bankDataContext.AccountTables.Single(p => p.Account_ID == i.Account_ID).Account_Type;
+                
+                TransactionType getTransactionType = (TransactionType)Enum.Parse(typeof(TransactionType), i.Transaction_Type);
+                AccountType getAccountType = (AccountType)Enum.Parse(typeof(AccountType), getAcctType);
+                DateTime getDate = DateTime.ParseExact(i.Transaction_Date, "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-                Console.WriteLine("Account Type: {0}", getAcctType);
-                Console.WriteLine("Transaction Type: {0}", i.Transaction_Type);
-                Console.WriteLine("Transaction Date: {0}", i.Transaction_Date);
-                Console.WriteLine("Amount: {0}", i.Amount);
+                //Console.WriteLine(getDate + "\n" + i.Transaction_Date);
 
-                Console.WriteLine();
+                Transactions transObj = new Transactions(getTransactionType, getAccountType, getDate, Convert.ToDouble(i.Amount));
+                getTrans.Add(transObj);
             }
+
+            return getTrans;
+
+            
+            
         }
 
-        public void GetAllTransactions(int custID)
+        public List<Transactions> GetAllTransactions(int custID)
         {
             BankDataContext bankDataContext = new BankDataContext();
             TransactionTable transTable = new TransactionTable();
 
-            var getAllTransQuery = (from p in bankDataContext.TransactionTables
-                                    where p.Customer_ID == custID
-                                    select p);
+            var getAllTransQuery = bankDataContext.TransactionTables.Where(t => t.Customer_ID == custID);
+            List<Transactions> getAllTrans = new List<Transactions>();
 
             foreach (var i in getAllTransQuery)
             {
-                var getAcctType = (from p in bankDataContext.AccountTables
-                                   where p.Account_ID == i.Account_ID
-                                   select p.Account_Type).Single();
+                var getAcctType = bankDataContext.AccountTables.Single(a => a.Account_ID == i.Account_ID).Account_Type;
 
-                Console.WriteLine("Account Type: {0}", getAcctType);
-                Console.WriteLine("Transaction Type: {0}", i.Transaction_Type);
-                Console.WriteLine("Transaction Date: {0}", i.Transaction_Date);
-                Console.WriteLine("Amount: {0}", i.Amount);
+                TransactionType getTransactionType = (TransactionType)Enum.Parse(typeof(TransactionType), i.Transaction_Type);
+                AccountType getAccountType = (AccountType)Enum.Parse(typeof(AccountType), getAcctType);
+                DateTime getDate = DateTime.ParseExact(i.Transaction_Date, "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-                Console.WriteLine();
+
+                Transactions getAllTransObj = new Transactions(getTransactionType, getAccountType,getDate, Convert.ToDouble(i.Amount));
+                getAllTrans.Add(getAllTransObj);
             }
+            return getAllTrans;
         }
 
 
