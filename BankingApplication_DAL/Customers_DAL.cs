@@ -9,13 +9,15 @@ namespace BankingApplication_DAL
 {
     public class Customers_DAL
     {
-        private static List<Customers> lstCustomers = new List<Customers>();
-        BankDataContext bankDataContext = new BankDataContext();
-        CustomerTable custTable = new CustomerTable();
+
         
 
         public void AddNewCustomer(Customers customer)
         {
+
+            BankDataContext bankDataContext = new BankDataContext();
+            CustomerTable custTable = new CustomerTable();
+
             bankDataContext.Connection.Open();
 
             custTable.Customer_Address = customer.GetCustomerAddress();
@@ -26,14 +28,14 @@ namespace BankingApplication_DAL
             bankDataContext.SubmitChanges();
         }
 
-        public List<Customers> getLstCustomers()
-        {
-            return lstCustomers;
-        }
+        
 
         public int GetCustomerIDAfterRegister(string custName)
         {
 
+
+            BankDataContext bankDataContext = new BankDataContext();
+            CustomerTable custTable = new CustomerTable();
 
             var custIDQuery = (from p in bankDataContext.CustomerTables
                        where p.Customer_Name == custName
@@ -45,6 +47,10 @@ namespace BankingApplication_DAL
 
         public string GetCustomerName(int custID)
         {
+
+            BankDataContext bankDataContext = new BankDataContext();
+            CustomerTable custTable = new CustomerTable();
+
             var custNameQuery = (from p in bankDataContext.CustomerTables
                                  where p.Customer_ID == custID
                                  select p.Customer_Name).Single();
@@ -55,6 +61,9 @@ namespace BankingApplication_DAL
 
         public bool ValidateCustomer(int custID)
         {
+
+            BankDataContext bankDataContext = new BankDataContext();
+            CustomerTable custTable = new CustomerTable();
 
             var valIDQuery = (from p in bankDataContext.CustomerTables
                               where p.Customer_ID == custID

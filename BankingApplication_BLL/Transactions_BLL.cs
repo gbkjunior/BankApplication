@@ -16,8 +16,30 @@ namespace BankingApplication_BLL
             transRepo.GetAllTransactions(custID);
         }
 
+        //public double GetBalance(int custID, int acctID)
+        //{
 
-        
+        //    return transRepo.GetBalance(new Transactions(custID, acctID));
+        //}
+
+        public void Deposit(int custID, int acctID, double amount)
+        {
+
+            transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
+            //transRepo.DepositAmount(custID, acctID, amount);
+            //return GetBalance(custID, acctID);
+        }
+
+        public void Withdraw(int custID, int acctID, double amount)
+        {
+
+            transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Withdraw, DateTime.Now, amount));
+            //transRepo.WithdrawAmount(custID, acctID, amount);
+            //return GetBalance(custID, acctID);
+        }
+
+
+
 
         public void GetTransactionsByID(int custID, int acctID)
         {

@@ -6,7 +6,7 @@ namespace BankingApplication_DAL
 {
     public class Accounts_DAL
     {
-        private List<Accounts> lstAccounts = new List<Accounts>();
+
 
         public void AddAccounts(Accounts acct)
         {
@@ -34,10 +34,7 @@ namespace BankingApplication_DAL
         }
 
 
-        public List<Accounts> GetAccounts()
-        {
-            return lstAccounts;
-        } 
+        
 
 
     }

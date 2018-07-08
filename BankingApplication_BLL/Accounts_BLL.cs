@@ -24,74 +24,56 @@ namespace BankingApplication_BLL
             return accountsRepo.GetAccountType(acctID);
         }
 
-        public double GetBalance(AccountType acctType)
-        {
-            var customers = custRepo.getLstCustomers();
-            var accounts = accountsRepo.GetAccounts(); 
-            double amount = 0;
-            for (int i = 0; i < accounts.Count; i++)
-            {
-                if (accounts[i].GetAccountType() == acctType)
-                {
-                    amount = accounts[i].amount;
-                }
-            }
-            return amount;
+        //public double GetBalance(AccountType acctType)
+        //{
+        //    var customers = custRepo.getLstCustomers();
+        //    var accounts = accountsRepo.GetAccounts(); 
+        //    double amount = 0;
+        //    for (int i = 0; i < accounts.Count; i++)
+        //    {
+        //        if (accounts[i].GetAccountType() == acctType)
+        //        {
+        //            amount = accounts[i].amount;
+        //        }
+        //    }
+        //    return amount;
 
-        }
+        //}
 
-        public double Deposit(double amount, AccountType acctType)
-        {
-            var accounts = accountsRepo.GetAccounts();
-            for (int i = 0; i < accounts.Count; i++)
-            {
-                if (accounts[i].GetAccountType() == acctType)
-                    accounts[i].amount += amount;
-            }
+        //public double Deposit(double amount, AccountType acctType)
+        //{
+        //    var accounts = accountsRepo.GetAccounts();
+        //    for (int i = 0; i < accounts.Count; i++)
+        //    {
+        //        if (accounts[i].GetAccountType() == acctType)
+        //            accounts[i].amount += amount;
+        //    }
 
-            var balanceAmount = GetBalance(acctType);
-            transRepo.AddTransaction(amount, balanceAmount, acctType);
-            //Transactions_DAL trans = new Transactions_DAL(amount, balanceAmount, acctType);
-            //transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
-            return GetBalance(acctType);
-        }
-        public double GetBalance(int custID, int acctID)
-        {
+        //    var balanceAmount = GetBalance(acctType);
+        //    transRepo.AddTransaction(amount, balanceAmount, acctType);
+        //    //Transactions_DAL trans = new Transactions_DAL(amount, balanceAmount, acctType);
+        //    //transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
+        //    return GetBalance(acctType);
+        //}
+        
 
-            return transRepo.GetBalance(new Transactions(custID, acctID));
-        }
+        
 
-        public void Deposit(int custID, int acctID, double amount)
-        {
-            
-            transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
-            //transRepo.DepositAmount(custID, acctID, amount);
-            //return GetBalance(custID, acctID);
-        }
+        //public double Withdraw(double amount, AccountType acctType)
+        //{
+        //    var accounts = accountsRepo.GetAccounts();
+        //    for (int i = 0; i < accounts.Count; i++)
+        //    {
+        //        if (accounts[i].GetAccountType() == acctType)
+        //            accounts[i].amount -= amount;
+        //    }
+        //    //accountType.amount -= amount;
+        //    double balanceAmount = GetBalance(acctType);
 
-        public void Withdraw(int custID, int acctID, double amount)
-        {
-            
-            transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Withdraw, DateTime.Now, amount));
-            //transRepo.WithdrawAmount(custID, acctID, amount);
-            //return GetBalance(custID, acctID);
-        }
-
-        public double Withdraw(double amount, AccountType acctType)
-        {
-            var accounts = accountsRepo.GetAccounts();
-            for (int i = 0; i < accounts.Count; i++)
-            {
-                if (accounts[i].GetAccountType() == acctType)
-                    accounts[i].amount -= amount;
-            }
-            //accountType.amount -= amount;
-            double balanceAmount = GetBalance(acctType);
-
-            transRepo.AddTransaction(amount, balanceAmount, acctType);
-            //Transactions_DAL trans = new Transactions_DAL(amount, balanceAmount, acctType);
-            return GetBalance(acctType);
-        }
+        //    transRepo.AddTransaction(amount, balanceAmount, acctType);
+        //    //Transactions_DAL trans = new Transactions_DAL(amount, balanceAmount, acctType);
+        //    return GetBalance(acctType);
+        //}
 
         
     }

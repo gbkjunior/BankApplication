@@ -65,7 +65,7 @@ namespace BankingApplication
                 }
                 catch (Exception e)
                 {
-
+                    Console.WriteLine("Exception caught: {0}", e.ToString());
                 }
             }
 
@@ -119,7 +119,7 @@ namespace BankingApplication
                 }
                 catch(Exception e)
                 {
-
+                    Console.WriteLine("Exception caught: {0}", e.ToString());
                 }
             }
 
@@ -206,7 +206,7 @@ namespace BankingApplication
                                         //    Console.WriteLine("Please enter an amount within your balance: {0}", accounts.GetBalance(custID, acctID));
                                         //else
                                         //{
-                                        accounts.Withdraw(custID, acctID, amountValue);
+                                        transactions.Withdraw(custID, acctID, amountValue);
 
                                         Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, accounts.GetAccountTypeByID(acctID));
                                         //Console.WriteLine("Your current balance in your {0} account is: {1}", acctID, accounts.GetBalance(custID, acctID));
@@ -226,7 +226,7 @@ namespace BankingApplication
                                         //    Console.WriteLine("Please enter a valid amount value.");
                                         //else
                                         //{
-                                            accounts.Deposit(custID,acctID,depositAmountValue);
+                                            transactions.Deposit(custID,acctID,depositAmountValue);
                                             Console.WriteLine("You have successfully deposited {0} in your {1} account.", depositAmountValue, accounts.GetAccountTypeByID(acctID));
                                             //Console.WriteLine("Your current balance in your {0} account is: {1}", acctID, accounts.GetBalance(custID,acctID));
                                         //}
@@ -287,7 +287,7 @@ namespace BankingApplication
                                 AccountMenu(custID, acctID);
                                 break;
                             case 4:
-                                GetAllBalances();
+                                //GetAllBalances();
                                 break;
                             case 5:
                                 MainMenu(custID);
@@ -349,12 +349,12 @@ namespace BankingApplication
                 } while (transMenuFlag);
             }
 
-            void GetAllBalances()
-            {
-                Console.WriteLine("Your checking account balance is: {0}", accounts.GetBalance(AccountType.Checking));
-                Console.WriteLine("Your savings account balance is: {0}", accounts.GetBalance(AccountType.Savings));
-                Console.WriteLine("Your loan account balance is: {0}", accounts.GetBalance(AccountType.Loan));
-            }
+            //void GetAllBalances()
+            //{
+            //    //Console.WriteLine("Your checking account balance is: {0}", accounts.GetBalance(AccountType.Checking));
+            //    //Console.WriteLine("Your savings account balance is: {0}", accounts.GetBalance(AccountType.Savings));
+            //    //Console.WriteLine("Your loan account balance is: {0}", accounts.GetBalance(AccountType.Loan));
+            //}
 
             
         }

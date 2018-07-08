@@ -25,6 +25,7 @@ namespace BankingApplication_BLL
         {
             return custObject.GetCustomerName(custID);
         }
+
         public bool validateCustomer(int custID)
         {
             return custObject.ValidateCustomer(custID);
