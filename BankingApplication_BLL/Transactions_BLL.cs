@@ -26,46 +26,57 @@ namespace BankingApplication_BLL
         {
 
             transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
-            Console.WriteLine(transRepo.DepositAmount(new Transactions(custID, acctID, TransactionType.Deposit, amount)));
+            transRepo.DepositAmount(new Transactions(custID, acctID, TransactionType.Deposit, amount));
             return GetBalance(custID, acctID);
         }
 
         public double Withdraw(int custID, int acctID, double amount)
         {
-
             transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Withdraw, DateTime.Now, amount));
-            Console.WriteLine(transRepo.WithdrawAmount(new Transactions(custID, acctID, TransactionType.Withdraw, amount)));
+            transRepo.WithdrawAmount(new Transactions(custID, acctID, TransactionType.Withdraw, amount));
             return GetBalance(custID, acctID);
         }
 
-
+        public List<Transactions> GetAllAccountBalances(int custID)
+        {
+            List<Transactions> allBalanceList = transRepo.GetAllBalances(custID);
+            return allBalanceList;
+        }
 
 
         public List<Transactions> GetTransactionsByID(int custID, int acctID)
         {
-            //List<Transactions> lstObject = new List<Transactions>();
             return  transRepo.GetTransactionsByAcctID(custID, acctID);
-            //return lstObject;
-
-            
-
         }
 
         public void DisplayTransactions(List<Transactions> trans)
         {
-            foreach(var i in trans)
+            if (trans.Count < 1)
             {
-                Console.WriteLine("Account Type: {0}", i.GetAccountType());
-                Console.WriteLine("Transaction Type: {0}", i.GetTransactionType());
-                Console.WriteLine("Transaction Date: {0}", i.GetDate());
-                Console.WriteLine("Amount: {0}", i.GetAmount());
-
+                Console.WriteLine("You don't have any transactions associated with this account type.");
             }
+            else
+                foreach (var i in trans)
+                {
+                    Console.WriteLine("Account Type: {0}", i.GetAccountType());
+                    Console.WriteLine("Transaction Type: {0}", i.GetTransactionType());
+                    Console.WriteLine("Transaction Date: {0}", i.GetDate());
+                    Console.WriteLine("Amount: {0}", i.GetAmount());
+
+                    Console.WriteLine();
+                }
 
             //Console.WriteLine("Balance: {0}", transRepo.DisplayBalance(trans[0].GetAccountID(),trans[0].GetCustomerID()));
             
         }
 
-        
+        public void DisplayAllBalances(List<Transactions> trans)
+        {
+            foreach (var i in trans)
+            {
+                Console.WriteLine("Your balance in {0} account is: {1}", i.GetAccountType(), i.GetBalance());
+            }
+            Console.WriteLine();
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace BankingApplication_DAL
             bankDataContext.SubmitChanges();
             // how linq to sql works in fetching the identity column
 
-            return bankDataContext.CustomerTables.First(a => a.Customer_Name == custTable.Customer_Name).Customer_ID;
+            return custTable.Customer_ID;
             
         }
 

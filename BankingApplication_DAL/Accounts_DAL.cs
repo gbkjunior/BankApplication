@@ -22,17 +22,30 @@ namespace BankingApplication_DAL
 
         public AccountType GetAccountType(int acctID)
         {
-            var query = bankDataContext.AccountTables.First(a => a.Account_ID == acctID).Account_Type;
-            //bool check = Enum.TryParse(query.ToString(), out AccountType acctTypeValue);
+            var query = bankDataContext.AccountTables.FirstOrDefault(a => a.Account_ID == acctID);
+
+            if(query == null)
+            {
+                //log exception, throw exception, let the user know 
+                return 0;
+            }
+            else
+            {
+                var accountType = query.Account_Type;
+
+                // var query = bankDataContext.AccountTables.First(a => a.Account_ID == acctID).Account_Type;
+                //bool check = Enum.TryParse(query.ToString(), out AccountType acctTypeValue);
+
+                //var getAcctTypeQuery = (from p in bankDataContext.AccountTables
+                //                        where p.Account_ID == acctID
+                //                        select p.Account_Type).Single();
+
+                //enum
+                AccountType newType = (AccountType)Enum.Parse(typeof(AccountType), accountType.ToString());
+
+                return newType;
+            }
             
-            //var getAcctTypeQuery = (from p in bankDataContext.AccountTables
-            //                        where p.Account_ID == acctID
-            //                        select p.Account_Type).Single();
-
-            //enum
-            AccountType newType = (AccountType)Enum.Parse(typeof(AccountType), query.ToString());
-
-            return newType;
         }
 
 

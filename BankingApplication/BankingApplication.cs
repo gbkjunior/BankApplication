@@ -202,15 +202,15 @@ namespace BankingApplication
                                     bool checkAmount = double.TryParse(amount, out double amountValue);
                                     if (checkAmount)
                                     {
-                                        //if (accounts.GetBalance(custID, acctID) - amountValue < 0)
-                                        //    Console.WriteLine("Please enter an amount within your balance: {0}", accounts.GetBalance(custID, acctID));
-                                        //else
-                                        //{
+                                        if (transactions.GetBalance(custID, acctID) - amountValue < 0)
+                                            Console.WriteLine("Please enter an amount within your balance: {0}", transactions.GetBalance(custID, acctID));
+                                        else
+                                        {
                                         transactions.Withdraw(custID, acctID, amountValue);
 
                                         Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, accounts.GetAccountTypeByID(acctID));
                                         Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID, acctID));
-                                    //}
+                                    }
 
                                     }
                                     else
@@ -222,14 +222,14 @@ namespace BankingApplication
                                     bool checkDepositAmount = double.TryParse(depositAmount, out double depositAmountValue);
                                     if (checkDepositAmount)
                                     {
-                                        //if (depositAmountValue < 0)
-                                        //    Console.WriteLine("Please enter a valid amount value.");
-                                        //else
-                                        //{
+                                        if (depositAmountValue < 0)
+                                            Console.WriteLine("Please enter a valid amount value.");
+                                        else
+                                        {
                                             transactions.Deposit(custID,acctID,depositAmountValue);
                                             Console.WriteLine("You have successfully deposited {0} in your {1} account.", depositAmountValue, accounts.GetAccountTypeByID(acctID));
                                             Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID,acctID));
-                                        //}
+                                        }
 
                                     }
                                     else
@@ -287,7 +287,7 @@ namespace BankingApplication
                                 AccountMenu(custID, acctID);
                                 break;
                             case 4:
-                                //GetAllBalances();
+                                transactions.DisplayAllBalances(transactions.GetAllAccountBalances(custID));
                                 break;
                             case 5:
                                 MainMenu(custID);

@@ -35,7 +35,11 @@ namespace BankingApplication_BO
             this.amount = amount;
             this.balance = balance;
         }
-
+        public Transactions(AccountType acctType, double balance)
+        {
+            this.accountType = acctType;
+            this.balance = balance;
+        }
         public Transactions(TransactionType tType, AccountType acctType, DateTime date, double amount)
         {
             this.transType = tType;
@@ -94,9 +98,9 @@ namespace BankingApplication_BO
             return this.date;
         }
 
-        public decimal GetAmount()
+        public double GetAmount()
         {
-            return Convert.ToDecimal(this.amount);
+            return this.amount;
         }
 
         public string GetTransactionType()
