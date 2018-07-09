@@ -26,6 +26,12 @@ namespace BankingApplication_DAL
 
         }
 
+        /// <summary>
+        /// Method to retrieve transactions based on accountID from the db.
+        /// </summary>
+        /// <param name="custID"></param>
+        /// <param name="acctID"></param>
+        /// <returns>List of transactions based on the accountID</returns>
         public List<Transactions> GetTransactionsByAcctID(int custID, int acctID)
         {
             BankDataContext bankDataContext = new BankDataContext();
@@ -49,7 +55,12 @@ namespace BankingApplication_DAL
 
             return getTrans;
         }
-
+        
+        /// <summary>
+        /// Method to get all the transactions of a customer from the db
+        /// </summary>
+        /// <param name="custID"></param>
+        /// <returns>List of transactions for a customer</returns>
         public List<Transactions> GetAllTransactions(int custID)
         {
             BankDataContext bankDataContext = new BankDataContext();
@@ -72,6 +83,11 @@ namespace BankingApplication_DAL
             return getAllTrans;
         }
 
+        /// <summary>
+        /// Method to get all the balances of a customer from the db
+        /// </summary>
+        /// <param name="custID"></param>
+        /// <returns>List of transactions with accountType and balances</returns>
         public List<Transactions> GetAllBalances(int custID)
         {
             List<Transactions> allBalanceList = new List<Transactions>();
@@ -92,6 +108,11 @@ namespace BankingApplication_DAL
             return allBalanceList;
         }
 
+        /// <summary>
+        /// Method to get the current balance of a customer based on the accountType
+        /// </summary>
+        /// <param name="trans"></param>
+        /// <returns>Current balance</returns>
         public double GetBalance(Transactions trans)
         {
             BankDataContext bankDataContext = new BankDataContext();
@@ -105,6 +126,11 @@ namespace BankingApplication_DAL
                 return Convert.ToDouble(balance);
         }
 
+        /// <summary>
+        /// Method to bridge the Deposit Transaction and getting the current balance from the db. Uses the customer_accounts_table.
+        /// </summary>
+        /// <param name="trans"></param>
+        /// <returns></returns>
         public double DepositAmount(Transactions trans)
         {
             BankDataContext bankDataContext = new BankDataContext();
@@ -134,6 +160,11 @@ namespace BankingApplication_DAL
             }
         }
 
+        /// <summary>
+        /// Method to bridge the Withdraw Transaction and getting the current balance from the db. Uses the customer_accounts_table.
+        /// </summary>
+        /// <param name="trans"></param>
+        /// <returns></returns>
         public double WithdrawAmount(Transactions trans)
         {
             BankDataContext bankDataContext = new BankDataContext();
@@ -166,17 +197,5 @@ namespace BankingApplication_DAL
             }
 
         }
-
-        public double DisplayBalance(int custID, int acctID)
-        {
-            BankDataContext bankDataContext = new BankDataContext();
-            var bal = bankDataContext.Customer_Accounts_Tables.SingleOrDefault(b => (b.Account_ID == acctID && b.Customer_ID == custID)).Balance;
-
-            if (bal == null)
-                return 0;
-            else
-            return Convert.ToDouble(bal);
-        }
-
     }
 }

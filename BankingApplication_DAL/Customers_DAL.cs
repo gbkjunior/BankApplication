@@ -9,6 +9,11 @@ namespace BankingApplication_DAL
 {
     public class Customers_DAL
     {
+        /// <summary>
+        /// Method to add a new customer into the db
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns>New generated customerID</returns>
         public int AddNewCustomer(Customers customer)
         {
             BankDataContext bankDataContext = new BankDataContext();
@@ -17,7 +22,7 @@ namespace BankingApplication_DAL
             bankDataContext.Connection.Open();
 
             custTable.Customer_Address = customer.GetCustomerAddress();
-            custTable.Customer_Name = customer.getCustomerName();
+            custTable.Customer_Name = customer.GetCustomerName();
             custTable.Customer_Telephone = customer.GetCustomerTelephone();
 
             bankDataContext.CustomerTables.InsertOnSubmit(custTable);
@@ -27,6 +32,11 @@ namespace BankingApplication_DAL
 
         }
 
+        /// <summary>
+        /// Method to get the customer name from the db based on the customerID
+        /// </summary>
+        /// <param name="custID"></param>
+        /// <returns>CustomerName</returns>
         public string GetCustomerName(int custID)
         {
             BankDataContext bankDataContext = new BankDataContext();
@@ -40,6 +50,11 @@ namespace BankingApplication_DAL
                 return custNameQuery.ToString();
         }
 
+        /// <summary>
+        /// Method which checks the db and validates a customerID
+        /// </summary>
+        /// <param name="custID"></param>
+        /// <returns>A bool value</returns>
         public bool ValidateCustomer(int custID)
         {
             BankDataContext bankDataContext = new BankDataContext();

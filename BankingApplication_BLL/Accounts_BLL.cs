@@ -12,7 +12,12 @@ namespace BankingApplication_BLL
 
         public Accounts_BLL() { }
         
-        public AccountType GetAccountTypeByID(int acctID)
+        /// <summary>
+        /// Method to Get the account type based on the account ID
+        /// </summary>
+        /// <param name="acctID"></param>
+        /// <returns>Accounts object</returns>
+        public Accounts GetAccountTypeByID(int acctID)
         {
             return accountsRepo.GetAccountType(acctID);
         }

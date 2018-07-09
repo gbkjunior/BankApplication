@@ -10,16 +10,33 @@ namespace BankingApplication_BLL
     {
         Customers_DAL custObject = new Customers_DAL();
 
+        /// <summary>
+        /// Method to add a new customer. Gets parameters from the user and calls the method to the DAL.
+        /// </summary>
+        /// <param name="custName"></param>
+        /// <param name="custAddress"></param>
+        /// <param name="custTelephone"></param>
+        /// <returns>CustomerID</returns>
         public int AddNewCustomer(string custName, string custAddress, string custTelephone)
         {
              return custObject.AddNewCustomer(new Customers(custName, custAddress, custTelephone));
         }
 
+        /// <summary>
+        /// Method to retrieve customer name based on his customerID
+        /// </summary>
+        /// <param name="custID"></param>
+        /// <returns>CustomerName</returns>
         public string GetCustomerName(int custID)
         {
             return custObject.GetCustomerName(custID);
         }
-
+        
+        /// <summary>
+        /// Method to validate a customer for login
+        /// </summary>
+        /// <param name="custID"></param>
+        /// <returns>bool</returns>
         public bool validateCustomer(int custID)
         {
             return custObject.ValidateCustomer(custID);

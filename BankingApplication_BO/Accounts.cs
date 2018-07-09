@@ -11,23 +11,29 @@ namespace BankingApplication_BO
     {
         int accountID;
         private AccountType accountType;
-        
-        public Accounts(int accountID, AccountType acctType)
-        {    
-            this.accountID = accountID;
-            this.accountType = acctType;
-        }
 
+        /// <summary>
+        /// Constuctor which gets the AccountType from the db and initializes the  AccountType in the BO.
+        /// </summary>
+        /// <param name="acctType"></param>
         public Accounts(AccountType acctType)
         {
             this.accountType = acctType;
         }
-
+        
+        /// <summary>
+        /// Get method to retrive AccountType
+        /// </summary>
+        /// <returns>AccountType</returns>
         public AccountType GetAccountType()
         {
             return accountType;
         }
 
+        /// <summary>
+        /// Get method to retrieve AccountID
+        /// </summary>
+        /// <returns>AccountID</returns>
         public int GetAccountID()
         {
             return this.accountID;

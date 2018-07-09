@@ -20,9 +20,10 @@ namespace BankingApplication
             bool transMenuFlag = true;
             bool custFlag = true;
             bool checkCustFlag = true;
-
+            
             BankMenu();
 
+            //BankMenu starts the application
             void BankMenu()
             {
                 try
@@ -64,6 +65,7 @@ namespace BankingApplication
                 }
             }
 
+            //Method for the customer to log into the application
             void CustomerLoginMenu()
             {
                 do
@@ -89,6 +91,7 @@ namespace BankingApplication
                 } while (custFlag);
             }
 
+            //Method to register new customer into the application
             void CustomerRegisterMenu()
             {
                 try
@@ -112,6 +115,7 @@ namespace BankingApplication
                 }
             }
 
+            // Main menu after customer logs in. Gives options to select Accounts or transactions or log out.
             void MainMenu(int custID)
             {
                 try
@@ -157,6 +161,7 @@ namespace BankingApplication
 
             }
 
+            // Gives options to check balance, deposit or withdraw
             void AccountMenu(int custID,int acctID)
             {
                 try
@@ -173,7 +178,7 @@ namespace BankingApplication
                             switch (accountMenuInputInteger)
                             {
                                 case 1:
-                                    Console.WriteLine("Your {0} account balance is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID,acctID));
+                                    Console.WriteLine("Your {0} account balance is: {1}", accounts.GetAccountTypeByID(acctID).GetAccountType(), transactions.GetBalance(custID,acctID));
                                     break;
                                 case 2:
                                     Console.WriteLine("Enter an amount to withdraw:");
@@ -186,8 +191,8 @@ namespace BankingApplication
                                         else
                                         {
                                             transactions.Withdraw(custID, acctID, amountValue);
-                                            Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, accounts.GetAccountTypeByID(acctID));
-                                            Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID, acctID));
+                                            Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, accounts.GetAccountTypeByID(acctID).GetAccountType());
+                                            Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID).GetAccountType(), transactions.GetBalance(custID, acctID));
                                         }
                                     }
                                     else
@@ -204,8 +209,8 @@ namespace BankingApplication
                                         else
                                         {
                                             transactions.Deposit(custID,acctID,depositAmountValue);
-                                            Console.WriteLine("You have successfully deposited {0} in your {1} account.", depositAmountValue, accounts.GetAccountTypeByID(acctID));
-                                            Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID,acctID));
+                                            Console.WriteLine("You have successfully deposited {0} in your {1} account.", depositAmountValue, accounts.GetAccountTypeByID(acctID).GetAccountType());
+                                            Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID).GetAccountType(), transactions.GetBalance(custID,acctID));
                                         }
                                     }
                                     else
@@ -235,6 +240,7 @@ namespace BankingApplication
                 }
             }
 
+            // Gives options for customer to select any of his accounts and to check his balances.
             void SelectAccountMenu(int custID)
             {
                 do
@@ -278,6 +284,7 @@ namespace BankingApplication
                 } while (selectAcctMenuFlag);
             }
 
+            // Gives options for the customer to check his transactions made on their accounts.
             void SelectTransactionMenu(int custID)
             {
                 do

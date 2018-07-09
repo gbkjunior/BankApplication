@@ -10,30 +10,26 @@ namespace BankingApplication_DAL
 
         AccountTable accountTableObject = new AccountTable();
 
-        public void AddAccounts(Accounts acct)
-        {
-            accountTableObject.Account_ID = acct.GetAccountID();
-            accountTableObject.Account_Type = acct.GetAccountType().ToString();
-
-            bankDataContext.AccountTables.InsertOnSubmit(accountTableObject);
-            bankDataContext.SubmitChanges();
-        }
-
-        public AccountType GetAccountType(int acctID)
+        /// <summary>
+        /// Method to get the account type from the DB
+        /// </summary>
+        /// <param name="acctID"></param>
+        /// <returns>Accounts object</returns>
+        public Accounts GetAccountType(int acctID)
         {
             var query = bankDataContext.AccountTables.FirstOrDefault(a => a.Account_ID == acctID);
 
             if(query == null)
             {
                 //log exception, throw exception, let the user know 
-                return 0;
+                return null;
             }
             else
             {
                 var accountType = query.Account_Type;
                 AccountType newType = (AccountType)Enum.Parse(typeof(AccountType), accountType.ToString());
-
-                return newType;
+                Accounts objAccounts = new Accounts(newType);
+                return objAccounts;
             }   
         }
     }
