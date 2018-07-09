@@ -9,18 +9,11 @@ namespace BankingApplication_BO
 
     public class Accounts
     {
-
-
         int accountID;
-        public double amount;
         private AccountType accountType;
-
-
-        //Constructors
-
-        public Accounts(int accountID,AccountType acctType)
-        {
-            
+        
+        public Accounts(int accountID, AccountType acctType)
+        {    
             this.accountID = accountID;
             this.accountType = acctType;
         }
@@ -39,11 +32,6 @@ namespace BankingApplication_BO
         {
             return this.accountID;
         }
-        
-        public string GetAccountTypeForTable()
-        {
-            return this.accountType.ToString();
-        }
-        
+
     }
 }

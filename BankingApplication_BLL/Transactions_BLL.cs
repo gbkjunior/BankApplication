@@ -8,7 +8,6 @@ namespace BankingApplication_BLL
 {
     public class Transactions_BLL 
     {
-
         Transactions_DAL transRepo = new Transactions_DAL();
 
         public List<Transactions> GetAllTransaction(int custID)
@@ -19,12 +18,10 @@ namespace BankingApplication_BLL
         public double GetBalance(int custid, int acctid)
         {
             return transRepo.GetBalance(new Transactions(custid, acctid));
-            
         }
 
         public double Deposit(int custID, int acctID, double amount)
         {
-
             transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
             transRepo.DepositAmount(new Transactions(custID, acctID, TransactionType.Deposit, amount));
             return GetBalance(custID, acctID);
@@ -39,10 +36,8 @@ namespace BankingApplication_BLL
 
         public List<Transactions> GetAllAccountBalances(int custID)
         {
-            List<Transactions> allBalanceList = transRepo.GetAllBalances(custID);
-            return allBalanceList;
+            return transRepo.GetAllBalances(custID);
         }
-
 
         public List<Transactions> GetTransactionsByID(int custID, int acctID)
         {
@@ -52,9 +47,7 @@ namespace BankingApplication_BLL
         public void DisplayTransactions(List<Transactions> trans)
         {
             if (trans.Count < 1)
-            {
                 Console.WriteLine("You don't have any transactions associated with this account type.");
-            }
             else
                 foreach (var i in trans)
                 {
@@ -65,9 +58,6 @@ namespace BankingApplication_BLL
 
                     Console.WriteLine();
                 }
-
-            //Console.WriteLine("Balance: {0}", transRepo.DisplayBalance(trans[0].GetAccountID(),trans[0].GetCustomerID()));
-            
         }
 
         public void DisplayAllBalances(List<Transactions> trans)

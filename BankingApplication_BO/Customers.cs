@@ -6,10 +6,10 @@ namespace BankingApplication_BO
 {
     public class Customers
     {
-        int customerID;
-        string customerName;
-        string customerAddress;
-        string customerTelephone;
+        private int customerID;
+        private string customerName;
+        private string customerAddress;
+        private string customerTelephone;
 
         public Customers(int custID, string custName, string custAddress, string custTelephone)
         {

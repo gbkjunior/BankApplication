@@ -14,7 +14,7 @@ namespace BankingApplication_DAL
             BankDataContext bankDataContext = new BankDataContext();
             TransactionTable transTable = new TransactionTable();
 
-            transTable.Transaction_Type = trans.GetTransactionType();
+            transTable.Transaction_Type = trans.GetTransactionType().ToString();
             transTable.Account_ID = trans.GetAccountID();
             transTable.Customer_ID = trans.GetCustomerID();
             transTable.Transaction_Date = trans.GetDate().ToString();
@@ -33,28 +33,21 @@ namespace BankingApplication_DAL
             AccountTable acctTable = new AccountTable();
 
             var getTransQuery = bankDataContext.TransactionTables.Where(a => (a.Customer_ID == custID && a.Account_ID == acctID));
-
-
+            
             List<Transactions> getTrans = new List<Transactions>();
             foreach(var i in getTransQuery)
             {
                 var getAcctType = bankDataContext.AccountTables.Single(p => p.Account_ID == i.Account_ID).Account_Type;
                 
-
                 TransactionType getTransactionType = (TransactionType)Enum.Parse(typeof(TransactionType), i.Transaction_Type);
                 AccountType getAccountType = (AccountType)Enum.Parse(typeof(AccountType), getAcctType);
                 DateTime getDate = DateTime.ParseExact(i.Transaction_Date, "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-
-                //Console.WriteLine(getDate + "\n" + i.Transaction_Date);
-
+                
                 Transactions transObj = new Transactions(getTransactionType, getAccountType, getDate, Convert.ToDouble(i.Amount));
                 getTrans.Add(transObj);
             }
 
             return getTrans;
-
-            
-            
         }
 
         public List<Transactions> GetAllTransactions(int custID)
@@ -69,12 +62,10 @@ namespace BankingApplication_DAL
             {
                 var getAcctType = bankDataContext.AccountTables.Single(a => a.Account_ID == i.Account_ID).Account_Type;
                 
-
                 TransactionType getTransactionType = (TransactionType)Enum.Parse(typeof(TransactionType), i.Transaction_Type);
                 AccountType getAccountType = (AccountType)Enum.Parse(typeof(AccountType), getAcctType);
                 DateTime getDate = DateTime.ParseExact(i.Transaction_Date, "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-
-
+                
                 Transactions getAllTransObj = new Transactions(getTransactionType, getAccountType,getDate, Convert.ToDouble(i.Amount));
                 getAllTrans.Add(getAllTransObj);
             }
@@ -87,15 +78,8 @@ namespace BankingApplication_DAL
             BankDataContext bankDataContext = new BankDataContext();
             Customer_Accounts_Table transTable = new Customer_Accounts_Table();
 
-            //var allBalanceQuery = bankDataContext.Customer_Accounts_Tables.Where(b => b.Customer_ID == custID);
-            var allBalanceQuery = (from p in bankDataContext.Customer_Accounts_Tables
-                                   where p.Customer_ID == custID
-                                   select new
-                                   {
-                                       p.Account_ID,
-                                       p.Balance
-                                   }).ToList();
-            //Console.WriteLine(allBalanceQuery);
+            var allBalanceQuery = bankDataContext.Customer_Accounts_Tables.Where(trans => trans.Customer_ID == custID).Select(s => new { s.Account_ID, s.Balance} ).ToList();
+            
             foreach(var i in allBalanceQuery)
             {
                 var getAcctType = bankDataContext.AccountTables.Single(a => a.Account_ID == i.Account_ID).Account_Type;
@@ -106,20 +90,19 @@ namespace BankingApplication_DAL
             }
 
             return allBalanceList;
-
-
         }
+
         public double GetBalance(Transactions trans)
         {
             BankDataContext bankDataContext = new BankDataContext();
             TransactionTable transTable = new TransactionTable();
             Customer_Accounts_Table custAcctTable = new Customer_Accounts_Table();
 
-            var balance = bankDataContext.Customer_Accounts_Tables.First(b => (b.Account_ID == trans.GetAccountID() && b.Customer_ID == trans.GetCustomerID())).Balance;
-
-            return Convert.ToDouble(balance);
-
-
+            var balance = bankDataContext.Customer_Accounts_Tables.FirstOrDefault(b => (b.Account_ID == trans.GetAccountID() && b.Customer_ID == trans.GetCustomerID())).Balance;
+            if (balance == null)
+                return 0;
+            else 
+                return Convert.ToDouble(balance);
         }
 
         public double DepositAmount(Transactions trans)
@@ -133,8 +116,7 @@ namespace BankingApplication_DAL
                 custAcctTable.Account_ID = trans.GetAccountID();
                 custAcctTable.Customer_ID = trans.GetCustomerID();
                 custAcctTable.Balance = Convert.ToDecimal(trans.GetAmount());
-
-
+                
                 bankDataContext.Customer_Accounts_Tables.InsertOnSubmit(custAcctTable);
                 bankDataContext.SubmitChanges();
 
@@ -143,20 +125,13 @@ namespace BankingApplication_DAL
             else
             {
                 var amtQuery = bankDataContext.TransactionTables.Where(t => (t.Account_ID == trans.GetAccountID() && t.Customer_ID == trans.GetCustomerID() && t.Transaction_Type == trans.GetTransactionType().ToString())).ToArray().Last().Amount;
-
                 
-                Customer_Accounts_Table myCust = bankDataContext.Customer_Accounts_Tables.Single(p => (p.Customer_ID == trans.GetCustomerID() && p.Account_ID == trans.GetAccountID()));
+                Customer_Accounts_Table myCust = bankDataContext.Customer_Accounts_Tables.SingleOrDefault(p => (p.Customer_ID == trans.GetCustomerID() && p.Account_ID == trans.GetAccountID()));
                 myCust.Balance = myCust.Balance + amtQuery;
                 
-
                 bankDataContext.SubmitChanges();
                 return Convert.ToDouble(myCust.Balance);
             }
-
-
-
-            
-            
         }
 
         public double WithdrawAmount(Transactions trans)
@@ -180,13 +155,13 @@ namespace BankingApplication_DAL
             else
             {
                 var amtQuery = bankDataContext.TransactionTables.Where(t => (t.Account_ID == trans.GetAccountID() && t.Customer_ID == trans.GetCustomerID() && t.Transaction_Type == trans.GetTransactionType().ToString())).ToArray().Last().Amount;
-
-
-                Customer_Accounts_Table myCust = bankDataContext.Customer_Accounts_Tables.Single(p => (p.Customer_ID == trans.GetCustomerID() && p.Account_ID == trans.GetAccountID()));
+                
+                Customer_Accounts_Table myCust = bankDataContext.Customer_Accounts_Tables.SingleOrDefault(p => (p.Customer_ID == trans.GetCustomerID() && p.Account_ID == trans.GetAccountID()));
                 myCust.Balance = myCust.Balance - amtQuery;
 
                 Console.WriteLine(myCust.Balance);
                 bankDataContext.SubmitChanges();
+
                 return Convert.ToDouble(myCust.Balance);
             }
 
@@ -195,7 +170,11 @@ namespace BankingApplication_DAL
         public double DisplayBalance(int custID, int acctID)
         {
             BankDataContext bankDataContext = new BankDataContext();
-            var bal = bankDataContext.Customer_Accounts_Tables.Single(b => (b.Account_ID == acctID && b.Customer_ID == custID)).Balance;
+            var bal = bankDataContext.Customer_Accounts_Tables.SingleOrDefault(b => (b.Account_ID == acctID && b.Customer_ID == custID)).Balance;
+
+            if (bal == null)
+                return 0;
+            else
             return Convert.ToDouble(bal);
         }
 

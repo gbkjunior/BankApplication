@@ -12,9 +12,8 @@ namespace BankingApplication_DAL
 
         public void AddAccounts(Accounts acct)
         {
-
             accountTableObject.Account_ID = acct.GetAccountID();
-            accountTableObject.Account_Type = acct.GetAccountTypeForTable();
+            accountTableObject.Account_Type = acct.GetAccountType().ToString();
 
             bankDataContext.AccountTables.InsertOnSubmit(accountTableObject);
             bankDataContext.SubmitChanges();
@@ -32,25 +31,10 @@ namespace BankingApplication_DAL
             else
             {
                 var accountType = query.Account_Type;
-
-                // var query = bankDataContext.AccountTables.First(a => a.Account_ID == acctID).Account_Type;
-                //bool check = Enum.TryParse(query.ToString(), out AccountType acctTypeValue);
-
-                //var getAcctTypeQuery = (from p in bankDataContext.AccountTables
-                //                        where p.Account_ID == acctID
-                //                        select p.Account_Type).Single();
-
-                //enum
                 AccountType newType = (AccountType)Enum.Parse(typeof(AccountType), accountType.ToString());
 
                 return newType;
-            }
-            
+            }   
         }
-
-
-        
-
-
     }
 }

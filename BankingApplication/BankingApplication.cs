@@ -7,15 +7,12 @@ namespace BankingApplication
 {
     class BankingApplication
     {
- 
-        enum AccountFunc { Balance, Withdraw, Deposit }
         static void Main(string[] args)
         {
             Accounts_BLL accounts = new Accounts_BLL();
             Transactions_BLL transactions = new Transactions_BLL();
             Customers_BLL customers = new Customers_BLL();
-
-
+            
             bool bankMenuFlag = true;
             bool selectAcctMenuFlag = true;
             bool mainMenuFlag = true;
@@ -60,8 +57,6 @@ namespace BankingApplication
                             Console.WriteLine("Please enter a value from the given options");
 
                     } while (bankMenuFlag);
-
-
                 }
                 catch (Exception e)
                 {
@@ -86,13 +81,10 @@ namespace BankingApplication
                             MainMenu(custInputInteger);
                             custFlag = false;
                         }
-                            
                         else
                         {
-                            Console.WriteLine("Your customer ID is not found. Please try again.");
-                            
+                            Console.WriteLine("Your customer ID is not found. Please try again.");   
                         }
-                            
                     }
                 } while (custFlag);
             }
@@ -111,11 +103,8 @@ namespace BankingApplication
 
                         Console.WriteLine("Enter your Telephone Number");
                         string userTelephoneInput = Console.ReadLine();
-
-                        
-
-                        Console.WriteLine("You have registered successfully. Your customerID is: {0}", customers.AddNewCustomer(userNameInput, userAddressInput, userTelephoneInput));
                     
+                        Console.WriteLine("You have registered successfully. Your customerID is: {0}", customers.AddNewCustomer(userNameInput, userAddressInput, userTelephoneInput));
                 }
                 catch(Exception e)
                 {
@@ -129,14 +118,11 @@ namespace BankingApplication
                 {
                     do
                     {
-
                         Console.WriteLine("Main Menu:\n1. Accounts \n2. Transactions \n3. Log Out");
                         string mainMenuInput = Console.ReadLine();
-
-
+                        
                         bool mainMenuInputCheck = int.TryParse(mainMenuInput, out int mainMenuInputInteger);
-
-
+                        
                         if (mainMenuInputCheck)
                         {
                             switch (mainMenuInputInteger)
@@ -163,10 +149,6 @@ namespace BankingApplication
                             Console.WriteLine("Please enter a value from the given options");
 
                     } while (mainMenuFlag);
-
-
-
-
                 }
                 catch (Exception e)
                 {
@@ -179,11 +161,8 @@ namespace BankingApplication
             {
                 try
                 {
-
-
                     do
                     {
-
                         Console.WriteLine("Account Menu: \n1. Get Balance \n2. Withdraw \n3. Deposit \n4. Select Account Menu \n5. Main Menu");
                         string accountMenuInput = Console.ReadLine();
 
@@ -206,12 +185,10 @@ namespace BankingApplication
                                             Console.WriteLine("Please enter an amount within your balance: {0}", transactions.GetBalance(custID, acctID));
                                         else
                                         {
-                                        transactions.Withdraw(custID, acctID, amountValue);
-
-                                        Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, accounts.GetAccountTypeByID(acctID));
-                                        Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID, acctID));
-                                    }
-
+                                            transactions.Withdraw(custID, acctID, amountValue);
+                                            Console.WriteLine("You have successfully withdrawn {0} from your {1} account.", amountValue, accounts.GetAccountTypeByID(acctID));
+                                            Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID, acctID));
+                                        }
                                     }
                                     else
                                         Console.WriteLine("Please enter a proper amount value.");
@@ -230,7 +207,6 @@ namespace BankingApplication
                                             Console.WriteLine("You have successfully deposited {0} in your {1} account.", depositAmountValue, accounts.GetAccountTypeByID(acctID));
                                             Console.WriteLine("Your current balance in your {0} account is: {1}", accounts.GetAccountTypeByID(acctID), transactions.GetBalance(custID,acctID));
                                         }
-
                                     }
                                     else
                                         Console.WriteLine("Please enter a proper amount value.");
@@ -239,7 +215,6 @@ namespace BankingApplication
                                     SelectAccountMenu(custID);
                                     break;
                                 case 5:
-                                    
                                     accountMenuFlag = false;
                                     selectAcctMenuFlag = false;
                                     Console.ReadKey();
@@ -273,7 +248,6 @@ namespace BankingApplication
                         int acctID;
                         switch (selectAcctMenuInputInteger)
                         {
-                            
                             case 1:
                                 acctID = (int)AccountType.Checking;
                                 AccountMenu(custID, acctID);
@@ -302,13 +276,10 @@ namespace BankingApplication
                         Console.WriteLine("Please enter a value from the given options.");
 
                 } while (selectAcctMenuFlag);
-
-
             }
 
             void SelectTransactionMenu(int custID)
             {
-
                 do
                 {
                     Console.WriteLine("Select the account to retrieve transactions: \n1. Checking \n2. Savings \n3. Loan \n4. Get All Transactions \n5. Main Menu ");
@@ -348,17 +319,6 @@ namespace BankingApplication
                         Console.WriteLine("Please select a value from the given options.");
                 } while (transMenuFlag);
             }
-
-            //void GetAllBalances()
-            //{
-            //    //Console.WriteLine("Your checking account balance is: {0}", accounts.GetBalance(AccountType.Checking));
-            //    //Console.WriteLine("Your savings account balance is: {0}", accounts.GetBalance(AccountType.Savings));
-            //    //Console.WriteLine("Your loan account balance is: {0}", accounts.GetBalance(AccountType.Loan));
-            //}
-
-            
         }
-
-
     }
 }
