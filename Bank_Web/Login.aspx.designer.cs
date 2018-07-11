@@ -103,6 +103,15 @@ namespace Bank_Web {
         protected global::System.Web.UI.WebControls.View viewRegister;
         
         /// <summary>
+        /// lblErrorName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorName;
+        
+        /// <summary>
         /// btnAddCustomer control.
         /// </summary>
         /// <remarks>

@@ -10,6 +10,7 @@ namespace Bank_Web
 {
     public partial class Login : System.Web.UI.Page
     {
+        int customerID;
         protected void Page_Load(object sender, EventArgs e)
         {
             
@@ -30,8 +31,9 @@ namespace Bank_Web
                 bool checkCust = objCustomerBLL.validateCustomer(custIDValue);
                 if (checkCust)
                 {
-                    
-                    Response.Redirect("Home.aspx?CustomerID="+txtCustomerID.Text);
+                    customerID = Convert.ToInt32(txtCustomerID.Text);
+                    Session["customerID"] = customerID;
+                    Response.Redirect("Home.aspx?CustomerID="+customerID);
                 }
                 else
                 {
@@ -48,6 +50,7 @@ namespace Bank_Web
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
+            btnLogin.Enabled = false;
             RegisterView.SetActiveView(viewRegister);
         }
 
@@ -70,20 +73,35 @@ namespace Bank_Web
             string custName = Request.Form["txtCustName"];
             string custAddress = Request.Form["txtCustAddress"];
             string custTelephone = Request.Form["txtCustTelephone"];
+            if(custName == "")
+            {
+                lblErrorName.Visible = !lblErrorName.Visible;
+            }
+            else
+            {
+                var objCustomerBLL = new Customers_BLL();
 
-            var objCustomerBLL = new Customers_BLL();
+                int custID = objCustomerBLL.AddNewCustomer(custName, custAddress, custTelephone);
+                RegisterView.Views.Remove(viewRegister);
 
-            int custID = objCustomerBLL.AddNewCustomer(custName, custAddress, custTelephone);
-            RegisterView.Views.Remove(viewRegister);
-
-            RegisterView.SetActiveView(viewSuccessRegister);
-            lblSuccessRegister.Text = lblSuccessRegister.Text + "Your customerID is" + custID + ".";
-            lblSuccessRegister.Visible = true;
+                RegisterView.SetActiveView(viewSuccessRegister);
+                lblSuccessRegister.Text = lblSuccessRegister.Text +custName+ ". Your customerID is" + custID + ".";
+                lblSuccessRegister.Visible = true;
+                btnLogin.Enabled = true;
+            }
+            
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
+            btnLogin.Enabled = true;
+            viewRegister.EnableViewState = false;
             RegisterView.ActiveViewIndex = 0;
+        }
+
+        public int GetCustomerID()
+        {
+            return this.customerID;
         }
     }
 }

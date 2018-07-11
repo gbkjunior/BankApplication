@@ -31,6 +31,15 @@ namespace Bank_Web {
         protected global::System.Web.UI.WebControls.Label lblWelcome;
         
         /// <summary>
+        /// btnLogout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLogout;
+        
+        /// <summary>
         /// lblOptions control.
         /// </summary>
         /// <remarks>
@@ -40,30 +49,21 @@ namespace Bank_Web {
         protected global::System.Web.UI.WebControls.Label lblOptions;
         
         /// <summary>
-        /// btnChecking control.
+        /// dropAccountList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnChecking;
+        protected global::System.Web.UI.WebControls.DropDownList dropAccountList;
         
         /// <summary>
-        /// btnSaving control.
+        /// btnSubmitAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSaving;
-        
-        /// <summary>
-        /// btnLoan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLoan;
+        protected global::System.Web.UI.WebControls.Button btnSubmitAccount;
     }
 }
