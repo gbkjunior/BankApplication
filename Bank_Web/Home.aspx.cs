@@ -13,13 +13,17 @@ namespace Bank_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //session verify if it has an ID or not, if not , redirect to the login
+
             var objCustomerBLL = new Customers_BLL();
-            
-            lblWelcome.Text = "Welcome " + objCustomerBLL.GetCustomerName(Convert.ToInt32(Request.QueryString["CustomerID"]));
+            int selectedCustomerID = (int)Session["CustomerID"];
+
+            lblWelcome.Text = "Welcome " + objCustomerBLL.GetCustomerName(selectedCustomerID);
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
+            //clear the customerIdsession
             FormsAuthentication.SignOut();
             Response.Redirect("~/Login.aspx");
         }

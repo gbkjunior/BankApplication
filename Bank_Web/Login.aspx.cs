@@ -32,8 +32,8 @@ namespace Bank_Web
                 if (checkCust)
                 {
                     customerID = Convert.ToInt32(txtCustomerID.Text);
-                    Session["customerID"] = customerID;
-                    Response.Redirect("Home.aspx?CustomerID="+customerID);
+                    Session["CustomerID"] = customerID;
+                    Response.Redirect("Home.aspx");
                 }
                 else
                 {

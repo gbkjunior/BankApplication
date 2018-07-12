@@ -16,7 +16,14 @@
         <br />
         <br />
         <br />
-        <asp:Label ID="lblCheckAccBalance" runat="server" Text="Your Checking Account Balance is:"></asp:Label>
+        <asp:Label ID="lblCheckAccBalance" runat="server" Text="Your"></asp:Label>
+        <br />
+        <br />
+        <asp:Button ID="btnShowTrans" runat="server" BackColor="#99CCFF" OnClick="btnShowTrans_Click" Text="Show Transactions" Width="171px" />
+        <br />
+        <asp:GridView ID="gridTransactions" runat="server" AllowPaging="True" OnPageIndexChanging="gridTransactions_SelectedIndexChanged" PageSize="5">
+        </asp:GridView>
+        <br />
     </form>
 </body>
 </html>

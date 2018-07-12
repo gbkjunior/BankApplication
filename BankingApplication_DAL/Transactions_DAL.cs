@@ -119,12 +119,20 @@ namespace BankingApplication_DAL
             TransactionTable transTable = new TransactionTable();
             Customer_Accounts_Table custAcctTable = new Customer_Accounts_Table();
             //var checkRecord = bankDataContext.TransactionTables.Where(c => (c.Account_ID == trans.GetAccountID() && c.Customer_ID == trans.GetCustomerID())).Any();
-            var balance = bankDataContext.Customer_Accounts_Tables.SingleOrDefault(b => (b.Account_ID == trans.GetAccountID() && b.Customer_ID == trans.GetCustomerID())).Balance;
-            var checkBalance = bankDataContext.Customer_Accounts_Tables.Where(b => (b.Account_ID == trans.GetAccountID() && b.Customer_ID == trans.GetCustomerID())).Any();
-            if (!checkBalance)
+            var balance = bankDataContext.Customer_Accounts_Tables.SingleOrDefault(b => (b.Account_ID == trans.GetAccountID() && b.Customer_ID == trans.GetCustomerID()));
+            if(balance == null)
+            {
                 return 0;
+            }
             else
-                return Convert.ToDouble(balance);
+            {
+                var checkBalance = bankDataContext.Customer_Accounts_Tables.Where(b => (b.Account_ID == trans.GetAccountID() && b.Customer_ID == trans.GetCustomerID())).Any();
+                if (!checkBalance)
+                    return 0;
+                else
+                    return Convert.ToDouble(balance.Balance);
+            }
+            
         }
 
         /// <summary>
