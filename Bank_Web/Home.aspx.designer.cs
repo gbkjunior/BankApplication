@@ -13,13 +13,13 @@ namespace Bank_Web {
     public partial class Home {
         
         /// <summary>
-        /// form1 control.
+        /// HomeMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Menu HomeMenu;
         
         /// <summary>
         /// lblWelcome control.
@@ -47,6 +47,15 @@ namespace Bank_Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblOptions;
+        
+        /// <summary>
+        /// gridAccountBalances control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridAccountBalances;
         
         /// <summary>
         /// dropAccountList control.

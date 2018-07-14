@@ -1,93 +1,16 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="Bank_Web.Login" %>
+﻿
+<%@ Page Title="" Language="C#" MasterPageFile="~/BankMaster.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="Bank_Web.Login" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="cphHead" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="c1" runat="server">
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-    <style type="text/css">
-        #form1 {
-            height: 757px;
-        }
-        .auto-style1 {
-            width: 296px;
-        }
-        .auto-style2 {
-            width: 311px;
-        }
-        #Text1 {
-            width: 265px;
-            margin-left: 0px;
-        }
-        .auto-style3 {
-            width: 292px;
-        }
-        #Text2 {
-            width: 265px;
-            margin-left: 0px;
-        }
-        #Text3 {
-            width: 265px;
-            margin-left: 0px;
-        }
-        #txtCustName {
-            width: 323px;
-            height: 26px;
-            margin-top: 0px;
-        }
-        #txtCustAddress {
-            width: 316px;
-            height: 28px;
-            margin-left: 0px;
-            margin-top: 0px;
-            margin-bottom: 0px;
-        }
-        #txtCustTelephone {
-            width: 320px;
-            height: 25px;
-            margin-top: 0px;
-        }
-        #txtCustName0 {
-            width: 323px;
-            height: 26px;
-            margin-top: 15px;
-        }
-        #txtCustAddress0 {
-            width: 316px;
-            height: 44px;
-            margin-left: 0px;
-            margin-top: 17px;
-            margin-bottom: 0px;
-        }
-        #txtCustTelephone0 {
-            width: 320px;
-            height: 25px;
-            margin-top: 13px;
-        }
-        .auto-style4 {
-            width: 292px;
-            height: 86px;
-        }
-        .auto-style6 {
-            width: 292px;
-            height: 96px;
-        }
-        .auto-style7 {
-            height: 96px;
-        }
-        .auto-style8 {
-            height: 86px;
-        }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
         <div style="height: 965px">
 
+           
             <br />
             <br />
-            <img alt="" draggable="auto" src="images/YESBANKLOGO.jpg" style="width: 1053px; height: 103px; position: relative;" /><br />
-            <br />
+
+           
             <asp:Label ID="lblCustomer" runat="server" Text="Customer ID:"></asp:Label>
 &nbsp;
             <asp:TextBox ID="txtCustomerID" runat="server" Width="186px" Height="19px"></asp:TextBox>
@@ -170,6 +93,4 @@
             <br />
 
         </div>
-    </form>
-</body>
-</html>
+   </asp:Content>

@@ -15,49 +15,42 @@ namespace Bank_Web
         protected void Page_Load(object sender, EventArgs e)
         {
             int custID = (int)Session["customerID"];
-            if (Session["SelectAccountDropList"] != null)
+            if (Session["selectedAccountID"] != null)
             {
-                int selectedAccount = (int)Session["SelectAccountDropList"];
+                int selectedAccount = (int)Session["selectedAccountID"];
                 Login objLogin = new Login();
                 var objTransactionBLL = new Transactions_BLL();
                 var objAccountsBLL = new Accounts_BLL();
                 
                 double getBalanceValue = objTransactionBLL.GetBalance(custID, selectedAccount);
-                string acctType = objAccountsBLL.GetAccountTypeByID(selectedAccount).GetAccountType().ToString();
-                lblCheckAccBalance.Text = lblCheckAccBalance.Text + " " + acctType + " Account balance is: " + getBalanceValue + " ";
+                //string acctType = objAccountsBLL.GetAccountTypeByID(selectedAccount).GetAccountType().ToString();
+                //lblCheckAccBalance.Text = lblCheckAccBalance.Text + " " + acctType + " Account balance is: " + getBalanceValue + " ";
+                GetDataTableData();
             }
         }
 
         protected void gridTransactions_SelectedIndexChanged(object sender, GridViewPageEventArgs e)
         {
             gridTransactions.PageIndex = e.NewPageIndex;
-            btnShowTrans_Click(sender, e);
+            Page_Load(sender, e);
         }
 
         protected void btnShowTrans_Click(object sender, EventArgs e)
         {
             
-                
-            //gridTransactions.DataSource = GetTransList().ToList();
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Account Type");
-            dt.Columns.Add("Transaction Type");
-            dt.Columns.Add("Transaction Date");
-            dt.Columns.Add("Amount");
-
-            foreach (var i in GetTransList())
+            gridTransactions.Visible = !gridTransactions.Visible;
+            if (!gridTransactions.Visible)
             {
-                dt.Rows.Add(i.GetAccountType(), i.GetTransactionType(),i.GetDate(),i.GetAmount());
+                btnShowTrans.Text = "Show Transactions";
             }
-            gridTransactions.DataSource = dt;
-            gridTransactions.DataBind();
-            
+            else
+                btnShowTrans.Text = "Hide Transactions";
         }
 
         protected List<Transactions> GetTransList()
         {
             int selectedCustomerID = (int)Session["CustomerID"];
-            int selectedAccount = (int)Session["SelectAccountDropList"];
+            int selectedAccount = (int)Session["selectedAccountID"];
 
             List<Transactions> lstTransactions = new List<Transactions>();
             List<String> lstNewTransactions = new List<String>();
@@ -69,6 +62,25 @@ namespace Bank_Web
                 lstNewTransactions.Add(i.GetDate().ToString());
             }
             return lstTransactions;
+        }
+
+        protected void GetDataTableData()
+        {
+
+            //gridTransactions.DataSource = GetTransList().ToList();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Account Type");
+            dt.Columns.Add("Transaction Type");
+            dt.Columns.Add("Transaction Date");
+            dt.Columns.Add("Amount");
+
+            foreach (var i in GetTransList())
+            {
+                dt.Rows.Add(i.GetAccountType(), i.GetTransactionType(), i.GetDate(), i.GetAmount());
+            }
+            gridTransactions.DataSource = dt;
+            gridTransactions.DataBind();
+
         }
     }
 }

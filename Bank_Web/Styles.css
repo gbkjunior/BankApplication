@@ -1,0 +1,204 @@
+﻿body {
+}
+
+#form1 {
+    height: 757px;
+}
+
+.auto-style1 {
+    width: 296px;
+}
+
+.auto-style2 {
+    width: 311px;
+}
+
+#Text1 {
+    width: 265px;
+    margin-left: 0px;
+}
+
+.auto-style3 {
+    width: 292px;
+}
+
+#Text2 {
+    width: 265px;
+    margin-left: 0px;
+}
+
+#Text3 {
+    width: 265px;
+    margin-left: 0px;
+}
+
+#txtCustName {
+    width: 323px;
+    height: 26px;
+    margin-top: 0px;
+}
+
+#txtCustAddress {
+    width: 316px;
+    height: 28px;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#txtCustTelephone {
+    width: 320px;
+    height: 25px;
+    margin-top: 0px;
+}
+
+#txtCustName0 {
+    width: 323px;
+    height: 26px;
+    margin-top: 15px;
+}
+
+#txtCustAddress0 {
+    width: 316px;
+    height: 44px;
+    margin-left: 0px;
+    margin-top: 17px;
+    margin-bottom: 0px;
+}
+
+#txtCustTelephone0 {
+    width: 320px;
+    height: 25px;
+    margin-top: 13px;
+}
+
+.auto-style4 {
+    width: 292px;
+    height: 86px;
+}
+
+.auto-style6 {
+    width: 292px;
+    height: 96px;
+}
+
+.auto-style7 {
+    height: 96px;
+}
+
+.auto-style8 {
+    height: 86px;
+}
+
+.nav-bar {
+    position: relative;
+    top: 2px;
+    left: -2px;
+    width: 1920px;
+    height: 62px;
+}
+
+.dot-bank {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    width: 146px;
+    height: 38px;
+}
+
+.products {
+    position: absolute;
+    top: 37px;
+    left: 192px;
+    width: 117px;
+    height: 27px;
+}
+
+.personal {
+    position: absolute;
+    top: 37px;
+    left: 340px;
+    width: 117px;
+    height: 27px;
+}
+
+.business {
+    position: absolute;
+    top: 37px;
+    left: 488px;
+    width: 117px;
+    height: 27px;
+}
+
+.services {
+    position: absolute;
+    top: 37px;
+    left: 636px;
+    width: 117px;
+    height: 27px;
+}
+
+.search {
+    position: absolute;
+    top: 37px;
+    left: 784px;
+    width: 117px;
+    height: 27px;
+}
+
+.about-us {
+    position: absolute;
+    top: 37px;
+    left: 932px;
+    width: 117px;
+    height: 27px;
+}
+
+.group-2 {
+    position: absolute;
+    top: 38px;
+    left: 1082px;
+    width: 51px;
+    height: 27px;
+}
+
+.auto-style1 {
+    width: 22px;
+    height: 24px;
+}
+
+.menu ul {
+    height: 54px;
+    border-bottom: 1px solid gray;
+}
+
+.menu {
+    height: 54px;
+    width: 100%;
+}
+
+    .menu ul li {
+        background-color: black;
+        text-decoration: none;
+        padding: 3px;
+        margin: 3px;
+    }
+
+        .menu ul li a {
+            color: White;
+        }
+
+            .menu ul li a:hover {
+                font-weight: bold;
+            }
+    .menu ul li>a[href="Login.aspx"]  {
+        background-color: black;
+        text-decoration: none;
+        padding: 3px;
+        margin: 3px;
+        float: right !important;
+        margin-right: 10px;
+        color: red;
+    }
+            
+

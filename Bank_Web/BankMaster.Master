@@ -1,0 +1,62 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="BankMaster.master.cs" Inherits="Bank_Web.BankMaster" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="cphHead" runat="server">
+    </asp:ContentPlaceHolder>
+    <meta charset="”utf-8″">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="Styles.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <form id="form1" runat="server">
+        <div id="wrapper">
+            <asp:Menu ID="HomeMenu" runat="server" Orientation="Horizontal" CssClass="menu" Font-Names="Segoe UI" OnMenuItemClick="HomeMenu_MenuItemClick" BackColor="Black">
+
+                <Items>
+                    <asp:MenuItem ImageUrl="images/Header/Group%2012.png" />
+
+                    <asp:MenuItem Text="Home" NavigateUrl="Home.aspx" />
+                    <asp:MenuItem Text="Our Products" NavigateUrl="ContactUs.aspx" />
+                    <asp:MenuItem Text="Personal" NavigateUrl="AboutUs.aspx" />
+                    <asp:MenuItem Text="About Us" NavigateUrl="AboutUs.aspx" />
+                    <asp:MenuItem Text="Contact" NavigateUrl="Contact.aspx" />
+                    <asp:MenuItem Text="Login" NavigateUrl="Contact.aspx" />
+                    <asp:MenuItem Text="Register" NavigateUrl="Login.aspx" />
+                </Items>
+            </asp:Menu>
+
+            <%--<img alt="header_rect" class="nav-bar" src="images/Header/Rectangle%201.png"/>
+                    <img alt="dotbank" class="dot-bank" src="images/Header/Group%2012.png" />
+                    <img alt="our-prod" class="products" src="images/Header/Our%20Products.png" />
+                    <img alt="personal" class="personal" src="images/Header/Personal@2x.png" />
+                    <img alt="business" class="business" src="images/Header/Business.png" />
+                    <img alt="services" class="services" src="images/Header/Services.png" />
+                    
+                    <img alt="about-us" class="about-us" src="images/Header/About%20Us@2x.png" />
+                    <img alt="group-2" class="group-2" src="images/Header/Group%202.png" />
+            --%><asp:ContentPlaceHolder ID="c1" runat="server">
+                <p>
+                </p>
+
+            </asp:ContentPlaceHolder>
+        </div>
+        <p>
+        </p>
+
+    </form>
+    <p>
+    </p>
+
+</body>
+</html>
