@@ -7,13 +7,7 @@
     <div style="height: 507px">
         <br />
         <br />
-        <asp:Menu ID="HomeMenu" runat="server" Orientation="Horizontal" CssClass="menu" Font-Names="Segoe UI" OnMenuItemClick="Menu1_MenuItemClick">
-            <Items>
-                <asp:MenuItem Text="Home" NavigateUrl="Home.aspx" />
-                <asp:MenuItem Text="Contact us" NavigateUrl="ContactUs.aspx" />
-                <asp:MenuItem Text="About us" NavigateUrl="AboutUs.aspx" />
-            </Items>
-        </asp:Menu>
+        
         <br />
         &nbsp;&nbsp;&nbsp;
             <asp:Label ID="lblWelcome" runat="server" Enabled="False" Text="Welcome "></asp:Label>
@@ -29,6 +23,8 @@
         &nbsp;&nbsp;
             <asp:GridView ID="gridAccountBalances" runat="server" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowCommand="GridAccountBalances_RowCommand">
                 <Columns>
+                    <asp:ButtonField ButtonType="Button" CommandName="Withdraw"  Text="Withdraw"  />
+                    <asp:ButtonField ButtonType="Button" CommandName="Deposit"  Text="Deposit"  />
                     <asp:ButtonField ButtonType="Button" CommandName="SelectAccount"  Text="Select Account"  />
                 </Columns>
             </asp:GridView>
@@ -41,20 +37,16 @@
         <table style="width: 34%; height: 145px; margin-left: 24px; margin-top: 2px;">
             <tr>
                 <td>
-                    <asp:DropDownList ID="dropAccountList" runat="server" Width="350px" InitialValue="-1" OnSelectedIndexChanged="dropAccountList_SelectedIndexChanged" DataTextField="SelectAccountDropList">
-                        <asp:ListItem>--Select Account--</asp:ListItem>
-                        <asp:ListItem>Checking Account</asp:ListItem>
-                        <asp:ListItem>Saving Account</asp:ListItem>
-                        <asp:ListItem>Loan Account</asp:ListItem>
-                    </asp:DropDownList>
+                    <asp:TextBox ID="txtInput" runat="server" Visible="False" Width="361px"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <asp:Button ID="btnSubmitAccount" runat="server" BackColor="#99CCFF" OnClick="btnSubmitAccount_Click" Text="Submit" Width="157px" />
+                <td>&nbsp;&nbsp;<asp:Button ID="btnSubmitAmount" runat="server" BackColor="#99CCFF" OnClick="btnSubmitAmount_Click1" Text="Submit" Visible="False" Width="109px" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="btnCancelInput" runat="server" BackColor="#99CCFF" Text="Cancel" Visible="False" Width="120px" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
             </tr>
         </table>

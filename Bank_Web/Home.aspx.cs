@@ -13,8 +13,21 @@ namespace Bank_Web
 {
     public partial class Home : System.Web.UI.Page
     {
+        
+        int selectedAccountID;
         protected void Page_Load(object sender, EventArgs e)
         {
+            var menu = Master.FindControl("HomeMenu") as Menu;
+            foreach(MenuItem mi in menu.Items)
+            {
+                if(mi.Value == "login")
+                {
+                    mi.Text = "Log Out";
+                }
+            }
+
+            
+            Session["selectedAccountID"] = null;
             //session verify if it has an ID or not, if not , redirect to the login
             if (String.IsNullOrEmpty(Session["CustomerID"]+ ""))
             {
@@ -61,16 +74,9 @@ namespace Bank_Web
             Response.Redirect("~/Login.aspx");
         }
 
-        protected void dropAccountList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Session["SelectAccountDropList"] = dropAccountList.SelectedIndex; 
-        }
+        
 
-        protected void btnSubmitAccount_Click(object sender, EventArgs e)
-        {
-
-            Response.Redirect("Account.aspx");
-        }
+        
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -99,6 +105,46 @@ namespace Bank_Web
                 // Retrieve the row that contains the button 
                 // from the Rows collection.
                 Response.Redirect("Account.aspx");
+            }
+            else if (e.CommandName == "Deposit")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                switch (index)
+                {
+                    case 0:
+                        this.selectedAccountID = 1;
+                        break;
+                    case 1:
+                        this.selectedAccountID = 2;
+                        break;
+                    case 2:
+                        this.selectedAccountID = 3;
+                        break;
+                }
+                txtInput.Visible = true;
+                btnSubmitAmount.Visible = true;
+            }
+        }
+
+        protected void DepositAmount(int index)
+        {
+
+        }
+
+        protected void btnSubmitAmount_Click1(object sender, EventArgs ee)
+        {
+            string amt = txtInput.Text;
+            bool checkAmt = double.TryParse(amt, out double amtValue);
+            if (checkAmt)
+            {
+                int selectedCustomerID = (int)Session["CustomerID"];
+                int selectedAccountID = this.selectedAccountID;
+
+                var objTransactionsBLL = new Transactions_BLL();
+                
+                    objTransactionsBLL.Deposit(selectedCustomerID, selectedAccountID, amtValue);
+               
+
             }
         }
     }

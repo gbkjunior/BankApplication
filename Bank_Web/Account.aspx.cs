@@ -15,7 +15,7 @@ namespace Bank_Web
         protected void Page_Load(object sender, EventArgs e)
         {
             int custID = (int)Session["customerID"];
-            if (Session["selectedAccountID"] != null)
+            if (String.IsNullOrEmpty(Session["selectedAccountID"] + ""))
             {
                 int selectedAccount = (int)Session["selectedAccountID"];
                 Login objLogin = new Login();
@@ -26,6 +26,10 @@ namespace Bank_Web
                 //string acctType = objAccountsBLL.GetAccountTypeByID(selectedAccount).GetAccountType().ToString();
                 //lblCheckAccBalance.Text = lblCheckAccBalance.Text + " " + acctType + " Account balance is: " + getBalanceValue + " ";
                 GetDataTableData();
+            }
+            else
+            {
+                Response.Redirect("Home.aspx");
             }
         }
 

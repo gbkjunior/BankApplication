@@ -14,7 +14,7 @@ namespace BankingApplication_DAL
         /// </summary>
         /// <param name="customer"></param>
         /// <returns>New generated customerID</returns>
-        public int AddNewCustomer(Customers customer)
+        public int AddNewCustomer1(Customers customer)
         {
             BankDataContext bankDataContext = new BankDataContext();
             CustomerTable custTable = new CustomerTable();
@@ -24,6 +24,27 @@ namespace BankingApplication_DAL
             custTable.Customer_Address = customer.GetCustomerAddress();
             custTable.Customer_Name = customer.GetCustomerName();
             custTable.Customer_Telephone = customer.GetCustomerTelephone();
+
+            bankDataContext.CustomerTables.InsertOnSubmit(custTable);
+            bankDataContext.SubmitChanges();
+            // how linq to sql works in fetching the identity column
+            return custTable.Customer_ID;
+
+        }
+
+        public int AddNewCustomer(Customers customer)
+        {
+            BankDataContext bankDataContext = new BankDataContext();
+            CustomerTable custTable = new CustomerTable();
+
+            bankDataContext.Connection.Open();
+
+            custTable.Customer_Name = customer.GetCustomerName();
+            custTable.Customer_Email = customer.GetCustomerEmail();
+            custTable.Customer_Password = customer.GetCustomerPassword();
+            custTable.Customer_DOB = customer.GetCustomerDOB();
+            custTable.Customer_Telephone = customer.GetCustomerTelephone();
+            custTable.Customer_Address = customer.GetCustomerAddress();
 
             bankDataContext.CustomerTables.InsertOnSubmit(custTable);
             bankDataContext.SubmitChanges();
@@ -55,12 +76,12 @@ namespace BankingApplication_DAL
         /// </summary>
         /// <param name="custID"></param>
         /// <returns>A bool value</returns>
-        public bool ValidateCustomer(int custID)
+        public bool ValidateCustomer(int custID, string password)
         {
             BankDataContext bankDataContext = new BankDataContext();
             CustomerTable custTable = new CustomerTable();
 
-            var valIDQuery = bankDataContext.CustomerTables.Any(cust => cust.Customer_ID == custID);
+            var valIDQuery = bankDataContext.CustomerTables.Any(cust => (cust.Customer_ID == custID && cust.Customer_Password == password));
 
             if (!valIDQuery)
                 return false;

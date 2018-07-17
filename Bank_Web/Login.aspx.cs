@@ -13,14 +13,18 @@ namespace Bank_Web
         int customerID;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            lblError.Visible = false;
+            ValidationSettings.UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             string custID = txtCustomerID.Text;
+            string custPassword = txtPassword.Text;
+
             bool checkCustID = int.TryParse(custID, out int custIDValue);
-            if (!checkCustID)
+            
+            if (!checkCustID && custPassword.ToString() == null)
             {
                 lblError.Visible = true;
             }
@@ -28,7 +32,7 @@ namespace Bank_Web
             {
                 var objCustomerBLL = new Customers_BLL();
 
-                bool checkCust = objCustomerBLL.validateCustomer(custIDValue);
+                bool checkCust = objCustomerBLL.validateCustomer(custIDValue, custPassword);
                 if (checkCust)
                 {
                     customerID = Convert.ToInt32(txtCustomerID.Text);
@@ -37,7 +41,7 @@ namespace Bank_Web
                 }
                 else
                 {
-                    lblError.Text = "Your customerID is not found. Please try again!";
+                    lblError.Text = "Your customerID and password do not match. Please try again!";
                     lblError.Visible = true;
                 }
             }
@@ -50,6 +54,7 @@ namespace Bank_Web
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
+            
             btnLogin.Enabled = false;
             RegisterView.SetActiveView(viewRegister);
         }
@@ -70,18 +75,22 @@ namespace Bank_Web
 
         protected void btnAddCustomer_Click(object sender, EventArgs e)
         {
-            string custName = Request.Form["txtCustName"];
+            btnAddCustomer.CausesValidation = true;
+            string custName = txtCustName.Text;
+            string custEmail = txtCustEmail.Text;
+            string custPassword = txtCustPassword.Text;
+            string custDOB = txtCustDOB.Text;
             string custAddress = Request.Form["txtCustAddress"];
-            string custTelephone = Request.Form["txtCustTelephone"];
+            string custTelephone = txtCustTelephone.Text;
             if(custName == "")
             {
-                lblErrorName.Visible = !lblErrorName.Visible;
+                //lblErrorName.Visible = !lblErrorName.Visible;
             }
             else
             {
                 var objCustomerBLL = new Customers_BLL();
 
-                int custID = objCustomerBLL.AddNewCustomer(custName, custAddress, custTelephone);
+                int custID = objCustomerBLL.AddNewCustomer(custName,custEmail,custPassword, custDOB, custTelephone, custAddress);
                 RegisterView.Views.Remove(viewRegister);
 
                 RegisterView.SetActiveView(viewSuccessRegister);
@@ -103,5 +112,15 @@ namespace Bank_Web
         {
             return this.customerID;
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //protected void Button1_Click1(object sender, EventArgs e)
+        //{
+        //    pnlLogin.Visible = false;
+        //}
     }
 }

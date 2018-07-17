@@ -8,6 +8,9 @@ namespace BankingApplication_BO
     {
         private int customerID;
         private string customerName;
+        private string customerEmail;
+        private string customerPassword;
+        private string customerDOB;
         private string customerAddress;
         private string customerTelephone;
         
@@ -20,6 +23,16 @@ namespace BankingApplication_BO
         public Customers(string custName, string custAddress, string custTelephone)
         {
             this.customerName = custName;
+            this.customerAddress = custAddress;
+            this.customerTelephone = custTelephone;
+        }
+
+        public Customers(string custName, string email, string password, string dob , string custTelephone, string custAddress)
+        {
+            this.customerName = custName;
+            this.customerEmail = email;
+            this.customerPassword = password;
+            this.customerDOB = dob;
             this.customerAddress = custAddress;
             this.customerTelephone = custTelephone;
         }
@@ -40,6 +53,21 @@ namespace BankingApplication_BO
         public string GetCustomerName()
         {
             return this.customerName;
+        }
+
+        public string GetCustomerEmail()
+        {
+            return this.customerEmail;
+        }
+
+        public string GetCustomerPassword()
+        {
+            return this.customerPassword;
+        }
+
+        public string GetCustomerDOB()
+        {
+            return this.customerDOB;
         }
 
         /// <summary>

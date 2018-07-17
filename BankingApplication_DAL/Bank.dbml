@@ -1,40 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Bank" Class="BankDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=&quot;C:\Users\vijay\C# Development\BankingApplication\BankingApplication_DAL\Bank.mdf&quot;;Integrated Security=True" SettingsObjectName="BankingApplication_DAL.Properties.Settings" SettingsPropertyName="BankConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Bank.mdf;Integrated Security=True" SettingsObjectName="BankingApplication_DAL.Properties.Settings" SettingsPropertyName="BankConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.AccountTable" Member="AccountTables">
     <Type Name="AccountTable">
-      <Column Name="Account_ID" Type="System.Int32" DbType="Int" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Account_Type" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="Account_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Account_Type" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
       <Association Name="AccountTable_Customer_Accounts_Table" Member="Customer_Accounts_Tables" ThisKey="Account_ID" OtherKey="Account_ID" Type="Customer_Accounts_Table" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Customer_Accounts_Table" Member="Customer_Accounts_Tables">
-    <Type Name="Customer_Accounts_Table">
-      <Column Name="Customer_ID" Type="System.Int32" DbType="Int" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Account_ID" Type="System.Int32" DbType="Int" CanBeNull="false" />
-      <Column Name="Balance" Type="System.Decimal" DbType="Decimal(10,0)" CanBeNull="true" />
-      <Association Name="Customer_Accounts_Table_TransactionTable" Member="TransactionTables" ThisKey="Customer_ID,Account_ID" OtherKey="Customer_ID,Account_ID" Type="TransactionTable" />
-      <Association Name="AccountTable_Customer_Accounts_Table" Member="AccountTable" ThisKey="Account_ID" OtherKey="Account_ID" Type="AccountTable" IsForeignKey="true" />
-      <Association Name="CustomerTable_Customer_Accounts_Table" Member="CustomerTable" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="CustomerTable" IsForeignKey="true" />
+      <Association Name="AccountTable_TransactionTable" Member="TransactionTables" ThisKey="Account_ID" OtherKey="Account_ID" Type="TransactionTable" />
     </Type>
   </Table>
   <Table Name="dbo.CustomerTable" Member="CustomerTables">
     <Type Name="CustomerTable">
       <Column Name="Customer_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Customer_Name" Type="System.String" DbType="VarChar(45)" CanBeNull="true" />
-      <Column Name="Customer_Address" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Customer_Email" Type="System.String" DbType="VarChar(45)" CanBeNull="true" />
+      <Column Name="Customer_Password" Type="System.String" DbType="VarChar(45)" CanBeNull="true" />
+      <Column Name="Customer_DOB" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
       <Column Name="Customer_Telephone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Customer_Address" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Association Name="CustomerTable_Customer_Accounts_Table" Member="Customer_Accounts_Tables" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="Customer_Accounts_Table" />
+      <Association Name="CustomerTable_TransactionTable" Member="TransactionTables" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="TransactionTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customer_Accounts_Table" Member="Customer_Accounts_Tables">
+    <Type Name="Customer_Accounts_Table">
+      <Column Name="Customer_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Account_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Balance" Type="System.Decimal" DbType="Decimal(10,0) NOT NULL" CanBeNull="false" />
+      <Association Name="AccountTable_Customer_Accounts_Table" Member="AccountTable" ThisKey="Account_ID" OtherKey="Account_ID" Type="AccountTable" IsForeignKey="true" />
+      <Association Name="CustomerTable_Customer_Accounts_Table" Member="CustomerTable" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="CustomerTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TransactionTable" Member="TransactionTables">
     <Type Name="TransactionTable">
-      <Column Name="Transaction_ID" AutoSync="Never" Type="System.Int32" DbType="Int" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Transaction_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Transaction_Type" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
       <Column Name="Transaction_Date" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(10,0)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(10,0) NOT NULL" CanBeNull="false" />
       <Column Name="Account_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Customer_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Customer_Accounts_Table_TransactionTable" Member="Customer_Accounts_Table" ThisKey="Customer_ID,Account_ID" OtherKey="Customer_ID,Account_ID" Type="Customer_Accounts_Table" IsForeignKey="true" />
+      <Association Name="AccountTable_TransactionTable" Member="AccountTable" ThisKey="Account_ID" OtherKey="Account_ID" Type="AccountTable" IsForeignKey="true" />
+      <Association Name="CustomerTable_TransactionTable" Member="CustomerTable" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="CustomerTable" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

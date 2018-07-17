@@ -161,12 +161,20 @@
     width: 51px;
     height: 27px;
 }
-
+.bgImg {
+    width: 1024px;
+    height: 768px;
+    background-image:url('images/Login-Landing page/Group 26.png');
+}
 .auto-style1 {
     width: 22px;
     height: 24px;
 }
 
+.panelLogin {
+    margin-left:60%;
+    margin-right:10%;
+}
 .menu ul {
     height: 54px;
     border-bottom: 1px solid gray;
@@ -191,8 +199,9 @@
             .menu ul li a:hover {
                 font-weight: bold;
             }
-    .menu ul li>a[href="Login.aspx"]  {
+    .menu ul li>login  {
         background-color: black;
+        text-align: right;
         text-decoration: none;
         padding: 3px;
         margin: 3px;

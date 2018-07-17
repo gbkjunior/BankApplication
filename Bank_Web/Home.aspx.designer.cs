@@ -13,15 +13,6 @@ namespace Bank_Web {
     public partial class Home {
         
         /// <summary>
-        /// HomeMenu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu HomeMenu;
-        
-        /// <summary>
         /// lblWelcome control.
         /// </summary>
         /// <remarks>
@@ -58,21 +49,30 @@ namespace Bank_Web {
         protected global::System.Web.UI.WebControls.GridView gridAccountBalances;
         
         /// <summary>
-        /// dropAccountList control.
+        /// txtInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dropAccountList;
+        protected global::System.Web.UI.WebControls.TextBox txtInput;
         
         /// <summary>
-        /// btnSubmitAccount control.
+        /// btnSubmitAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSubmitAccount;
+        protected global::System.Web.UI.WebControls.Button btnSubmitAmount;
+        
+        /// <summary>
+        /// btnCancelInput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelInput;
     }
 }

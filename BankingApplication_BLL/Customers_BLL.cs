@@ -21,7 +21,10 @@ namespace BankingApplication_BLL
         {
              return custObject.AddNewCustomer(new Customers(custName, custAddress, custTelephone));
         }
-
+        public int AddNewCustomer(string custName, string email, string password, string dob, string custTelephone, string custAddress)
+        {
+            return custObject.AddNewCustomer(new Customers(custName, email, password, dob, custTelephone, custAddress));
+        }
         /// <summary>
         /// Method to retrieve customer name based on his customerID
         /// </summary>
@@ -37,9 +40,9 @@ namespace BankingApplication_BLL
         /// </summary>
         /// <param name="custID"></param>
         /// <returns>bool</returns>
-        public bool validateCustomer(int custID)
+        public bool validateCustomer(int custID, string password)
         {
-            return custObject.ValidateCustomer(custID);
+            return custObject.ValidateCustomer(custID, password);
         }
     }
 }

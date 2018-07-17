@@ -33,9 +33,6 @@ namespace BankingApplication_DAL
     partial void InsertAccountTable(AccountTable instance);
     partial void UpdateAccountTable(AccountTable instance);
     partial void DeleteAccountTable(AccountTable instance);
-    partial void InsertCustomer_Accounts_Table(Customer_Accounts_Table instance);
-    partial void UpdateCustomer_Accounts_Table(Customer_Accounts_Table instance);
-    partial void DeleteCustomer_Accounts_Table(Customer_Accounts_Table instance);
     partial void InsertCustomerTable(CustomerTable instance);
     partial void UpdateCustomerTable(CustomerTable instance);
     partial void DeleteCustomerTable(CustomerTable instance);
@@ -82,19 +79,19 @@ namespace BankingApplication_DAL
 			}
 		}
 		
-		public System.Data.Linq.Table<Customer_Accounts_Table> Customer_Accounts_Tables
-		{
-			get
-			{
-				return this.GetTable<Customer_Accounts_Table>();
-			}
-		}
-		
 		public System.Data.Linq.Table<CustomerTable> CustomerTables
 		{
 			get
 			{
 				return this.GetTable<CustomerTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Customer_Accounts_Table> Customer_Accounts_Tables
+		{
+			get
+			{
+				return this.GetTable<Customer_Accounts_Table>();
 			}
 		}
 		
@@ -117,7 +114,7 @@ namespace BankingApplication_DAL
 		
 		private string _Account_Type;
 		
-		private EntitySet<Customer_Accounts_Table> _Customer_Accounts_Tables;
+		private EntitySet<TransactionTable> _TransactionTables;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -131,11 +128,11 @@ namespace BankingApplication_DAL
 		
 		public AccountTable()
 		{
-			this._Customer_Accounts_Tables = new EntitySet<Customer_Accounts_Table>(new Action<Customer_Accounts_Table>(this.attach_Customer_Accounts_Tables), new Action<Customer_Accounts_Table>(this.detach_Customer_Accounts_Tables));
+			this._TransactionTables = new EntitySet<TransactionTable>(new Action<TransactionTable>(this.attach_TransactionTables), new Action<TransactionTable>(this.detach_TransactionTables));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Account_ID", DbType="Int", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Account_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int Account_ID
 		{
 			get
@@ -155,7 +152,7 @@ namespace BankingApplication_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Account_Type", DbType="VarChar(15)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Account_Type", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
 		public string Account_Type
 		{
 			get
@@ -175,159 +172,7 @@ namespace BankingApplication_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AccountTable_Customer_Accounts_Table", Storage="_Customer_Accounts_Tables", ThisKey="Account_ID", OtherKey="Account_ID")]
-		public EntitySet<Customer_Accounts_Table> Customer_Accounts_Tables
-		{
-			get
-			{
-				return this._Customer_Accounts_Tables;
-			}
-			set
-			{
-				this._Customer_Accounts_Tables.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Customer_Accounts_Tables(Customer_Accounts_Table entity)
-		{
-			this.SendPropertyChanging();
-			entity.AccountTable = this;
-		}
-		
-		private void detach_Customer_Accounts_Tables(Customer_Accounts_Table entity)
-		{
-			this.SendPropertyChanging();
-			entity.AccountTable = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Customer_Accounts_Table")]
-	public partial class Customer_Accounts_Table : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Customer_ID;
-		
-		private int _Account_ID;
-		
-		private System.Nullable<decimal> _Balance;
-		
-		private EntitySet<TransactionTable> _TransactionTables;
-		
-		private EntityRef<AccountTable> _AccountTable;
-		
-		private EntityRef<CustomerTable> _CustomerTable;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCustomer_IDChanging(int value);
-    partial void OnCustomer_IDChanged();
-    partial void OnAccount_IDChanging(int value);
-    partial void OnAccount_IDChanged();
-    partial void OnBalanceChanging(System.Nullable<decimal> value);
-    partial void OnBalanceChanged();
-    #endregion
-		
-		public Customer_Accounts_Table()
-		{
-			this._TransactionTables = new EntitySet<TransactionTable>(new Action<TransactionTable>(this.attach_TransactionTables), new Action<TransactionTable>(this.detach_TransactionTables));
-			this._AccountTable = default(EntityRef<AccountTable>);
-			this._CustomerTable = default(EntityRef<CustomerTable>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_ID", DbType="Int", IsPrimaryKey=true)]
-		public int Customer_ID
-		{
-			get
-			{
-				return this._Customer_ID;
-			}
-			set
-			{
-				if ((this._Customer_ID != value))
-				{
-					if (this._CustomerTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCustomer_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Customer_ID = value;
-					this.SendPropertyChanged("Customer_ID");
-					this.OnCustomer_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Account_ID", DbType="Int")]
-		public int Account_ID
-		{
-			get
-			{
-				return this._Account_ID;
-			}
-			set
-			{
-				if ((this._Account_ID != value))
-				{
-					if (this._AccountTable.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAccount_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Account_ID = value;
-					this.SendPropertyChanged("Account_ID");
-					this.OnAccount_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Balance", DbType="Decimal(10,0)")]
-		public System.Nullable<decimal> Balance
-		{
-			get
-			{
-				return this._Balance;
-			}
-			set
-			{
-				if ((this._Balance != value))
-				{
-					this.OnBalanceChanging(value);
-					this.SendPropertyChanging();
-					this._Balance = value;
-					this.SendPropertyChanged("Balance");
-					this.OnBalanceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Accounts_Table_TransactionTable", Storage="_TransactionTables", ThisKey="Customer_ID,Account_ID", OtherKey="Customer_ID,Account_ID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AccountTable_TransactionTable", Storage="_TransactionTables", ThisKey="Account_ID", OtherKey="Account_ID")]
 		public EntitySet<TransactionTable> TransactionTables
 		{
 			get
@@ -337,74 +182,6 @@ namespace BankingApplication_DAL
 			set
 			{
 				this._TransactionTables.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AccountTable_Customer_Accounts_Table", Storage="_AccountTable", ThisKey="Account_ID", OtherKey="Account_ID", IsForeignKey=true)]
-		public AccountTable AccountTable
-		{
-			get
-			{
-				return this._AccountTable.Entity;
-			}
-			set
-			{
-				AccountTable previousValue = this._AccountTable.Entity;
-				if (((previousValue != value) 
-							|| (this._AccountTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._AccountTable.Entity = null;
-						previousValue.Customer_Accounts_Tables.Remove(this);
-					}
-					this._AccountTable.Entity = value;
-					if ((value != null))
-					{
-						value.Customer_Accounts_Tables.Add(this);
-						this._Account_ID = value.Account_ID;
-					}
-					else
-					{
-						this._Account_ID = default(int);
-					}
-					this.SendPropertyChanged("AccountTable");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CustomerTable_Customer_Accounts_Table", Storage="_CustomerTable", ThisKey="Customer_ID", OtherKey="Customer_ID", IsForeignKey=true)]
-		public CustomerTable CustomerTable
-		{
-			get
-			{
-				return this._CustomerTable.Entity;
-			}
-			set
-			{
-				CustomerTable previousValue = this._CustomerTable.Entity;
-				if (((previousValue != value) 
-							|| (this._CustomerTable.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CustomerTable.Entity = null;
-						previousValue.Customer_Accounts_Tables.Remove(this);
-					}
-					this._CustomerTable.Entity = value;
-					if ((value != null))
-					{
-						value.Customer_Accounts_Tables.Add(this);
-						this._Customer_ID = value.Customer_ID;
-					}
-					else
-					{
-						this._Customer_ID = default(int);
-					}
-					this.SendPropertyChanged("CustomerTable");
-				}
 			}
 		}
 		
@@ -431,13 +208,13 @@ namespace BankingApplication_DAL
 		private void attach_TransactionTables(TransactionTable entity)
 		{
 			this.SendPropertyChanging();
-			entity.Customer_Accounts_Table = this;
+			entity.AccountTable = this;
 		}
 		
 		private void detach_TransactionTables(TransactionTable entity)
 		{
 			this.SendPropertyChanging();
-			entity.Customer_Accounts_Table = null;
+			entity.AccountTable = null;
 		}
 	}
 	
@@ -451,11 +228,17 @@ namespace BankingApplication_DAL
 		
 		private string _Customer_Name;
 		
-		private string _Customer_Address;
+		private string _Customer_Email;
+		
+		private string _Customer_Password;
+		
+		private string _Customer_DOB;
 		
 		private string _Customer_Telephone;
 		
-		private EntitySet<Customer_Accounts_Table> _Customer_Accounts_Tables;
+		private string _Customer_Address;
+		
+		private EntitySet<TransactionTable> _TransactionTables;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -465,15 +248,21 @@ namespace BankingApplication_DAL
     partial void OnCustomer_IDChanged();
     partial void OnCustomer_NameChanging(string value);
     partial void OnCustomer_NameChanged();
-    partial void OnCustomer_AddressChanging(string value);
-    partial void OnCustomer_AddressChanged();
+    partial void OnCustomer_EmailChanging(string value);
+    partial void OnCustomer_EmailChanged();
+    partial void OnCustomer_PasswordChanging(string value);
+    partial void OnCustomer_PasswordChanged();
+    partial void OnCustomer_DOBChanging(string value);
+    partial void OnCustomer_DOBChanged();
     partial void OnCustomer_TelephoneChanging(string value);
     partial void OnCustomer_TelephoneChanged();
+    partial void OnCustomer_AddressChanging(string value);
+    partial void OnCustomer_AddressChanged();
     #endregion
 		
 		public CustomerTable()
 		{
-			this._Customer_Accounts_Tables = new EntitySet<Customer_Accounts_Table>(new Action<Customer_Accounts_Table>(this.attach_Customer_Accounts_Tables), new Action<Customer_Accounts_Table>(this.detach_Customer_Accounts_Tables));
+			this._TransactionTables = new EntitySet<TransactionTable>(new Action<TransactionTable>(this.attach_TransactionTables), new Action<TransactionTable>(this.detach_TransactionTables));
 			OnCreated();
 		}
 		
@@ -517,22 +306,62 @@ namespace BankingApplication_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_Address", DbType="VarChar(100)")]
-		public string Customer_Address
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_Email", DbType="VarChar(45)")]
+		public string Customer_Email
 		{
 			get
 			{
-				return this._Customer_Address;
+				return this._Customer_Email;
 			}
 			set
 			{
-				if ((this._Customer_Address != value))
+				if ((this._Customer_Email != value))
 				{
-					this.OnCustomer_AddressChanging(value);
+					this.OnCustomer_EmailChanging(value);
 					this.SendPropertyChanging();
-					this._Customer_Address = value;
-					this.SendPropertyChanged("Customer_Address");
-					this.OnCustomer_AddressChanged();
+					this._Customer_Email = value;
+					this.SendPropertyChanged("Customer_Email");
+					this.OnCustomer_EmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_Password", DbType="VarChar(45)")]
+		public string Customer_Password
+		{
+			get
+			{
+				return this._Customer_Password;
+			}
+			set
+			{
+				if ((this._Customer_Password != value))
+				{
+					this.OnCustomer_PasswordChanging(value);
+					this.SendPropertyChanging();
+					this._Customer_Password = value;
+					this.SendPropertyChanged("Customer_Password");
+					this.OnCustomer_PasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_DOB", DbType="VarChar(15)")]
+		public string Customer_DOB
+		{
+			get
+			{
+				return this._Customer_DOB;
+			}
+			set
+			{
+				if ((this._Customer_DOB != value))
+				{
+					this.OnCustomer_DOBChanging(value);
+					this.SendPropertyChanging();
+					this._Customer_DOB = value;
+					this.SendPropertyChanged("Customer_DOB");
+					this.OnCustomer_DOBChanged();
 				}
 			}
 		}
@@ -557,16 +386,36 @@ namespace BankingApplication_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CustomerTable_Customer_Accounts_Table", Storage="_Customer_Accounts_Tables", ThisKey="Customer_ID", OtherKey="Customer_ID")]
-		public EntitySet<Customer_Accounts_Table> Customer_Accounts_Tables
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_Address", DbType="VarChar(100)")]
+		public string Customer_Address
 		{
 			get
 			{
-				return this._Customer_Accounts_Tables;
+				return this._Customer_Address;
 			}
 			set
 			{
-				this._Customer_Accounts_Tables.Assign(value);
+				if ((this._Customer_Address != value))
+				{
+					this.OnCustomer_AddressChanging(value);
+					this.SendPropertyChanging();
+					this._Customer_Address = value;
+					this.SendPropertyChanged("Customer_Address");
+					this.OnCustomer_AddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CustomerTable_TransactionTable", Storage="_TransactionTables", ThisKey="Customer_ID", OtherKey="Customer_ID")]
+		public EntitySet<TransactionTable> TransactionTables
+		{
+			get
+			{
+				return this._TransactionTables;
+			}
+			set
+			{
+				this._TransactionTables.Assign(value);
 			}
 		}
 		
@@ -590,16 +439,79 @@ namespace BankingApplication_DAL
 			}
 		}
 		
-		private void attach_Customer_Accounts_Tables(Customer_Accounts_Table entity)
+		private void attach_TransactionTables(TransactionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.CustomerTable = this;
 		}
 		
-		private void detach_Customer_Accounts_Tables(Customer_Accounts_Table entity)
+		private void detach_TransactionTables(TransactionTable entity)
 		{
 			this.SendPropertyChanging();
 			entity.CustomerTable = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Customer_Accounts_Table")]
+	public partial class Customer_Accounts_Table
+	{
+		
+		private System.Nullable<int> _Customer_ID;
+		
+		private System.Nullable<int> _Account_ID;
+		
+		private decimal _Balance;
+		
+		public Customer_Accounts_Table()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer_ID", DbType="Int")]
+		public System.Nullable<int> Customer_ID
+		{
+			get
+			{
+				return this._Customer_ID;
+			}
+			set
+			{
+				if ((this._Customer_ID != value))
+				{
+					this._Customer_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Account_ID", DbType="Int")]
+		public System.Nullable<int> Account_ID
+		{
+			get
+			{
+				return this._Account_ID;
+			}
+			set
+			{
+				if ((this._Account_ID != value))
+				{
+					this._Account_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Balance", DbType="Decimal(10,0) NOT NULL")]
+		public decimal Balance
+		{
+			get
+			{
+				return this._Balance;
+			}
+			set
+			{
+				if ((this._Balance != value))
+				{
+					this._Balance = value;
+				}
+			}
 		}
 	}
 	
@@ -615,13 +527,15 @@ namespace BankingApplication_DAL
 		
 		private string _Transaction_Date;
 		
-		private System.Nullable<decimal> _Amount;
+		private decimal _Amount;
 		
 		private System.Nullable<int> _Account_ID;
 		
 		private System.Nullable<int> _Customer_ID;
 		
-		private EntityRef<Customer_Accounts_Table> _Customer_Accounts_Table;
+		private EntityRef<AccountTable> _AccountTable;
+		
+		private EntityRef<CustomerTable> _CustomerTable;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -633,7 +547,7 @@ namespace BankingApplication_DAL
     partial void OnTransaction_TypeChanged();
     partial void OnTransaction_DateChanging(string value);
     partial void OnTransaction_DateChanged();
-    partial void OnAmountChanging(System.Nullable<decimal> value);
+    partial void OnAmountChanging(decimal value);
     partial void OnAmountChanged();
     partial void OnAccount_IDChanging(System.Nullable<int> value);
     partial void OnAccount_IDChanged();
@@ -643,11 +557,12 @@ namespace BankingApplication_DAL
 		
 		public TransactionTable()
 		{
-			this._Customer_Accounts_Table = default(EntityRef<Customer_Accounts_Table>);
+			this._AccountTable = default(EntityRef<AccountTable>);
+			this._CustomerTable = default(EntityRef<CustomerTable>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Transaction_ID", DbType="Int", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Transaction_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Transaction_ID
 		{
 			get
@@ -707,8 +622,8 @@ namespace BankingApplication_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(10,0)")]
-		public System.Nullable<decimal> Amount
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(10,0) NOT NULL")]
+		public decimal Amount
 		{
 			get
 			{
@@ -738,7 +653,7 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Account_ID != value))
 				{
-					if (this._Customer_Accounts_Table.HasLoadedOrAssignedValue)
+					if (this._AccountTable.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -762,7 +677,7 @@ namespace BankingApplication_DAL
 			{
 				if ((this._Customer_ID != value))
 				{
-					if (this._Customer_Accounts_Table.HasLoadedOrAssignedValue)
+					if (this._CustomerTable.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -775,38 +690,70 @@ namespace BankingApplication_DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Accounts_Table_TransactionTable", Storage="_Customer_Accounts_Table", ThisKey="Customer_ID,Account_ID", OtherKey="Customer_ID,Account_ID", IsForeignKey=true)]
-		public Customer_Accounts_Table Customer_Accounts_Table
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AccountTable_TransactionTable", Storage="_AccountTable", ThisKey="Account_ID", OtherKey="Account_ID", IsForeignKey=true)]
+		public AccountTable AccountTable
 		{
 			get
 			{
-				return this._Customer_Accounts_Table.Entity;
+				return this._AccountTable.Entity;
 			}
 			set
 			{
-				Customer_Accounts_Table previousValue = this._Customer_Accounts_Table.Entity;
+				AccountTable previousValue = this._AccountTable.Entity;
 				if (((previousValue != value) 
-							|| (this._Customer_Accounts_Table.HasLoadedOrAssignedValue == false)))
+							|| (this._AccountTable.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Customer_Accounts_Table.Entity = null;
+						this._AccountTable.Entity = null;
 						previousValue.TransactionTables.Remove(this);
 					}
-					this._Customer_Accounts_Table.Entity = value;
+					this._AccountTable.Entity = value;
 					if ((value != null))
 					{
 						value.TransactionTables.Add(this);
-						this._Customer_ID = value.Customer_ID;
 						this._Account_ID = value.Account_ID;
 					}
 					else
 					{
-						this._Customer_ID = default(Nullable<int>);
 						this._Account_ID = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Customer_Accounts_Table");
+					this.SendPropertyChanged("AccountTable");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CustomerTable_TransactionTable", Storage="_CustomerTable", ThisKey="Customer_ID", OtherKey="Customer_ID", IsForeignKey=true)]
+		public CustomerTable CustomerTable
+		{
+			get
+			{
+				return this._CustomerTable.Entity;
+			}
+			set
+			{
+				CustomerTable previousValue = this._CustomerTable.Entity;
+				if (((previousValue != value) 
+							|| (this._CustomerTable.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CustomerTable.Entity = null;
+						previousValue.TransactionTables.Remove(this);
+					}
+					this._CustomerTable.Entity = value;
+					if ((value != null))
+					{
+						value.TransactionTables.Add(this);
+						this._Customer_ID = value.Customer_ID;
+					}
+					else
+					{
+						this._Customer_ID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("CustomerTable");
 				}
 			}
 		}
