@@ -13,6 +13,7 @@ namespace Bank_Web
         int customerID;
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["CustomerID"] = null;
             lblError.Visible = false;
             ValidationSettings.UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
         }
@@ -52,12 +53,12 @@ namespace Bank_Web
 
         }
 
-        protected void btnRegister_Click(object sender, EventArgs e)
-        {
+        //protected void btnRegister_Click(object sender, EventArgs e)
+        //{
             
-            btnLogin.Enabled = false;
-            RegisterView.SetActiveView(viewRegister);
-        }
+        //    btnLogin.Enabled = false;
+        //    MultiViewLogin.SetActiveView(viewRegister);
+        //}
 
         protected void RegisterView_ActiveViewChanged(object sender, EventArgs e)
         {
@@ -89,11 +90,15 @@ namespace Bank_Web
             else
             {
                 var objCustomerBLL = new Customers_BLL();
-
+                var objAccountsBLL = new Accounts_BLL();
                 int custID = objCustomerBLL.AddNewCustomer(custName,custEmail,custPassword, custDOB, custTelephone, custAddress);
-                RegisterView.Views.Remove(viewRegister);
 
-                RegisterView.SetActiveView(viewSuccessRegister);
+                for (int i = 1; i < 4; i++)
+                    objAccountsBLL.AddCustomerAccount(custID, i, 100);
+
+                MultiViewLogin.Views.Remove(viewRegister);
+
+                MultiViewLogin.SetActiveView(viewSuccessRegister);
                 lblSuccessRegister.Text = lblSuccessRegister.Text +custName+ ". Your customerID is" + custID + ".";
                 lblSuccessRegister.Visible = true;
                 btnLogin.Enabled = true;
@@ -105,7 +110,7 @@ namespace Bank_Web
         {
             btnLogin.Enabled = true;
             viewRegister.EnableViewState = false;
-            RegisterView.ActiveViewIndex = 0;
+            MultiViewLogin.ActiveViewIndex = 0;
         }
 
         public int GetCustomerID()

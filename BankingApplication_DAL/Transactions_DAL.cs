@@ -119,7 +119,7 @@ namespace BankingApplication_DAL
             TransactionTable transTable = new TransactionTable();
             Customer_Accounts_Table custAcctTable = new Customer_Accounts_Table();
             //var checkRecord = bankDataContext.TransactionTables.Where(c => (c.Account_ID == trans.GetAccountID() && c.Customer_ID == trans.GetCustomerID())).Any();
-            var balance = bankDataContext.Customer_Accounts_Tables.SingleOrDefault(b => (b.Account_ID == trans.GetAccountID() && b.Customer_ID == trans.GetCustomerID()));
+            var balance = bankDataContext.Customer_Accounts_Tables.FirstOrDefault(b => (b.Account_ID == trans.GetAccountID() && b.Customer_ID == trans.GetCustomerID()));
             if(balance == null)
             {
                 return 0;
@@ -161,11 +161,12 @@ namespace BankingApplication_DAL
             {
                 var amtQuery = bankDataContext.TransactionTables.Where(t => (t.Account_ID == trans.GetAccountID() && t.Customer_ID == trans.GetCustomerID() && t.Transaction_Type == trans.GetTransactionType().ToString())).ToArray().Last().Amount;
                 
-                Customer_Accounts_Table myCust = bankDataContext.Customer_Accounts_Tables.SingleOrDefault(p => (p.Customer_ID == trans.GetCustomerID() && p.Account_ID == trans.GetAccountID()));
-                myCust.Balance = myCust.Balance + amtQuery;
+                custAcctTable = bankDataContext.Customer_Accounts_Tables.SingleOrDefault(p => (p.Customer_ID == trans.GetCustomerID() && p.Account_ID == trans.GetAccountID()));
+                custAcctTable.Balance = custAcctTable.Balance + amtQuery;
                 
                 bankDataContext.SubmitChanges();
-                return Convert.ToDouble(myCust.Balance);
+                
+                return Convert.ToDouble(custAcctTable.Balance);
             }
         }
 

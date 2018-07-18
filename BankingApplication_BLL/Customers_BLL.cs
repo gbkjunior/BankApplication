@@ -17,10 +17,6 @@ namespace BankingApplication_BLL
         /// <param name="custAddress"></param>
         /// <param name="custTelephone"></param>
         /// <returns>CustomerID</returns>
-        public int AddNewCustomer(string custName, string custAddress, string custTelephone)
-        {
-             return custObject.AddNewCustomer(new Customers(custName, custAddress, custTelephone));
-        }
         public int AddNewCustomer(string custName, string email, string password, string dob, string custTelephone, string custAddress)
         {
             return custObject.AddNewCustomer(new Customers(custName, email, password, dob, custTelephone, custAddress));

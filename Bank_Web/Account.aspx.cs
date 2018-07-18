@@ -14,10 +14,23 @@ namespace Bank_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            int custID = (int)Session["customerID"];
-            if (String.IsNullOrEmpty(Session["selectedAccountID"] + ""))
+            if (Session["CustomerID"] != null)
+            {
+                var menu = Master.FindControl("HomeMenu") as Menu;
+
+                foreach (MenuItem mi in menu.Items)
+                {
+                    if (mi.Value == "login")
+                    {
+                        mi.Text = "Log Out";
+                    }
+                }
+            }
+            //int custID = (int)Session["CustomerID"];
+            if (!(String.IsNullOrEmpty(Session["selectedAccountID"] + "") || String.IsNullOrEmpty(Session["CustomerID"] + "")))
             {
                 int selectedAccount = (int)Session["selectedAccountID"];
+                int custID = (int)Session["CustomerID"];
                 Login objLogin = new Login();
                 var objTransactionBLL = new Transactions_BLL();
                 var objAccountsBLL = new Accounts_BLL();

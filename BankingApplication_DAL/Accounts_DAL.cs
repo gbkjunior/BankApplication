@@ -10,6 +10,22 @@ namespace BankingApplication_DAL
 
         AccountTable accountTableObject = new AccountTable();
 
+        public void AddCustomerAccount(int custID, int acctID, double balance)
+        {
+            BankDataContext bankDataContext = new BankDataContext();
+            Customer_Accounts_Table custAcctTable = new Customer_Accounts_Table();
+
+            custAcctTable.Account_ID = acctID;
+            custAcctTable.Customer_ID = custID;
+            custAcctTable.Balance = Convert.ToDecimal(balance);
+
+            string insertStatement = "Insert into Customer_Accounts_Table(CustomerID, AccountID, Balance) values('',''+acctID,''+balance)";
+            bankDataContext.ExecuteQuery<Customer_Accounts_Table>(insertStatement);
+            //bankDataContext.Customer_Accounts_Tables.InsertOnSubmit(custAcctTable);
+            bankDataContext.SubmitChanges();
+
+        }
+
         /// <summary>
         /// Method to get the account type from the DB
         /// </summary>

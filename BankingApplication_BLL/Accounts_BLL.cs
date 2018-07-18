@@ -12,6 +12,10 @@ namespace BankingApplication_BLL
 
         public Accounts_BLL() { }
         
+        public void AddCustomerAccount(int custID, int acctID, double balance)
+        {
+            accountsRepo.AddCustomerAccount(custID, acctID, balance);
+        }
         /// <summary>
         /// Method to Get the account type based on the account ID
         /// </summary>

@@ -13,18 +13,27 @@ namespace Bank_Web
 {
     public partial class Home : System.Web.UI.Page
     {
-        
-        int selectedAccountID;
+        public static string commandName;
+        public static int commandIndex;
+        public static int selectedAccountID;
         protected void Page_Load(object sender, EventArgs e)
         {
-            var menu = Master.FindControl("HomeMenu") as Menu;
-            foreach(MenuItem mi in menu.Items)
+            
+            if (Session["CustomerID"] != null)
             {
-                if(mi.Value == "login")
+                var menu = Master.FindControl("HomeMenu") as Menu;
+               
+                foreach (MenuItem mi in menu.Items)
                 {
-                    mi.Text = "Log Out";
+                    if (mi.Value == "login")
+                    {
+                        mi.Text = "Log Out";
+                    }
+                    else if (mi.Value == "register")
+                        mi.Text = "";
                 }
             }
+            
 
             
             Session["selectedAccountID"] = null;
@@ -90,6 +99,7 @@ namespace Bank_Web
 
         protected void GridAccountBalances_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            
             if(e.CommandName=="SelectAccount")
             {
                 int index = Convert.ToInt32(e.CommandArgument);
@@ -108,21 +118,47 @@ namespace Bank_Web
             }
             else if (e.CommandName == "Deposit")
             {
-                int index = Convert.ToInt32(e.CommandArgument);
-                switch (index)
+                commandName = "Deposit";
+                commandIndex = Convert.ToInt32(e.CommandArgument);
+                switch (commandIndex)
                 {
                     case 0:
-                        this.selectedAccountID = 1;
+                        selectedAccountID = 1;
                         break;
                     case 1:
-                        this.selectedAccountID = 2;
+                        selectedAccountID = 2;
                         break;
                     case 2:
-                        this.selectedAccountID = 3;
+                        selectedAccountID = 3;
                         break;
                 }
                 txtInput.Visible = true;
                 btnSubmitAmount.Visible = true;
+                btnCancelInput.Visible = true;
+            }
+            else if (e.CommandName == "Withdraw")
+            {
+                commandName = "Withdraw";
+                commandIndex = Convert.ToInt32(e.CommandArgument);
+                
+                switch (commandIndex)
+                {
+                    case 0:
+                        selectedAccountID = 1;
+                        PassToSubmitClick(e);
+                        break;
+                    case 1:
+                        selectedAccountID = 2;
+                        break;
+                    case 2:
+                        selectedAccountID = 3;
+                        break;
+                }
+                txtInput.Visible = true;
+                btnSubmitAmount.Visible = true;
+                btnCancelInput.Visible = true;
+
+                
             }
         }
 
@@ -131,21 +167,57 @@ namespace Bank_Web
 
         }
 
-        protected void btnSubmitAmount_Click1(object sender, EventArgs ee)
+        protected void btnSubmitAmount_Click(object sender, EventArgs ee)
         {
             string amt = txtInput.Text;
             bool checkAmt = double.TryParse(amt, out double amtValue);
             if (checkAmt)
             {
                 int selectedCustomerID = (int)Session["CustomerID"];
-                int selectedAccountID = this.selectedAccountID;
-
                 var objTransactionsBLL = new Transactions_BLL();
+
+
                 
+                if(commandName == "Deposit")
+                {
                     objTransactionsBLL.Deposit(selectedCustomerID, selectedAccountID, amtValue);
-               
+                }
+                else if(commandName == "Withdraw")
+                {
+                    objTransactionsBLL.Withdraw(selectedCustomerID, selectedAccountID, amtValue);
+                }
+                //if (gvr.NamingContainer.FindControl("Withdraw"))
+                //{
+                //    objTransactionsBLL.Withdraw(selectedCustomerID, selectedAccountID, amtValue);
+                //}
+                //else if (row.Cells[1].Text == "Deposit")
+                //{
+                //    objTransactionsBLL.Deposit(selectedCustomerID, selectedAccountID, amtValue);
+                //}
+
+
+
+
 
             }
+        }
+
+        protected void btnCancelInput_Click(object sender, EventArgs e)
+        {
+            txtInput.Text = "";
+            txtInput.Visible = false;
+            btnSubmitAmount.Visible = false;
+            btnCancelInput.Visible = false;
+        }
+
+        protected void PassToSubmitClick(GridViewCommandEventArgs e)
+        {
+
+        }
+
+        protected void txtInput_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

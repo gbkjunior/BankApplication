@@ -17,10 +17,12 @@ namespace Bank_Web
 
         protected void HomeMenu_MenuItemClick(object sender, MenuEventArgs e)
         {
+            MultiView mview = c1.FindControl("MultiViewLogin") as MultiView;
             switch (HomeMenu.SelectedItem.Text)
             {
-                case "Login": Panel loginPanel = c1.FindControl("pnlLogin") as Panel;
-                    loginPanel.Visible = true;
+                
+                case "Login": View loginView =c1.FindControl("LoginView") as View;
+                    mview.SetActiveView(loginView);
                     break;
                 case "Log Out":
                     Session["CustomerID"] = null;
@@ -28,11 +30,16 @@ namespace Bank_Web
                     FormsAuthentication.SignOut();
                     Response.Redirect("~/Login.aspx");
                     break;
-                case "Register": MultiView mview = c1.FindControl("RegisterView") as MultiView;
+                case "Register": 
+                    
+                    mview.Visible = true;
                     View view = c1.FindControl("viewRegister") as View;
-                    mview.ActiveViewIndex = 0;
+                    //mview.ActiveViewIndex = 0;
                     
                     mview.SetActiveView(view);
+                    break;
+                case "Home": Session["selectedAccountID"] = null;
+                    Response.Redirect("Home.axpx");
                     break;
             }
         }

@@ -16,29 +16,32 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    </head>
+</head>
 
 <body>
     <form id="form1" runat="server">
 
-        <div id="wrapper">
+        
+            <%--<ul>
+                <li><a class="active" href="Home.aspx">Home</a></li>
+                <li><a href="ContactUs.aspx">Contact</a></li>
+                <li><a href="About.aspx">About Us</a></li>
+                <li><a href="Login.aspx">Login</a></li>
+            </ul>--%>
+
             <asp:Menu ID="HomeMenu" runat="server" Orientation="Horizontal" CssClass="menu" Font-Names="Segoe UI" OnMenuItemClick="HomeMenu_MenuItemClick" BackColor="Black">
 
                 <Items>
                     <asp:MenuItem ImageUrl="images/Header/Group%2012.png" />
 
                     <asp:MenuItem Text="Home" Value="Home" NavigateUrl="Home.aspx" />
-                    <asp:MenuItem Text="Our Products" NavigateUrl="ContactUs.aspx" />
-                    <asp:MenuItem Text="Personal" NavigateUrl="AboutUs.aspx" />
-                    <asp:MenuItem Text="About Us" NavigateUrl="AboutUs.aspx" />
-                    <asp:MenuItem Text="Contact" NavigateUrl="Contact.aspx" />
-                    <asp:MenuItem Text="Login"   Value="login"  />
-                    
-                    <asp:MenuItem Text="Register" Value="register" NavigateUrl="Login.aspx"  />
+
+                    <asp:MenuItem Text="Login" Value="login" />
+                    <asp:MenuItem Text="Register" Value="register" />
                 </Items>
             </asp:Menu>
-            </div>
-            <%--<img alt="header_rect" class="nav-bar" src="images/Header/Rectangle%201.png"/>
+        
+        <%--<img alt="header_rect" class="nav-bar" src="images/Header/Rectangle%201.png"/>
                     <img alt="dotbank" class="dot-bank" src="images/Header/Group%2012.png" />
                     <img alt="our-prod" class="products" src="images/Header/Our%20Products.png" />
                     <img alt="personal" class="personal" src="images/Header/Personal@2x.png" />
@@ -47,14 +50,13 @@
                     
                     <img alt="about-us" class="about-us" src="images/Header/About%20Us@2x.png" />
                     <img alt="group-2" class="group-2" src="images/Header/Group%202.png" />
-            --%><asp:ContentPlaceHolder ID="c1" runat="server">
-                <p>
-                    </p>
+        --%><asp:ContentPlaceHolder ID="c1" runat="server">
 
-            </asp:ContentPlaceHolder>
-        
+
+        </asp:ContentPlaceHolder>
+
         <p>
-</p>
+        </p>
 
     </form>
     <p>
