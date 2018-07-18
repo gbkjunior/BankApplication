@@ -257,7 +257,8 @@
                     <tr>
                         <td class="auto-style56" style="font-family: 'segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white;">Address:</td>
                         <td class="auto-style57">
-                            <textarea id="txtCustAddress" class="auto-style25" cols="20" name="S1" rows="2"></textarea></td>
+                            <asp:TextBox ID="txtCustAddress" runat="server" Columns="20" CssClass="auto-style68" Height="21px" TextMode="MultiLine" Width="320px" Rows="5"></asp:TextBox>
+                        </td>
                         <td class="auto-style58"></td>
                         <td class="auto-style59"></td>
                     </tr>

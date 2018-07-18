@@ -6,7 +6,7 @@ using BankingApplication_DAL;
 
 namespace BankingApplication_BLL
 {
-    public class Transactions_BLL 
+    public class Transactions_BLL
     {
         Transactions_DAL transRepo = new Transactions_DAL();
 
@@ -20,54 +20,7 @@ namespace BankingApplication_BLL
             return transRepo.GetAllTransactions(custID);
         }
 
-        /// <summary>
-        /// Method to retrieve the balance of a customer based on his accountID
-        /// </summary>
-        /// <param name="custid"></param>
-        /// <param name="acctid"></param>
-        /// <returns>Balance of the given accountID</returns>
-        public double GetBalance(int custid, int acctid)
-        {
-            return transRepo.GetBalance(new Transactions(custid, acctid));
-        }
-
-        /// <summary>
-        /// Method to do the Deposit transaction and get the current balance after deposit
-        /// </summary>
-        /// <param name="custID"></param>
-        /// <param name="acctID"></param>
-        /// <param name="amount"></param>
-        /// <returns>Current balance after deposit</returns>
-        public double Deposit(int custID, int acctID, double amount)
-        {
-            transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Deposit, DateTime.Now, amount));
-            transRepo.DepositAmount(new Transactions(custID, acctID, TransactionType.Deposit, amount));
-            return GetBalance(custID, acctID);
-        }
-
-        /// <summary>
-        /// Method to do the Withdraw transaction and get the balance after withdraw
-        /// </summary>
-        /// <param name="custID"></param>
-        /// <param name="acctID"></param>
-        /// <param name="amount"></param>
-        /// <returns>Current balance after Withdraw</returns>
-        public double Withdraw(int custID, int acctID, double amount)
-        {
-            transRepo.AddTransaction(new Transactions(custID, acctID, TransactionType.Withdraw, DateTime.Now, amount));
-            transRepo.WithdrawAmount(new Transactions(custID, acctID, TransactionType.Withdraw, amount));
-            return GetBalance(custID, acctID);
-        }
-
-        /// <summary>
-        /// Method to get all the account balances of a customer
-        /// </summary>
-        /// <param name="custID"></param>
-        /// <returns>List of transactions with account type and balances</returns>
-        public List<Transactions> GetAllAccountBalances(int custID)
-        {
-            return transRepo.GetAllBalances(custID);
-        }
+        
 
         /// <summary>
         /// Method to retrieve transactions of a customer for his accountID
@@ -77,7 +30,7 @@ namespace BankingApplication_BLL
         /// <returns>List of transactions of the given accountID</returns>
         public List<Transactions> GetTransactionsByID(int custID, int acctID)
         {
-            return  transRepo.GetTransactionsByAcctID(custID, acctID);
+            return transRepo.GetTransactionsByAcctID(custID, acctID);
         }
 
         /// <summary>

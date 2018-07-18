@@ -81,7 +81,7 @@ namespace Bank_Web
             string custEmail = txtCustEmail.Text;
             string custPassword = txtCustPassword.Text;
             string custDOB = txtCustDOB.Text;
-            string custAddress = Request.Form["txtCustAddress"];
+            string custAddress = txtCustAddress.Text;
             string custTelephone = txtCustTelephone.Text;
             if(custName == "")
             {

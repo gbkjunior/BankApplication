@@ -46,6 +46,7 @@ namespace Bank_Web
             {
                 var objCustomerBLL = new Customers_BLL();
                 var objTransactionsBLL = new Transactions_BLL();
+                var objAccountsBLL = new Accounts_BLL();
                 int selectedCustomerID = (int)Session["CustomerID"];
 
                 //List<Transactions> lstAccountBalances;
@@ -53,7 +54,7 @@ namespace Bank_Web
                 List<double> lstBalance = new List<double>();
                 for(int i = 1; i < 4; i++)
                 {
-                    lstBalance.Add(objTransactionsBLL.GetBalance(selectedCustomerID, i));
+                    lstBalance.Add(objAccountsBLL.GetBalance(selectedCustomerID, i));
                 }
                 DataTable dt = new DataTable();
                 dt.Columns.Add("Account Type");
@@ -175,30 +176,23 @@ namespace Bank_Web
             {
                 int selectedCustomerID = (int)Session["CustomerID"];
                 var objTransactionsBLL = new Transactions_BLL();
-
+                var objAccountsBLL = new Accounts_BLL();
 
                 
                 if(commandName == "Deposit")
                 {
-                    objTransactionsBLL.Deposit(selectedCustomerID, selectedAccountID, amtValue);
+                    objAccountsBLL.Deposit(selectedCustomerID, selectedAccountID, amtValue);
                 }
                 else if(commandName == "Withdraw")
                 {
-                    objTransactionsBLL.Withdraw(selectedCustomerID, selectedAccountID, amtValue);
+                    objAccountsBLL.Withdraw(selectedCustomerID, selectedAccountID, amtValue);
                 }
-                //if (gvr.NamingContainer.FindControl("Withdraw"))
-                //{
-                //    objTransactionsBLL.Withdraw(selectedCustomerID, selectedAccountID, amtValue);
-                //}
-                //else if (row.Cells[1].Text == "Deposit")
-                //{
-                //    objTransactionsBLL.Deposit(selectedCustomerID, selectedAccountID, amtValue);
-                //}
 
-
-
-
-
+                txtInput.Text = "";
+                txtInput.Visible = false;
+                btnSubmitAmount.Visible = false;
+                btnCancelInput.Visible = false;
+                Response.Redirect("Home.aspx");
             }
         }
 

@@ -35,7 +35,7 @@ namespace Bank_Web
                 var objTransactionBLL = new Transactions_BLL();
                 var objAccountsBLL = new Accounts_BLL();
                 
-                double getBalanceValue = objTransactionBLL.GetBalance(custID, selectedAccount);
+                double getBalanceValue = objAccountsBLL.GetBalance(custID, selectedAccount);
                 //string acctType = objAccountsBLL.GetAccountTypeByID(selectedAccount).GetAccountType().ToString();
                 //lblCheckAccBalance.Text = lblCheckAccBalance.Text + " " + acctType + " Account balance is: " + getBalanceValue + " ";
                 GetDataTableData();

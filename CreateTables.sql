@@ -19,8 +19,8 @@ CREATE TABLE CustomerTable (
 )
 
 CREATE TABLE Customer_Accounts_Table (
-	Customer_ID int foreign key references CustomerTable(Customer_ID),
-	Account_ID int foreign key references AccountTable(Account_ID),
+	Customer_ID int foreign key references CustomerTable(Customer_ID) not null,
+	Account_ID int foreign key references AccountTable(Account_ID) not null,
 	Balance decimal(10) not null
 )
 

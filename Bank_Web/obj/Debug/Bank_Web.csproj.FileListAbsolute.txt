@@ -63,3 +63,5 @@ C:\Users\vijay\C# Development\BankingApplication\Bank_Web\obj\Debug\Bank_Web.csp
 C:\Users\vijay\C# Development\BankingApplication\Bank_Web\obj\Debug\Bank_Web.csproj.CopyComplete
 C:\Users\vijay\C# Development\BankingApplication\Bank_Web\obj\Debug\Bank_Web.dll
 C:\Users\vijay\C# Development\BankingApplication\Bank_Web\obj\Debug\Bank_Web.pdb
+C:\Users\vijay\C# Development\BankingApplication\Bank_Web\bin\Bank.mdf
+C:\Users\vijay\C# Development\BankingApplication\Bank_Web\bin\Bank_log.ldf

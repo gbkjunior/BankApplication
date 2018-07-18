@@ -8,6 +8,15 @@
       <Association Name="AccountTable_TransactionTable" Member="TransactionTables" ThisKey="Account_ID" OtherKey="Account_ID" Type="TransactionTable" />
     </Type>
   </Table>
+  <Table Name="dbo.Customer_Accounts_Table" Member="Customer_Accounts_Tables">
+    <Type Name="Customer_Accounts_Table">
+      <Column Name="Customer_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Account_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Balance" Type="System.Decimal" DbType="Decimal(10,0) NOT NULL" CanBeNull="false" />
+      <Association Name="AccountTable_Customer_Accounts_Table" Member="AccountTable" ThisKey="Account_ID" OtherKey="Account_ID" Type="AccountTable" IsForeignKey="true" />
+      <Association Name="CustomerTable_Customer_Accounts_Table" Member="CustomerTable" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="CustomerTable" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.CustomerTable" Member="CustomerTables">
     <Type Name="CustomerTable">
       <Column Name="Customer_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -19,15 +28,6 @@
       <Column Name="Customer_Address" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Association Name="CustomerTable_Customer_Accounts_Table" Member="Customer_Accounts_Tables" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="Customer_Accounts_Table" />
       <Association Name="CustomerTable_TransactionTable" Member="TransactionTables" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="TransactionTable" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Customer_Accounts_Table" Member="Customer_Accounts_Tables">
-    <Type Name="Customer_Accounts_Table">
-      <Column Name="Customer_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Account_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Balance" Type="System.Decimal" DbType="Decimal(10,0) NOT NULL" CanBeNull="false" />
-      <Association Name="AccountTable_Customer_Accounts_Table" Member="AccountTable" ThisKey="Account_ID" OtherKey="Account_ID" Type="AccountTable" IsForeignKey="true" />
-      <Association Name="CustomerTable_Customer_Accounts_Table" Member="CustomerTable" ThisKey="Customer_ID" OtherKey="Customer_ID" Type="CustomerTable" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TransactionTable" Member="TransactionTables">
